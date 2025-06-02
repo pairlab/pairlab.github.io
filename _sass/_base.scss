@@ -1,7 +1,8 @@
 /*******************************************************************************
  * Styles for the base elements of the theme.
  ******************************************************************************/
-// Typography
+
+ // Typography
 p,
 h1,
 h2,
@@ -712,7 +713,7 @@ footer.sticky-bottom {
   }
 
   h2.bibliography {
-    color: var(--global-divider-color);
+    color: var(--global-text-color-light);
     border-top: 1px solid var(--global-divider-color);
     padding-top: 1rem;
     margin-top: 2rem;
@@ -755,7 +756,12 @@ footer.sticky-bottom {
       }
 
       .title {
-        font-weight: bolder;
+        font-weight: 400;
+        color: var(--global-text-color);
+        a {
+              font-weight: 400; 
+              color: var(--global-text-color);
+          }
       }
 
       .author {
@@ -788,7 +794,7 @@ footer.sticky-bottom {
       .links {
         a.btn {
           color: var(--global-text-color);
-          border: 1px solid var(--global-text-color);
+          border: 1px solid var(--global-divider-color);    
           padding-left: 1rem;
           padding-right: 1rem;
           padding-top: 0.25rem;

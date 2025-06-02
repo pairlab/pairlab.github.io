@@ -5,6 +5,10 @@
 
 @use "sass:color";
 
+//font size
+$base-font-size: 18px !default;
+$small-font-size:  0.875rem !default;
+
 // Colors
 $red-color: #ff3636 !default;
 $red-color-dark: #b71c1c !default;
