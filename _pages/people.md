@@ -3,7 +3,7 @@ layout: page
 div_class: people
 permalink: /people/
 title: people
-description: members of the lab or group
+description: members of the research group
 nav: true
 nav_order: 4
 tabs: true
@@ -25,7 +25,7 @@ display_status: [current, alumni]
   <!-- <swiper-container keyboard="true" navigation="true" pagination="true" pagination-clickable="true" pagination-dynamic-bullets="true" rewind="true"> -->
 <div style="max-width: 900px; margin: 0 auto;">
   <swiper-container
-    style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff; width: 100%; height: 480px;"
+    style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff; width: 80%; height: 480px;"
     class="mySwiper"
     pagination-dynamic-bullets="true"
     thumbs-swiper=".mySwiper2"

@@ -1,7 +1,7 @@
 ---
 layout: page
 name: Ezra Ameperosa
-role: Ph.D. Student #description of the role
+role: Ph.D. Student <br> with AFRL #description of the role
 img: assets/img/people/ezra-ameperosa.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni

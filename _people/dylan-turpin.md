@@ -1,7 +1,7 @@
 ---
 layout: page
 name: Dylan Turpin
-role: Ph.D. Student (UofT) <br> (With Sven Dickenson) #description of the role
+role: Ph.D. Student (UofT) <br> (With Sven Dickinson) #description of the role
 img: assets/img/people/dylan-turpin.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni

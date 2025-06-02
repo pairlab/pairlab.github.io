@@ -1,8 +1,8 @@
 ---
 layout: page
 name: Walker Byrnes
-role: Ph.D. Student #description of the role
-img: assets/img/people/walker-byrnes.jpg
+role: Ph.D. Student <br> with GTRI #description of the role
+img: assets/img/people/walker-byrnes.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni
 #links and socials
