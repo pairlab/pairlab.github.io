@@ -12,7 +12,7 @@ children:
     permalink: /news/
   - title: divider
   - title: code & talks
-    permalink: /repositories/
+    permalink: /resources/
   - title: divider
   - title: PI Profile
     permalink: /cv/    
