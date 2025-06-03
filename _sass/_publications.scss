@@ -40,7 +40,7 @@
 .bibliography {
     margin-bottom: 10px;
     margin-top: 10px;
-    list-style-type: none;
+    list-style: none inside;        
     h2 {
         border-top: 1px solid var(--global-divider-color);
         color: var(--global-text-color-light);
@@ -54,7 +54,7 @@
     }
     ul {    
         margin-left: -30px;
-        list-style: none inside;        
+        // list-style: none inside;        
     }
     li {
         border-left: 1px solid #ccc;
@@ -66,10 +66,10 @@
         position: relative;
         color: $grey-color;
         font-size: 0.9rem;
-        // display: flex;
-        // align-items: flex-start;
+        // list-style-type: decimal;
+        // list-style-position: outside;
 
-        span { display: block; }
+        span { display: inline-block; }
         .title { 
             font-size: $base-font-size;
             font-weight: 400; 
@@ -159,23 +159,22 @@
         }        
         .bib-teaser {
             grid-area: 1 / 2;
+        }
+        .internal-embed {
+           vertical-align: top !important;
+            margin-top: 0 !important;
+            display: inline-block !important;
         }  
     } 
  }
 
 /*this is for counters*/
 ol.bibliography {
-  counter-reset: item;
-}
-
-ol.bibliography li {
-  list-style-type: none;
-  list-style-position: outside;
-  /*margin: 30px 0;*/
+  counter-reset: item; /* Reset the counter on the ordered list */
 }
 
 ol.bibliography li:before {
-  content: counter(list-item) ".";
+//   content: counter(list-item) ".";  /* Display the counter value */
   counter-increment: item ;
   font-size: $small-font-size;
   position: absolute;
