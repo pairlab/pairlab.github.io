@@ -4,7 +4,7 @@
 
 title: PAIR # the website title (if blank, full name will be used instead)
 first_name: PAIR
-middle_name: 
+middle_name:
 last_name: Lab
 contact_note: >
   You can even add a little note about which of these is the best way to reach you.
@@ -113,19 +113,19 @@ giscus:
   lang: en
 
 # Disqus comments (DEPRECATED)
-disqus_shortname:  # put your disqus shortname
+disqus_shortname: # put your disqus shortname
 # https://help.disqus.com/en/articles/1717111-what-s-a-shortname
 
 # External sources.
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
-external_sources:
-  - name: 
-    rss_url: 
-  - name: 
-    posts:
-      - url: 
-        published_date: 
+# external_sources:
+#   - name:
+#     rss_url:
+#   - name:
+#     posts:
+#       - url:
+#         published_date:
 
 # -----------------------------------------------------------------------------
 # Newsletter
@@ -291,9 +291,9 @@ scholar:
   order: descending
   group_by: type
   group_order: ascending
-  type_aliases: {inproceedings: article}
-  type_names: {unpublished: Preprints,  article: Papers (Journals & Conferences), workshop: Peer-Reviewed Workshops, thesis: Theses, patent: Patents}
-  type_order: [article,unpublished,workshop,thesis,patent,misc]
+  type_aliases: { inproceedings: article }
+  type_names: { unpublished: Preprints, article: Papers (Journals & Conferences), workshop: Peer-Reviewed Workshops, thesis: Theses, patent: Patents }
+  type_order: [article, unpublished, workshop, thesis, patent, misc]
 
   bibliography_list_attributes:
     reversed: true
