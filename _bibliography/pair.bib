@@ -142,7 +142,7 @@ degree (for thesis type)
     year={2015},
     month={dec},
     pdf={http://berkeleyautomation.github.io/tsc-dl/files/gkm-wk_nips15-tsc.pdf},
-    html={http://berkeleyautomation.github.io/tsc-dl}
+    website= {http://berkeleyautomation.github.io/tsc-dl}
 }
 
 @workshop{krishnan2016hirl,
@@ -232,7 +232,7 @@ degree (for thesis type)
   year={2020},
   month={Dec},
   arXiv = {2010.09163},
-  html={https://sites.google.com/view/d2rl/home},
+  website= {https://sites.google.com/view/d2rl/home},
   talk={https://slideslive.com/38941315/d2rl-deep-dense-architectures-in-reinforcement-learning?ref=speaker-37161-latest},
   code={https://github.com/pairlab/d2rl},
   preview={d2rl-arxiv20.jpg},
@@ -363,7 +363,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   video={https://youtu.be/Kk_wHiu8nGg},
   talk={https://youtu.be/TGEIRpbuS_I},
   abstract={Automation seeks to improve the reliability and quality of processes. This study aims to automate high dose rate brachytherapy (HDR-BT), a radiation therapy that places radioactive sources at the site of the tumor using needles. Although HDR-BT has a high rate of clinical success in curing prostate cancer, it also has several side effects related to needle and dose trauma. A new planning algorithm from previous work optimizes needle arrangements using skew-lines (non-parallel, non-intersecting lines). This paper presents initial experiments towards an automated system for implanting skew-line needle arrangements computed from a planning system. We describe the interface, calibration and integration of the robotic hardware with the planning system, and present experiments using our robotic system to implant needles into anatomically-correct tissue phantoms. Results suggest that this system can achieve HDR-BT treatment objectives with reduced trauma to organs and low demands on operator skill, thus making the procedure more reliable and repeatable. In the future, we believe that robotic HDR-BT will improve overall treatment quality with reduced dependence on physician skill.},
-  html={https://doi.org/10.1109/CoASE.2012.6386483},
+  pdf={https://doi.org/10.1109/CoASE.2012.6386483},
   award={IEEE CASE Best Application Paper Award},
   preview={acubot-case12.gif}
 }
@@ -376,8 +376,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   ign-pages={466--473},
   year={2013},
   abstract={Brachytherapy is a widely-used treatment modality for cancer in many sites in the body. In brachytherapy, small radioactive sources are positioned proximal to cancerous tumors. An ongoing challenge is to accurately place sources on a set of dwell positions to sufficiently irradiate the tumors while limiting radiation damage to healthy organs and tissues. In current practice, standardized applicators with internal channels are inserted into body cavities to guide the sources. These standardized implants are one-size-fits-all and are prone to shifting inside the body, resulting in suboptimal dosages. We propose a new approach that builds on recent results in 3D printing and steerable needle motion planning to create customized implants containing customized curvature-constrained internal channels that fit securely, minimize air gaps, and precisely guide radioactive sources through printed channels. When compared with standardized implants, customized implants also have the potential to provide better coverage: more potential source dwell positions proximal to tumors. We present an algorithm for computing curvature-constrained channels based on rapidly-expanding randomized trees (RRT). We consider a prototypical case of OB/GYN cervical and vaginal cancer with three treatment options: standardized ring implant (current practice), customized implant with linear channels, and customized implant with curved channels. Results with a two-parameter coverage metric suggest that customized implants with curved channels can offer significant improvement over current practice.},
-  pdf={},
-  html={https://ieeexplore.ieee.org/document/6654002}
+  pdf={https://ieeexplore.ieee.org/document/6654002}
 }
 
 @article{siauw2014customized,
@@ -386,7 +385,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   journal={Brachytherapy},
   year={2014},
   month={mar},
-  html={https://doi.org/10.1016/j.brachy.2014.02.439},
+  pdf= {https://doi.org/10.1016/j.brachy.2014.02.439},
 }
 
 @inproceedings{garg2014exact,
@@ -395,7 +394,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   booktitle={IEEE International Conference on Automation Science \& Engg. (CASE)},
   month={aug},
   year={2014},
-  html={https://ieeexplore.ieee.org/document/6899376},
+  pdf= {https://ieeexplore.ieee.org/document/6899376},
   abstract={When planning skew-line needle arrangements for automated brachytherapy, one objective is to identify a set of candidate needles that enter from a specified entry region, avoid specified organs-at-risk and sufficiently cover the target (tumor) volume. Existing methods use uniform or random sampling to generate a set of candidate needles, which may not adequately cover the target volume. In this paper we present an exact reachability analysis that can be used to guide the selection of candidate needles and to identify which subset of the target volume may not be reachable. Assuming linear needles, convex polyhedral representations of entry zone, organs-at-risk and target volume, we give an exact polynomial time algorithm for checking existence and calculation of the non-reachable set in the target volume. We perform experiments using patient data from 18 brachytherapy cases and found that 11 cases had non-empty occluded volume inside the target ranging from 0.01% to 4.3% of target volume. We also report a sensitivity study showing the change in the occluded volume with dilation of the avoidance volume and entry zone.}
 }
 
@@ -407,7 +406,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2015},
   award={Finalist: Best Paper, Student Paper, and Medical Robotics Paper Award},
   abstract={Automating repetitive surgical subtasks such as suturing, cutting and debridement can reduce surgeon fatigue and procedure times and facilitate supervised tele-surgery. Programming is difficult because human tissue is deformable and highly specular. Using the da Vinci Research Kit (DVRK) robotic surgical assistant, we explore a “Learning By Observation” (LBO) approach where we identify, segment, and parameterize motion sequences and sensor conditions to build a finite state machine (FSM) for each subtask. The robot then executes the FSM repeatedly to tune parameters and if necessary update the FSM structure. We evaluate the approach on two surgical subtasks: debridement of 3D Viscoelastic Tissue Phantoms (3d-DVTP), in which small target fragments are removed from a 3D viscoelastic tissue phantom; and Pattern Cutting of 2D Orthotropic Tissue Phantoms (2d-PCOTP), a step in the standard Fundamentals of Laparoscopic Surgery training suite, in which a specified circular area must be cut from a sheet of orthotropic tissue phantom. We describe the approach and physical experiments with repeatability of 96% for 50 trials of the 3d-DVTP subtask and 70% for 20 trials of the 2d-PCOTP subtask.},
-  html={https://ieeexplore.ieee.org/document/7139344},
+  pdf= {https://ieeexplore.ieee.org/document/7139344},
   video={http://www.youtube.com/watch?v=beVWB6NtAaA},
   preview={lbo-icra15.gif}
 }
@@ -421,7 +420,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   award={Best Poster/Demo Award at ICRA 2015 Workshop on Shared Frameworks for Medical Robotics},
   pdf={http://berkeleyautomation.github.io/surgical-tools/files/mckinley-disposable-2015.pdf},
   abstract={We present the design and evaluation of a novel low-cost palpation probe for Robot assisted Minimally Invasive Surgery (RMIS) for localizing subcutaneous blood vessels. It measures probe tip deflection using a Hall Effect sensor as the spherical tip is moved tangentially across a surface under automated control. The probe is intended to be single-use and disposable, built from 3D printed parts and commercially available electronics. The prototype has a cross-section of less than 15mm×10mm and fits on the end of an 8mm diameter needle driver in the Intuitive Surgical da Vinci ® Research Kit (dVRK). We report experiments for quasi-static sliding palpation with silicone based tissue phantoms with embedded cylinders as subcutaneous blood vessel phantoms. We analyzed signal-to-noise ratios with multiple diameters of silicone cylinders (1.58-4.75 mm) at varying subcutaneous depths (1-5 mm) with a range of indentation depths (0-8 mm) and sliding speeds (0.5-21 mm/s). Results suggest that the probe can detect subcutaneous structures in phantoms of diameter 2.25 mm at a depth of up to 5mm below the tissue surface.},
-  html={https://doi.org/10.1109/CoASE.2015.7294253},
+  pdf= {https://doi.org/10.1109/CoASE.2015.7294253},
   preview={sensor-case15.jpg}
   }
 
@@ -441,7 +440,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   booktitle={IEEE International Conference on Robotics \& Automation (ICRA)},
   month={may},
   year={2016},
-  html={http://berkeleyautomation.github.io/tsc-dl/},
+  website={http://berkeleyautomation.github.io/tsc-dl/},
   code={https://github.com/BerkeleyAutomation/tsc-dl},
   video={https://youtu.be/L561cJh7DLE}
 }
@@ -453,7 +452,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={may},
   year={2016},
   IGNOREorganization={IEEE},
-  html={http://berkeleyautomation.github.io/amts/},
+  website={http://berkeleyautomation.github.io/amts/},
   video={https://youtu.be/z1ehShXFToc},
   preview={amts-icra16.gif}
 }
@@ -465,7 +464,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2016},
   mon={aug},
   IGNOREorganization={IEEE},
-  html={http://berkeleyautomation.github.io/gpas/},
+  website={http://berkeleyautomation.github.io/gpas/},
   pdf={http://berkeleyautomation.github.io/gpas/files/garg-case16-gpas.pdf},
   preview={gpas-case16.jpg}
 }
@@ -478,7 +477,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={aug},
   award={Best Video Award at 2015 Hamlyn Symposium},
   video={https://www.youtube.com/watch?v=YiPq9t0tR3U},
-  html={http://berkeleyautomation.github.io/surgical-tools/},
+  website={http://berkeleyautomation.github.io/surgical-tools/},
   preview={pida-case16.gif}
 }
 
@@ -512,7 +511,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={sep},
   year={2017},
   pdf={https://stanfordvl.github.io/ARPL/arpl_mzg_iros17.pdf},
-  html={https://stanfordvl.github.io/ARPL/},
+  website={https://stanfordvl.github.io/ARPL/},
   video={https://www.youtube.com/watch?v=yZ-gSsbbzh0}
 }
 
@@ -546,7 +545,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2018},
   arxiv={1710.01813},
   video={https://www.youtube.com/watch?v=THq7I7C5rkk&feature=youtu.be},
-  html={https://stanfordvl.github.io/ntp/},
+  website={https://stanfordvl.github.io/ntp/},
   talk={https://youtu.be/_9Ny2ghjwuY?t=7h54m},
   preview={ntp-icra18.gif}
 }
@@ -559,7 +558,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2018},
   talk={https://youtu.be/GBo4sFNzhtU?t=23m30s},
   award={Oral Presentation},
-  html={https://finding-it.github.io/},
+  website={https://finding-it.github.io/},
   poster={https://drive.google.com/file/d/1uvnw6VDn0r1nS3ePyFKaCbEx5GZw1ZEy/view},
   pdf={http://openaccess.thecvf.com/content_cvpr_2018/papers/Huang_Finding_It_Weakly-Supervised_CVPR_2018_paper.pdf},
   supplement={https://finding-it.github.io/finding-it-suppmat.pdf},
@@ -573,7 +572,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   arXiv={1708.04672},
   month={mar},
   year={2018},
-  html={https://deformnet-site.github.io/DeformNet-website/},
+  website={https://deformnet-site.github.io/DeformNet-website/},
   talk={https://www.youtube.com/watch?v=cKzXVL6W--8}
 }
 
@@ -585,7 +584,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={july},
   year={2018},
   arxiv={1806.09266},
-  html={https://sites.google.com/view/task-oriented-grasp},
+  website={https://sites.google.com/view/task-oriented-grasp},
   video={https://www.youtube.com/watch?v=YI-3sf067f8},
   talk={https://youtu.be/v0ErAR8Dwy8?t=43s},
   preview={tog-rss18.png}
@@ -599,7 +598,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2018},
   arxiv={1811.02790},
   pdf={http://proceedings.mlr.press/v87/mandlekar18a.html},
-  html={http://roboturk.stanford.edu/},
+  website={http://roboturk.stanford.edu/},
   code={https://cvgl.stanford.edu/projects/roboturk/ccr-web/dataset_sim.html},
   blog={http://ai.stanford.edu/blog/roboturk/},
   talk={https://www.youtube.com/watch?v=ugCBLNLWDM8&t=24400s}
@@ -613,7 +612,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={may},
   year={2019},
   award={ICRA Best Paper Award and Finalist: Best Cognitive Robotics Paper},
-  html={https://sites.google.com/view/visionandtouch},
+  website={https://sites.google.com/view/visionandtouch},
   video={https://youtu.be/usFQ8hNtE8c},
   preview={multimodal-icra19.gif}
 }
@@ -638,7 +637,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={may},
   year={2019},
   arxiv={1903.01588},
-  html={https://ai.stanford.edu/mech-search/},
+  website={https://ai.stanford.edu/mech-search/},
   video={https://youtu.be/lCwdGSDkbG4},
   abstract={When operating in unstructured environments such as warehouses, homes, and retail centers, robots are frequently required to interactively search for and retrieve specific objects from cluttered bins, shelves, or tables. Mechanical Search describes the class of tasks where the goal is to locate and extract a known target object. In this paper, we formalize Mechanical Search and study a version where distractor objects are heaped over the target object in a bin. The robot uses an RGBD perception system and control policies to iteratively select, parameterize, and perform one of 3 actions -- push, suction, grasp -- until the target object is extracted, or either a time limit is exceeded, or no high confidence push or grasp is available. We present a study of 5 algorithmic policies for mechanical search, with 15,000 simulated trials and 300 physical trials for heaps ranging from 10 to 20 objects. Results suggest that success can be achieved in this long-horizon task with algorithmic policies in over 95% of instances and that the number of actions required scales approximately linearly with the size of the heap.},
   preview={mechsearch-icra19.gif}
@@ -651,7 +650,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={nov},
   year={2019},
   arxiv={1906.08880},
-  html={https://stanfordvl.github.io/vices/}
+  website={https://stanfordvl.github.io/vices/}
 }
 
 @inproceedings{mandlekar2019roboturkreal,
@@ -662,7 +661,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={nov},
   year={2019},
   arxiv={1911.04052},
-  html={http://roboturk.stanford.edu/realrobotdataset},
+  website={http://roboturk.stanford.edu/realrobotdataset},
   code={https://cvgl.stanford.edu/projects/roboturk/ccr-web/dataset_real.html},
   blog={http://ai.stanford.edu/blog/roboturk/},
   preview={roboturk-real-iros19.gif}
@@ -685,7 +684,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={oct},
   year={2019},
   arxiv={1910.13395},
-  html={http://pair.stanford.edu/cavin/},
+  website={http://pair.stanford.edu/cavin/},
   award={Oral Presentation},
   preview={cavin-corl19.gif}
 }
@@ -699,7 +698,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2019},
   arxiv={1909.04121},
   blog={http://ai.stanford.edu/blog/acteach/},
-  html={https://sites.google.com/view/acteach/},
+  website={https://sites.google.com/view/acteach/},
   code={https://github.com/StanfordVL/ac-teach},
   preview={acteach-corl19.gif}
 }
@@ -727,7 +726,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={May},
   arxiv={1911.05321},
   video={https://youtu.be/H9KZgrI2I7I},
-  html={https://sites.google.com/stanford.edu/iris/},
+  website={https://sites.google.com/stanford.edu/iris/},
   talk={https://youtu.be/_7P41XHVHtM},
   preview={iris-icra20.gif},
   description={Offline demonstrations are both suboptimal and multimodal. Use two-stage model-learning: a high leven generative model to fit multi-modal state density, and a low-level imitation model for near optimal control.}
@@ -768,7 +767,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   code={https://github.com/NVlabs/High-res-disentanglement-datasets},
   slides={https://docs.google.com/presentation/d/127ChXpeWUNXIOkf6Z6qB201BhnJUxZepK4mvtsq9ELM/edit?usp=sharing},
   talk={https://slideslive.com/38928035/semisupervised-stylegan-for-disentanglement-learning?ref=search},
-  html={https://sites.google.com/nvidia.com/semi-stylegan},
+  website={https://sites.google.com/nvidia.com/semi-stylegan},
   preview={s3gan-icml20.gif},
   description={Dientanglement in GANs with 0.25-2.5% labelled dataset for high-resolution fine-grained control over image generation.}
 }
@@ -779,7 +778,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   booktitle={International Conference on Machine Learning (ICML)},
   year={2020},
   month={July}, 
-  html={https://proceedings.icml.cc/paper/2020/hash/7cc5ca26d6fbb6db2b134ef07cc68925-Abstract.html},
+  pdf={https://proceedings.icml.cc/paper/2020/hash/7cc5ca26d6fbb6db2b134ef07cc68925-Abstract.html},
   slides={https://icml.cc/media/Slides/icml/2020/virtual(no-parent)-14-15-00UTC-6648-angular_visual_.pdf},
   talk={https://slideslive.com/38928378/angular-visual-hardness?ref=search},
   arXiv = {1912.02279},
@@ -806,7 +805,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   title={{Visuomotor Mechanical Search: Learning to Retrieve Target Objects in Clutter}},
   author ={Kurenkov, Andrey and Taglic, Joseph and  Kulkarni, Rohun and Dominguez-Kuhne, Marcus and Garg, Animesh and Mart\'{i}n-Mart\'{i}n, Roberto and Saverese, Silvio},
   booktitle={IEEE International Conference on Intelligent Robots and Systems (IROS)},
-  html={https://ai.stanford.edu/mech-search/iros/},
+  website={https://ai.stanford.edu/mech-search/iros/},
   arXiv={2008.06073},
   month={oct},
   year={2020},
@@ -837,7 +836,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   Year = {2020},
   month={dec},
   arXiv = {2007.00631},
-  html={https://yunzhuli.github.io/V-CDN/},
+  website={https://yunzhuli.github.io/V-CDN/},
   talk={https://slideslive.com/38937105/causal-discovery-in-physical-systems-from-videos},
   preview={vcdn-neurips20.gif},
   description={Learn the underlying generative model as a causal graph with a few frames of observation. Generalize across variable latent dynamics (both graph connectivity and parameters).}
@@ -888,7 +887,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2021},
   month={may},
   arXiv = {2011.13897},
-  html={https://sites.google.com/view/partial-amortization-hierarchy/home},
+  website={https://sites.google.com/view/partial-amortization-hierarchy/home},
   talk={https://slideslive.com/38953774/latent-skill-planning-for-exploration-and-transfer},
   description={Combine benefits of learned world-model with a set of modular skills for faster online test-time adaptation. Use learned skills during planning stage improves both speed and data efficiency},
   preview={lsp-iclr21.jpg}
@@ -901,7 +900,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2021},
   month={may},
   arXiv = {2011.12363},
-  html={https://sites.google.com/view/learning-cae/},
+  website={https://sites.google.com/view/learning-cae/},
   talk={https://slideslive.com/38953967/clearning-horizonaware-cumulative-accessibility-estimation},
   preview={clearning-iclr21.gif},
   description={Horizon-Aware policies trade off safety and performance while encoding multimodal solutions. Insight is to learn cumulative accessibility C(s,a,h) with time horizon h instead of the usual Q-function Q(s,a).}
@@ -914,7 +913,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2021},
   month={may},
   arXiv = {2010.14497},
-  html={https://sites.google.com/view/conservative-safety-critics/home},
+  website={https://sites.google.com/view/conservative-safety-critics/home},
   talk={https://youtu.be/1E6wtSSL2Zs},
   preview={csc-iclr21.gif},
   description={We need to guarantee safety during training in RL. Instead of unintuitive specification of state based safety, we can learn safety as a separate value function, and can jointly optimize for task performance with safety value as a constraint.}
@@ -928,7 +927,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={jun},
   day={1},
   arXiv={2005.10934},
-  html={https://sites.google.com/view/leaf-exploration},
+  website={https://sites.google.com/view/leaf-exploration},
   preview={leaf-icra21.gif},
   description={Learn a dynamics aware manifold of reachable states, and then use this for guided exploration in hard continuous control tasks with RL.}
 }
@@ -941,7 +940,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={jun},
   day={1},
   arXiv = {2012.12209},
-  html={https://xinleipan.github.io/emergent_morphology/},
+  website={https://xinleipan.github.io/emergent_morphology/},
   preview={labo-icra21.gif},
   description={A data-driven bayesian optimization approach to jointly optimize hand-design along with policy for grasping diverse objects in multiple modes.}
 }
@@ -954,7 +953,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={jun},
   day={2},
   arXiv = {2103.15793},
-  html={https://www.pair.toronto.edu/laser/},
+  website={https://www.pair.toronto.edu/laser/},
   video={https://youtu.be/c3Vb-_2HSxk},
   preview={laser-icra21.jpg},
   description={Learn a lower dimensional action-space that results in efficient exploration in similar tasks.}
@@ -968,7 +967,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={jun},
   day={2},
   arXiv = {2011.02404},
-  html={https://www.pair.toronto.edu/understanding-dr/},
+  website={https://www.pair.toronto.edu/understanding-dr/},
   preview={dynrand-icra21.gif},
   description={Dynamics randomization is neither necessary nor sufficient for sim-to-real transfer of learning robust locomotion policies.}
 }
@@ -993,7 +992,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={jul},
   day={16},  
   arXiv = {2105.04682},
-  html={https://sites.google.com/view/value-iteration},
+  website={https://sites.google.com/view/value-iteration},
   preview={cfvi-icml21.jpg},
   description={RL in continuous states and actions can be solved with a closed-form extention of value iteration in cases of non-linear control-affine dynamics, resulting in a practical alternative to policy search.}
 }
@@ -1049,7 +1048,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={jul}, 
   day={18},   
   arXiv = {2105.12189},
-  html={https://sites.google.com/view/rfvi},
+  website={https://sites.google.com/view/rfvi},
   preview={rfvi-rss21.jpg},
   description={Robustness to Sim2Real via Dynamic Programming based Value Iteration in Continuous time RL.}
 }
@@ -1075,7 +1074,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={sep},
   year={2021},
   arXiv = {2101.07241},
-  html={https://www.pair.toronto.edu/lbw-kp/},
+  website={https://www.pair.toronto.edu/lbw-kp/},
   video={https://youtu.be/Retu1q-BbEo},
   preview={lbw-arxiv21.gif},
   description={Style transfer human videos to robot perspective, then sparse unsupervised keypoints for reward estimation, use RL for model-free task completion.}
@@ -1088,7 +1087,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   booktitle={Conference on Robot Learning (CoRL)},
   month={nov},
   arxiv={2110.00087},
-  html={https://www.pair.toronto.edu/TranspareNet/},
+  website={https://www.pair.toronto.edu/TranspareNet/},
   code={https://github.com/pairlab/TranspareNet},
   talk={https://www.youtube.com/watch?v=SuUMKy52b4E},
   award={Oral Presentation},
@@ -1114,7 +1113,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   booktitle={Conference on Robot Learning (CoRL)},
   month={nov},
   arXiv = {2107.05612},
-  html={https://hlsm-alfred.github.io/},
+  website={https://hlsm-alfred.github.io/},
   poster={https://openreview.net/attachment?id=NeGDZeyjcKa&name=poster},
   code={https://github.com/valtsblukis/hlsm},
   preview={corl21-hlsm.gif},
@@ -1207,7 +1206,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2022},
   month={may},
   date={9},
-  html={https://openreview.net/forum?id=4-D6CZkRXxI},
+  pdf={https://openreview.net/forum?id=4-D6CZkRXxI},
   arxiv={2204.01464},
   description={Value aware model learning to fix Objective Mismatch in Model-based RL. The gradient of the empirical value function as a measure of the sensitivity of the RL algorithm to model errors},
   preview={res-vagram-iclr22.jpg}
@@ -1221,7 +1220,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={may},
   date={10},
   pdf={https://openreview.net/forum?id=ZSKRQMvttc},
-  html={https://short-horizon-actor-critic.github.io/},
+  website={https://short-horizon-actor-critic.github.io/},
   description={A high-performance differentiable simulator and a new policy learning algorithm (SHAC) that can effectively leverage simulation gradients, even in the presence of non-smoothness},
   preview={res-shac-iclr22.jpg}
 }
@@ -1262,7 +1261,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   date={24},
   arxiv={2203.15086},
   preview={xpool-cvpr22.jpg},
-  html={https://layer6ai-labs.github.io/xpool/},
+  website={https://layer6ai-labs.github.io/xpool/},
   code={https://github.com/layer6ai-labs/xpool},
   description={Text to video retrieval with a scaled dot product attention for a text to attend to its most semantically similar frames.}
 }
@@ -1275,7 +1274,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={jun},
   date={25},
   arXiv = {2011.11201},
-  html={http://pair.toronto.edu/mac},
+  website={http://pair.toronto.edu/mac},
   preview={mac-arxiv21.gif},
   description={Object-Oriented semantic manipulation of scenes with unsupervised capsule networks which learn grounding of both objects and actions.}
 }
@@ -1287,7 +1286,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2022},
   month={jun},
   date={26},
-  html={https://neural-shape-mating.github.io/},
+  website={https://neural-shape-mating.github.io/},
   preview={nsm-cvpr22.jpg},
   description={Pairwise 3D geometric shape mating as general framework for part to part 3D pose matching for shape assembly.}
 }
@@ -1312,7 +1311,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={oct},
   date={20},
   arXiv = {2108.09779},
-  html={https://s2r2-ig.github.io/},
+  website= {https://s2r2-ig.github.io/},
   preview={s2r2-21.gif},
   description={A framework for learning a challenging dexterous manipulation task. The systems builds on IsaacGym for large scale simulation, keypoint based state representation and Cross-Atlantic remote sim2real to demonstrate the viability to scalability of robot learning.}
 }
@@ -1339,7 +1338,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={Oct},
   date={25},
   arxiv={2208.12250},
-  html={https://graspd-eccv22.github.io/},
+  website= {https://graspd-eccv22.github.io/},
   video={https://youtu.be/tkl_lywZ94o},
   code={https://github.com/dylanturpin/graspd},
   preview={graspd-eccv22.gif},
@@ -1367,7 +1366,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={Dec},
   year={2022},
   pdf={https://openreview.net/forum?id=QSUsBMuw0uV},
-  html={https://bayesianobjects.github.io/},
+  website={https://bayesianobjects.github.io/},
   description = {We present a differentiable probabilistic program that helps robots build mental representations of complex everyday objects.},
   preview={bom-corl22.jpg}
 }
@@ -1381,7 +1380,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={Dec},
   year={2022},
   pdf={https://openreview.net/forum?id=SYUEnQtK85o},
-  html={https://sites.google.com/view/robotube},
+  website={https://sites.google.com/view/robotube},
   video={https://youtu.be/oTnsZs7yOVc},
   description = {Reproducible and democratized benchmark for learning household robotic manipulation from 5000+ human videos. Also, a simulated twin environment RT-sim with matching assets for learning from these demonstrations.},
   award={Oral Presentation},
@@ -1398,7 +1397,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   arxiv={2210.11463},
   award={Featured Paper Presentation},
   pdf = {https://openreview.net/forum?id=mJWt6pOcHNy},
-  html={https://breaking-bad-dataset.github.io/},
+  website={https://breaking-bad-dataset.github.io/},
   preview={breaking-bad-neurips22.jpg},
   description={A large-scale dataset (1M+) of fractured objects to enable the study of fractured object reassembly and presents new challenges for geometric shape understanding.}
 }
@@ -1411,7 +1410,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={nov},
   day={30},
   arXiv = {2206.08851},
-  html={https://smpl-env.github.io/smpl-document/index.html},
+  website= {https://smpl-env.github.io/smpl-document/index.html},
   code={https://github.com/smpl-env/smpl},
   preview={smpl-neurips22.jpg},
   description={An easy-to-use library that includes five high-fidelity simulation environments for manufacturing processes and an extensive Offline and online RL Benchmark}
@@ -1676,7 +1675,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2025},
   month={apr},
   website={https://www.imgeorgiev.com/pwm/},
-  keywords={Reinforcement Learning, World Models, Policy Learning}
+  tags={Reinforcement Learning, World Models, Policy Learning}
 }
 
 @inproceedings{yu2024egosim,
@@ -1686,7 +1685,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2025},
   month={apr},
   website={https://egosim.github.io/EgoSim/},
-  html={https://openreview.net/forum?id=zAyS5aRKV8}
+  pdf={https://openreview.net/forum?id=zAyS5aRKV8}
 }
 
 
@@ -1708,6 +1707,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2025},
   month={may},
   website={https://rocoda.github.io/},
+  keywords={Counterfactual Data Augmentation, Robot Learning, Data Efficiency, causality},
+  tags={Data Augmentation},
 }
 
 
@@ -1731,7 +1732,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   journal={Journal of Applied Clinical Medical Physics (JACMP)},
   year={2015},
   mon={jan},
-  html={https://www.ncbi.nlm.nih.gov/pubmed/25679174}
+  website= {https://www.ncbi.nlm.nih.gov/pubmed/25679174}
 }
 
 @article{tsc-ijrr17,
@@ -1762,7 +1763,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   month={aug},
   year={2019},
   video={https://www.youtube.com/watch?v=YI-3sf067f8},
-  html={https://sites.google.com/view/task-oriented-grasp},
+  website= {https://sites.google.com/view/task-oriented-grasp},
   pdf={https://doi.org/10.1177%2F0278364919872545},
 }
 
@@ -1772,7 +1773,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   year={2020},
   month={mar},
   arXiv={1907.13098},
-  html={https://sites.google.com/view/visionandtouch},
+  website= {https://sites.google.com/view/visionandtouch},
   journal={IEEE Transactions on Robotics (T-RO)},
   preview={lee-tro20-making.png}
 }
@@ -1786,7 +1787,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   pdf={https://ieeexplore.ieee.org/document/9151283},
   arXiv = {1911.02497},
   code={https://github.com/NVlabs/condensa},
-  html={https://sites.google.com/view/condensa-bo/home},
+  website= {https://sites.google.com/view/condensa-bo/home},
   description={Demystifying network compression: user inputs pretrained model, compression scheme, objective and constraints. Condensa uses bayesian optimization to infer optimal sparsity ratio and corresponding compressed model.},
   preview={condensa-micro20.jpg}
 }
@@ -1820,7 +1821,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   date={30},
   journal={IEEE Robotics and Automation Letters (RA-L) and ICRA}, 
   arXiv = {2109.04869},
-  html={https://www.pair.toronto.edu/plate-planner/},
+  website= {https://www.pair.toronto.edu/plate-planner/},
   code={https://github.com/Jiankai-Sun/plate-pytorch},
   preview={plate-21.jpg},
   description={Planning Transformer to learn structured and plannable state and action spaces directly from unstructured videos. The model learns both action-conditional video prediction and goal conditioned planning.}
@@ -1834,7 +1835,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   year={2022},
   month={oct},
   arXiv = {2110.01954},
-  html={https://sites.google.com/view/rfvi},
+  website= {https://sites.google.com/view/rfvi},
   preview={cfvi-pami22.jpg},
   description={Solving HJB differential equation and its extension the Hamilton-Jacobi-Isaacs equation yields a robust optimal policy that achieves the maximum reward on a give task. We propose continuous and robust fitted value iteration that leverage the non-linear control-affine dynamics and separable state & action reward in continuous control to derive the optimal policy and optimal adversary in closed form.}
 }
@@ -1950,7 +1951,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   ign-issn={2835-8856},
   year={2023},
   month={nov},
-  html={https://openreview.net/forum?id=cHroS8VIyN},
+  pdf={https://openreview.net/forum?id=cHroS8VIyN},
   note={Survey Certification},
   code={https://github.com/ndrwmlnk/Awesome-Benchmarks-for-Physical-Reasoning-AI}
 }
@@ -2073,7 +2074,7 @@ arXiv = {1909.02749},
   year={2021},
   month={sept},
   arXiv = {2109.12456},
-  html={https://sites.google.com/view/audit-ai/},
+  website= {https://sites.google.com/view/audit-ai/},
   blog={https://developer.nvidia.com/blog/nvidia-research-auditing-ai-models-for-verified-deployment-under-semantic-specifications/},
   preview={audit-ai-banner.png},
   description={How can we design a similarly motivated auditing scheme for deep learning models? We propose a sequence of semantically aligned unit tests each to verify a predefined specification.}
