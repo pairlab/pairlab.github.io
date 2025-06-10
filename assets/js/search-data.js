@@ -333,11 +333,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/al-folio/people/wei-yu/";
-            },},{id: "people-yuchi-allan-zhao",
-          title: 'Yuchi Allan Zhao',
+            },},{id: "people-yuchi-zhao",
+          title: 'Yuchi Zhao',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/yuchi-allan-zhao/";
+              window.location.href = "/al-folio/people/yuchi-zhao/";
             },},{id: "people-zihan-zhou",
           title: 'Zihan Zhou',
           description: "",
