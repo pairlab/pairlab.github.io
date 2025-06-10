@@ -204,13 +204,13 @@ ninja.data = [{
           title: 'Convergence in Policy Gradients accepted at AAAI 22.',
           description: "",
           section: "News",},{id: "news-vagram-shac-and-pbrl-accepted-at-iclr-22",
-          title: 'VaGram, SHAC and PBRL  accepted at ICLR 22.',
+          title: 'VaGram, SHAC and PBRL accepted at ICLR 22.',
           description: "",
           section: "News",},{id: "news-new-papers-on-planning-plate-at-icra-22-and-rl-lfiw-at-l4dc-22",
           title: 'New papers on planning(PlaTe) at ICRA 22 and RL (LFIW) at L4DC 22....',
           description: "",
           section: "News",},{id: "news-mac-nsm-and-x-pool-accepted-at-cvpr-22",
-          title: 'MAC, NSM and X-Pool  accepted at CVPR 22.',
+          title: 'MAC, NSM and X-Pool accepted at CVPR 22.',
           description: "",
           section: "News",},{id: "news-3-new-rl-papers-koopman-rl-icml-lfiw-l4dc-amp-amp-glide-wafr",
           title: '3 New RL papers: Koopman-RL @ICML, LFIW @L4DC, &amp;amp;amp; GLIDE @WAFR',
@@ -333,6 +333,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/al-folio/people/wei-yu/";
+            },},{id: "people-yuchi-allan-zhao",
+          title: 'Yuchi Allan Zhao',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/al-folio/people/yuchi-allan-zhao/";
             },},{id: "people-zihan-zhou",
           title: 'Zihan Zhou',
           description: "",
