@@ -1,7 +1,7 @@
 ---
 layout: page
-name: Yuchi(Allan) Zhao
-role: Ph.D. Student (UofT) (with Alan Aspuru Guzik) #description of the role
+name: Yuchi (Allan) Zhao
+role: Ph.D. Student (UofT) <br> (with Alan Aspuru Guzik) #description of the role
 img: assets/img/people/allan-zhao.jpg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni
