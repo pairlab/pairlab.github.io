@@ -2,7 +2,7 @@
  * Styles for the base elements of the theme.
  ******************************************************************************/
 
- // Typography
+// Typography
 p,
 h1,
 h2,
@@ -15,7 +15,7 @@ div,
 li,
 span,
 strong {
-  color: var(--global-text-color);  
+  color: var(--global-text-color);
 }
 
 hr {
@@ -759,9 +759,9 @@ footer.sticky-bottom {
         font-weight: 400;
         color: var(--global-text-color);
         a {
-              font-weight: 400; 
-              color: var(--global-text-color);
-          }
+          font-weight: 400;
+          color: var(--global-text-color);
+        }
       }
 
       .author {
@@ -794,7 +794,7 @@ footer.sticky-bottom {
       .links {
         a.btn {
           color: var(--global-text-color);
-          border: 1px solid var(--global-divider-color);    
+          border: 1px solid var(--global-divider-color);
           padding-left: 1rem;
           padding-right: 1rem;
           padding-top: 0.25rem;
@@ -1352,7 +1352,6 @@ figure.cover {
   display: inline-block;
   text-align: center;
   margin: 0.5rem; /* adjust as needed */
-
 
   figcaption.abandoned {
     font-family: monospace;

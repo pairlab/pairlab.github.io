@@ -8,15 +8,14 @@ description: "Transferring Dexterous Manipulation from GPU Simulation to a Remot
 # bibliography_template: bib
 ---
 
+## **Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger**
 
-## **Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger**  
 Arthur Allshire, Mayank Mittal, Varun Lodaya, Viktor Makoviychuk, Denys Makoviichuk, Felix Widmaier, Manuel Wüthrich, Stefan Bauer, Ankur Handa, Animesh Garg.  
 [Paper](http://arxiv.org/abs/2108.09779), [Project](https://s2r2-ig.github.io/)
 
-
 ![Teaser image for Remote Sim2Real.]({{ 's2r2-teaser.jpeg' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="80%"}
 
-*Figure:  We have shown that large scale GPU-based simulation can be used to empower robot learning in simulation, and such solutions can be transferred to real robots without the need for physical access to the robots.*
+_Figure: We have shown that large scale GPU-based simulation can be used to empower robot learning in simulation, and such solutions can be transferred to real robots without the need for physical access to the robots._
 
 <!-- # Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger -->
 <!-- Author: Varun Lodaya, Animesh Garg -->
@@ -45,8 +44,6 @@ We show that our systems effort is a path to address this resource inequality, i
 #### 2. The complexity of standard pose representations in the context of Reinforcement Learning
 
 During initial experimentation, we followed previous works \[[OpenAI et al, 2018](https://openai.com/blog/learning-dexterity/), [Liang et al, 2018](http://proceedings.mlr.press/v87/liang18a/liang18a.pdf)\] in providing our policy with observations based on a 3-D cartesian position plus a 4-Dimensional quaternion representation of pose to specify the current and target position of the cube, and reward based on L2 norm (position) and angular difference (orientation) between the desired and current pose of the cube. We found this approach to produce unstable reward curves which was good at optimising the position portion of the reward, even after adjusting relative weightings.
-
-
 
 ![]({{ 'figure_4.png' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="50%"}
 
@@ -87,13 +84,13 @@ Once we have trained a policy, we upload it to the controller for the real robot
 
 #### 1. The key points representation of pose greatly improves success rate and convergence
 
-![]({{ 'four_setups.png' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="50%"}. 
+![]({{ 'four_setups.png' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="50%"}.
 
 **Success Rate on the real robot plotted for different trained agents. O-PQ and O-KP stand for position+quaternion and keypoints observations respectively, and R-PQ and R-KP stand for linear+angular and keypoints based displacements respectively. Each mean made of N=40 trials and error bars calculated based on an 80% confidence interval.**
 
 We were able to demonstrate that the policies that used our keypoint representation in either the observation provided to the policy or in reward calculation achieved a higher success rate than using a position+quaternion representation, with the highest performance coming from the policies that used the alternate representation for both elements.
 
-![]({{ 'dr_no_dr.png' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="100%"}. 
+![]({{ 'dr_no_dr.png' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="100%"}.
 
 **Success Rate over the course of training without and with domain randomization. Each curve is the average of 5 seeds; the shaded areas show standard deviation. Note that training without DR is shown to 1B steps to verify performance; use of DR didn't have a large impact on simulation success rates after initial training**
 
@@ -101,9 +98,9 @@ We performed experiments to see how the use of keypoints impacted the speed and 
 
 #### 2. The trained policies can be deployed straight from the simulator to remote real robots
 
-Dropping and Regrasping            |  Recovering from failure
-:-------------------------:|:-------------------------:
-![]({{ 'drop_repose.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"} |  ![]({{ 'recover.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"}
+| Dropping and Regrasping  |         Recovering from failure          |
+| :----------------------: | :--------------------------------------: | --------------------- | ------------------------------------ | -------------------- | ---------------------------------------- | --------------------- | ------------------------------------ |
+| ![]({{ 'drop_repose.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"} | ![]({{ 'recover.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"} |
 
 The above demonstration displays an emergent behaviour that we’ve termed “dropping and regrasping”. In this maneuver, the robot learns to drop the cube when it is close to the correct position, re-grasp, and pick it back up. This enables the robot to get a stable grasp on the cube in the right position, which leads to more successful attempts. It’s worth noting that this video is in real-time, i.e., it is not sped up in any way.
 
@@ -117,24 +114,21 @@ Our policy is also robust towards dropping - it is able to recover from a cube f
 
 We found that our policy was fairly robust to variations in environment parameters in simulation. For example, it gracefully handles scaling up and down of the cube by ranges far exceeding randomization:
 
-Scaled up cube             |  Scaled down cube
-:-------------------------:|:-------------------------:
-![]({{ 'big_cube.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"}  | ![]({{ 'small_cube.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"}  
-
+|    Scaled up cube     |             Scaled down cube             |
+| :-------------------: | :--------------------------------------: | --------------------- | ------------------------------------ | ----------------------- | ---------------------------------------- | --------------------- | ------------------------------------ |
+| ![]({{ 'big_cube.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"} | ![]({{ 'small_cube.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"} |
 
 Surprisingly, we found that our policies were able to generalise 0-shot to other objects, for example a cuboid or a sphere:
 
-Cuboid          |  Sphere
-:-------------------------:|:-------------------------:
-![]({{ 'cuboid.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"}  |  ![]({{ 'sphere.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"}
+|       Cuboid        |                  Sphere                  |
+| :-----------------: | :--------------------------------------: | --------------------- | ------------------------------------ | ------------------- | ---------------------------------------- | --------------------- | ------------------------------------ |
+| ![]({{ 'cuboid.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"} | ![]({{ 'sphere.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="95%"} |
 
 Note that generalisation in scale and object is taking place due to the policy's own robustness: we do not give it any shape information. The keypoints remain in the same place as they would on a cube:
 
-
 ![]({{ 'keypoints_cube.gif' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }}){: width="60%"}
 
-*An example of a successful completion of the manipulation task with the keypoints visualized.*
-
+_An example of a successful completion of the manipulation task with the keypoints visualized._
 
 ### Takeaways and Potentials
 
@@ -148,7 +142,7 @@ Under Review
 
 **Acknowledgement:** This work was led by University of Toronto in collaboration with Nvidia, Vector Institute, MPI, ETH and Snap. We would like to thank Vector Institute for computing support, as well as the CIFAR AI Chair for research support to Animesh Garg.
 
-<!-- 
+<!--
 ### Author Bios
 
 ![]({{ 'varun.png' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }})
@@ -157,5 +151,5 @@ Under Review
 
 ![]({{ 'animesh.png' | prepend: '/assets/img/blog/s2r2-sept21/' | prepend: site.baseurl | prepend: site.url }})
 
-[Animesh Garg](https://animesh.garg.tech/) is a Senior Research Scientist at Nvidia and a CIFAR Chair Assistant Professor of Computer Science at University of Toronto and a Faculty Member at the Vector Institute. He earned a PhD from UC, Berkeley and was a postdoc at Stanford AI lab. He works on the **Algorithmic Foundations for Generalizable Autonomy**, to enable AI-based robots to work alongside humans. His work has been recognized with numerous research awards in robotics and machine learning. 
+[Animesh Garg](https://animesh.garg.tech/) is a Senior Research Scientist at Nvidia and a CIFAR Chair Assistant Professor of Computer Science at University of Toronto and a Faculty Member at the Vector Institute. He earned a PhD from UC, Berkeley and was a postdoc at Stanford AI lab. He works on the **Algorithmic Foundations for Generalizable Autonomy**, to enable AI-based robots to work alongside humans. His work has been recognized with numerous research awards in robotics and machine learning.
 -->

@@ -6,9 +6,9 @@ img: assets/img/people/hrishit-leen.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni
 #links and socials
-email:  hleen3@gatech.edu
-website: 
-scholar: 
+email: hleen3@gatech.edu
+website:
+scholar:
 linkedin: https://www.linkedin.com/in/hrish-leen-1451a71b8/
-twitter: 
+twitter:
 ---

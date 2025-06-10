@@ -5,5 +5,3 @@ inline: true
 ---
 
 Our work [PWM](https://arxiv.org/abs/2407.02466v3/) and [EgoSim](https://openreview.net/forum?id=zAyS5aRKV8/) on will be at [ICLR 2025](https://iclr.cc/virtual/2025/workshop/23997#wse-detail-10000228).
-
-

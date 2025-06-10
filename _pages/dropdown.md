@@ -15,7 +15,7 @@ children:
     permalink: /resources/
   - title: divider
   - title: PI Profile
-    permalink: /cv/    
+    permalink: /cv/
   # - title: divider
   # - title: bookshelf
   #   permalink: /books/

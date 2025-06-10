@@ -9,6 +9,6 @@ status: current # current, alumni
 email: dylanturpin@cs.toronto.edu
 website: https://www.cs.toronto.edu/~dylanturpin/
 scholar: https://scholar.google.ca/citations?user=HYHTg_0AAAAJ&hl=en
-linkedin: 
+linkedin:
 twitter: https://x.com/dylanturpin
 ---

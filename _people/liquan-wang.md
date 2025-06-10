@@ -10,5 +10,5 @@ email: lichothu@gmail.com
 website: https://lichothu.github.io/
 scholar: https://scholar.google.com/citations?user=mCjP0bAAAAAJ&hl=en
 linkedin: https://www.linkedin.com/in/liquan-wang-a37634196/
-twitter: 
+twitter:
 ---

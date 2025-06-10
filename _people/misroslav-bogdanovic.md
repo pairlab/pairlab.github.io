@@ -12,4 +12,3 @@ scholar: https://scholar.google.com/citations?user=SAdQhg4AAAAJ&hl=fr
 linkedin: https://www.linkedin.com/in/miroslavbogdanovic/
 twitter: https://x.com/miroslavb
 ---
-

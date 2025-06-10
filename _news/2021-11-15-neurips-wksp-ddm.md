@@ -5,4 +5,3 @@ inline: true
 ---
 
 Organizing [Neurips](https://neurips.cc/) workshop on [Deployable Decision Making (DDM)](https://www.dynsyslab.org/deployable-decision-making-in-embodied-systems/)
-
