@@ -33,7 +33,7 @@ Our research vision is to build the **Algorithmic Foundations for Generalizable 
 [**Research**]({{ site.baseurl }}/research): Our current research focuses on machine learning algorithms for perception and control in robotics. The principal focus of this research is to understand representations and algorithms to enable the efficiency and generality of learning for interaction in autonomous agents. 
 We work on challenging open problems at the intersection of computer vision, machine learning, and robotics. We develop algorithms and systems that unify reinforcement learning, control theoretic modeling, causality, and 2D/3D visual scene understanding to teach robots to perceive and to interact with the physical world. [Read more]({{ site.baseurl}}/research)
 
-If you are interested in joining us, please see details on the [contact]({{ site.baseurl}}/contact)
+If you are interested in joining us, please see details on the [contact]({{ site.baseurl}}/contact) page.
 
 **Research Interests**: Robotics, Reinforcement Learning, Causality, Perception  
 **Current Applications**: Mobile-Manipulation in Retail/Warehouse, Personal/Sevice, and Surgical/Medical robotics.

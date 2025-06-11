@@ -10,7 +10,39 @@ nav: true
 nav_order: 5
 ---
 
-#### Getting Involved
+### Getting in Touch
+
+Best way to reach Animesh Garg is over email:
+
+- About Georgia Tech: [animesh.garg@gatech.edu](mailto:animesh.garg@gatech.edu) (preferred)
+- About UofT: [garg@cs.toronto.edu](mailto:garg@cs.toronto.edu)
+
+```
+Please note that emailing for current courses or graduate admissions is strongly discouraged.
+Please follow instructions in course material to contact staff.
+```
+
+{% details **Mailing Address** %}
+
+**Prof. Animesh Garg**
+: CODA 11th Floor, Office S1145  
+ 756 West Peachtree Street  
+ Atlanta, GA 30308
+
+{% enddetails %}
+
+{% details **How to Get Here** %}
+
+You may follow the [**Maps**](https://www.google.com/maps/place/Coda/@33.7753082,-84.3881242,19.37z/data=!4m6!3m5!1s0x88f5046677950223:0x7fd1ad077b382c98!8m2!3d33.7752651!4d-84.3876426!16s%2Fg%2F11c6lvs7sl!5m1!1e1?coh=245187&entry=tts&g_ep=EgoyMDI1MDUxMS4wIPu8ASoJLDEwMjExNDUzSAFQAw%3D%3D&skid=4c7009e2-1301-425b-a27f-88ffef9d795f)
+
+You can also get to CODA on public transport using MARTA.  
+Disemabark on North Avenue MARTA Station and walk one block north on W Peachtree St NE
+
+{% enddetails %}
+
+---
+
+### Getting Involved in PAIR lab
 
 Thank you for your interest in our lab!  
 We are accepting new students at all levels.
@@ -62,26 +94,3 @@ We are hiring a research engineer. To apply, please go through the official UC B
  -->
 
 {% endtabs %}
-
----
-
-#### Getting in Touch
-
-Best way to reach Animesh Garg is over email:
-
-- About Georgia Tech: [animesh.garg@gatech.edu](mailto:animesh.garg@gatech.edu)
-- About UofT: [garg@cs.toronto.edu](mailto:garg@cs.toronto.edu)
-
-```
-Please note that emailing for current courses is strongly discouraged.
-Please follow instructions in course material to contact staff.
-```
-
-#### Mailing Address
-
-**Prof. Animesh Garg**
-: CODA 11th Floor, Office S1145  
- 756 West Peachtree Street  
- Atlanta, GA 30308
-
-How to Get Here: [**Maps**](https://www.google.com/maps/place/Coda/@33.7753082,-84.3881242,19.37z/data=!4m6!3m5!1s0x88f5046677950223:0x7fd1ad077b382c98!8m2!3d33.7752651!4d-84.3876426!16s%2Fg%2F11c6lvs7sl!5m1!1e1?coh=245187&entry=tts&g_ep=EgoyMDI1MDUxMS4wIPu8ASoJLDEwMjExNDUzSAFQAw%3D%3D&skid=4c7009e2-1301-425b-a27f-88ffef9d795f)
