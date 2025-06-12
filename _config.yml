@@ -293,8 +293,17 @@ scholar:
   group_by: type
   group_order: ascending
   type_aliases: { inproceedings: article }
-  type_names: { unpublished: Preprints, article: Papers (Journals & Conferences), workshop: Peer-Reviewed Workshops, thesis: Theses, patent: Patents }
-  type_order: [article, unpublished, workshop, thesis, patent, misc]
+  type_names:
+    {
+      unpublished: Preprints,
+      article: Papers (archival),
+      workshop: Workshops,
+      thesis: Theses,
+      patent: Patents,
+      techreport: Tech Reports,
+      misc: Others,
+    }
+  type_order: [unpublished, article, workshop, thesis, patent, techreport, misc]
 
   bibliography_list_attributes:
     reversed: true
