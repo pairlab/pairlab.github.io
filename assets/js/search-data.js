@@ -16,9 +16,9 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/al-folio/publications/";
           },
-        },{id: "nav-research-agenda",
-          title: "Research Agenda",
-          description: "",
+        },{id: "nav-research",
+          title: "research",
+          description: "PAIR research thrusts",
           section: "Navigation",
           handler: () => {
             window.location.href = "/al-folio/research/";
@@ -303,11 +303,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/al-folio/people/liquan-wang/";
-            },},{id: "people-lorand-chang",
-          title: 'Lorand Chang',
+            },},{id: "people-lorand-cheng",
+          title: 'Lorand Cheng',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/lorand-chang/";
+              window.location.href = "/al-folio/people/lorand-cheng/";
             },},{id: "people-masoud-moghani",
           title: 'Masoud Moghani',
           description: "",
