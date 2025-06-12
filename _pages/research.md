@@ -1,8 +1,8 @@
 ---
 layout: page
-title: Research Agenda
+title: research
 permalink: /research/
-description:
+description: PAIR research thrusts
 nav: true
 nav_order: 3
 display_categories: [work, fun]
@@ -14,39 +14,39 @@ PAIR group blends ideas in _Causality_, _Perception_, and _Reinforcement Learnin
 
 As a group we pride ourselves on building and applying learning algorithms on different real robot platforms.
 
-<div class="row mt-3">
+<div class="row mt-3 align-items-center justify-content-around">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-planning-robot1-small.gif" class="img-fluid rounded z-depth-1" zoomable=true width="70%" %}
+        {% include figure.liquid path="assets/img/res-planning-robot1-small.gif" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-cavin.gif" class="img-fluid rounded z-depth-1" zoomable=true width="70%" %}
+        {% include figure.liquid path="assets/img/res-cavin.gif" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-multimodal-test.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/res-multimodal-test.gif" class="rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
 </div>
 <div class="caption">
     Personal & Service Robotics
 </div>
 
-<div class="row mt-3">
+<div class="row mt-3 align-items-center justify-content-around">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-cutting.gif" class="img-fluid rounded z-depth-1" zoomable=true width="70%" %}
+        {% include figure.liquid path="assets/img/res-cutting.gif" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-suturing.gif" class="img-fluid rounded z-depth-1" zoomable=true width="70%" %}
+        {% include figure.liquid path="assets/img/res-suturing.gif" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-acubot.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/res-acubot.gif" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
 </div>
 <div class="caption">
     Surgical & Healthcare Robotics
 </div>
 
-<div class="row mt-3">
+<div class="row mt-3 align-items-center justify-content-around">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-laikago-skateboard.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/res-laikago-skateboard.gif" class="img-fluid rounded z-depth-1 " zoomable=true %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/res-laikago-dr.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
@@ -71,15 +71,15 @@ Structured biases upend contemporary methods in all four dimensions, pointing to
 - Algorithms: [C-Learning](https://arxiv.org/abs/2011.12363), [LEAF](http://arxiv.org/abs/2005.10934), [OCEAN](http://arxiv.org/abs/2008.07087)
 - Architectures: [Deep-Dense nets in RL](https://sites.google.com/view/d2rl/home)
 
-<div class="row mt-3">
+<div class="row mt-3 justify-content-around align-items-center">
     <div class="col-sm-3 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-tog.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/res-tog.png" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
     <div class="col-sm-3 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-laser-intro.jpg" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/res-laser-intro.jpg" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
     <div class="col-sm-5 mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/res-clearning.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/res-clearning.gif" class="img-fluid rounded z-depth-1 mx-auto d-block" zoomable=true %}
     </div>
 </div>
 - 3D Vision: Object and Scene representations for manipulation.
@@ -90,7 +90,7 @@ Structured biases upend contemporary methods in all four dimensions, pointing to
 
 Causal understanding is one of key pillars of my current and future agenda. A simulator is a generative world model, and similarly follows a system of structural mechanisms. However, model learning focuses solely on statistical dependence, while Causal Models go beyond it to build representations that support intervention, planning, and modular reasoning. These methods provide a concrete step towards bridging vision and robotics through sub-goal inference and counterfactual imagination.
 
-<div class="row mt-3">
+<div class="row mt-3 justify-content-around align-items-center">
     <div class="col-sm-9 mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/res-vcdn.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
@@ -108,7 +108,7 @@ Causal understanding is one of key pillars of my current and future agenda. A si
 Data-driven methods help RL in exploration and reward specification. Robot learning, however, is limited by modest-sized real data.
 Access to data brings new algorithmic opportunities to robotics, as it did in vision and language. However, it also poses challenges due to static nature of data and covariate shifts.
 
-<div class="row mt-3">
+<div class="row mt-3 align-items-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/res-rt-alps.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
@@ -130,7 +130,7 @@ Access to data brings new algorithmic opportunities to robotics, as it did in vi
 Procedural reasoning, such as in robotics, needs both skills and their structured composition for interaction planning towards a higher-order objective.
 However, manual composition of skills via a finite state-machine design is both tedious and unscalable. Thus the need for inductive bias is intensified for cognitive reasoning. I have developed imitation guided policy learning in abstract spaces for hierarchically structure tasks.
 
-<div class="row mt-3">
+<div class="row mt-3 align-items-center">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid path="assets/img/res-ntp-small.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
@@ -145,65 +145,11 @@ However, manual composition of skills via a finite state-machine design is both 
 
 The algorithmic ideas have been motivated by problems in mobility and manipulation in robotics, and have been evaluated on various physical robot platforms.
 
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid path="assets/img/real-robots-garg.png" class="img-fluid rounded z-depth-1" width="75%" zoomable=true %}
+<div class="row mt-3 align-items-center justify-content-around">
+    <div class="col-sm-8 mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/real-robots-garg.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 - Personal & Service Robotics: [Tool Use](https://sites.google.com/view/task-oriented-grasp), [Task Planning](https://www.youtube.com/watch?v=OdqJuvAHvGE), [Assembly](https://www.youtube.com/watch?v=NwMukXa8kys&feature=youtu.be), [Pick & place](https://ai.stanford.edu/mech-search/multistep), [Laundry Layout](https://roboturk.stanford.edu/realrobotdataset#tasks), [Assistive Teleoperation](http://arxiv.org/abs/1909.09674), [Mechanical Search](http://arxiv.org/abs/1903.01588)
 - Surgical & Healthcare: [Debridement](https://youtu.be/beVWB6NtAaA), [Suturing](https://youtu.be/z1ehShXFToc), [Cutting](https://youtu.be/l6gQg2VbGcc), [Extraction](https://www.youtube.com/watch?v=YiPq9t0tR3U), [Radiotherapy](https://www.youtube.com/watch?v=Kk_wHiu8nGg&feature=youtu.be)
 - Legged Robotics: [Contact Planning](https://news.developer.nvidia.com/contact-adaptive-controller-locomotion), [Domain Randomization](https://www.pair.toronto.edu/understanding-dr)
-
-<!-- pages/projects.md -->
-
-{% comment %}
-
-<div class="projects">
-    {% if site.enable_project_categories and page.display_categories %}
-        <!-- Display categorized projects -->
-        {% for category in page.display_categories %}
-        <a id="{{ category }}" href=".#{{ category }}">
-            <h2 class="category">{{ category }}</h2>
-        </a>
-        {% assign categorized_projects = site.projects | where: "category", category %}
-        {% assign sorted_projects = categorized_projects | sort: "importance" %}
-        <!-- Generate cards for each project -->
-        {% if page.horizontal %}
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-2">
-            {% for project in sorted_projects %}
-            {% include projects_horizontal.liquid %}
-            {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="row row-cols-1 row-cols-md-3">
-            {% for project in sorted_projects %}
-            {% include projects.liquid %}
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% endfor %}
-    {% else %}
-        <!-- Display projects without categories -->
-        {% assign sorted_projects = site.projects | sort: "importance" %}
-        <!-- Generate cards for each project -->
-        {% if page.horizontal %}
-            <div class="container">
-                <div class="row row-cols-1 row-cols-md-2">
-                {% for project in sorted_projects %}
-                {% include projects_horizontal.liquid %}
-                {% endfor %}
-                </div>
-            </div>
-        {% else %}
-            <div class="row row-cols-1 row-cols-md-3">
-                {% for project in sorted_projects %}
-                {% include projects.liquid %}
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endif %}
-</div>
-
-{% endcomment %}
