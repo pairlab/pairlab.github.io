@@ -9,9 +9,18 @@ nav_order: 2
 #     sidebar: left
 #   min_level: 2
 #   max_level: 4
+
+# toc is same as type_order in _config.ym: [unpublished, article, workshop, thesis, patent, techreport, misc]
+toc:
+  beginning: true
+  sidebar: left
+  min_level: 2
+  max_level: 3
+  # name: preprints
+  # name: papers
+  # name: Workshop
 images:
   venobox: true
-
 tags: robotics, vision, machine learning, reinforcement learning, simulation
 ---
 
@@ -34,8 +43,9 @@ For coverage of research in press, please see [News]({{ site.baseurl }}/news/)
 
         <button
           type="button"
-          class="btn btn-sm btn-outline-dark z-depth-0 tag-filter"
+          class="btn btn-sm btn-outline-light z-depth-0 tag-filter"
           data-tag="{{ tag | escape }}"
+          role="button"
         >
           {{ tag }}
         </button>

@@ -20,9 +20,9 @@ $(document).ready(function () {
   // bootstrap-toc
   if ($("#toc-sidebar").length) {
     // remove related publications years from the TOC
-    $(".publications h2").each(function () {
-      $(this).attr("data-toc-skip", "");
-    });
+    // $(".publications h2").each(function () {
+    //   $(this).attr("data-toc-text", "test");
+    // });
     var navSelector = "#toc-sidebar";
     var $myNav = $(navSelector);
     Toc.init($myNav);

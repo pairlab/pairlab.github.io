@@ -54,8 +54,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const updateInputField = () => {
     const hashValue = decodeURIComponent(window.location.hash.substring(1)); // Remove the '#' character
-    document.getElementById("bibsearch").value = hashValue;
-    filterItems(hashValue);
+    // Collect all h2 anchors (ids)
+    const h2Anchors = Array.from(document.querySelectorAll("h2[id]")).map((h2) => h2.id);
+    let searchQuery = ""; // Default to the null
+    // Only use hash for search if it is NOT an h2 anchor
+    if (hashValue && !h2Anchors.includes(hashValue)) {
+      // If hash is an anchor, clear the search input and show all items
+      const searchQuery = hashValue.toLowerCase();
+    }
+    document.getElementById("bibsearch").value = searchQuery;
+    filterItems(searchQuery);
   };
 
   // Sensitive search. Only start searching if there's been no input for 300 ms
@@ -66,7 +74,8 @@ document.addEventListener("DOMContentLoaded", function () {
     timeoutId = setTimeout(filterItems(searchTerm), 300);
   });
 
-  window.addEventListener("hashchange", updateInputField); // Update the filter when the hash changes
+  // Update the filter when the hash changes
+  window.addEventListener("hashchange", updateInputField);
 
   updateInputField(); // Update filter when page loads
 });
