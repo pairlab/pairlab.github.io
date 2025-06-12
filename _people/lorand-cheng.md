@@ -1,6 +1,6 @@
 ---
 layout: page
-name: Lorand Chang
+name: Lorand Cheng
 role: Ph.D. Student #description of the role
 img: assets/img/people/lorand-cheng.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
