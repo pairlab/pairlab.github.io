@@ -10,107 +10,231 @@ entry types
   misc
 
 Fields (in addition to standard fields)
-pdf - can be url or filetype.pdf
-supplement -- can be url or filetype.pdf
-poster -- can be url or filetype.pdf
-slides -- can be url or filetype.pdf
-video -- url
-talk -- url -- use for talk video, otherwise use slides
-html, 
-code, 
-blog, 
-award, 
-abstract, 
-arxiv, 
-degree (for thesis type)
+  keywords --will be listed on the page
+    tags -- buttons/links 
+  award
+    award_details: optional
+  abstract
+  doi : only use the id, do not use the full url
+  arxiv  : only use the id, do not use the full url
+  bibtex_show  : have to mark true
+    bibtex: auto generated
+  html
+  pdf - can be url or filetype.pdf
+  supp - can be url or filetype.pdf
+  video
+  blog
+  code
+  poster
+  slides - can be url or filetype.pdf
+  website
+  altmetric
+  dimensions
+  google_scholar_id
+  inspirehep_id
+ 
 % =========
 
 % ==========
 % Patents
 % ==========
-@patent{pouliot2014patient,
-    title = {Patient-Specific Temporary Implants For Accurately Guiding Local Means of Tumor Control Along Patient-Specific Internal Channels to Treat Cancers},
-    author ={Pouliot,Jean and Ken Goldberg, Hsu,I-Chow  and Cunha,J. Adam and  Garg, Animesh and  Patil, Sachin and  Abbeel, Pieter and Siauw,  Timmy},
-    number = {US Patent 10,286,197},
-    nationality = {US},
-    yearfiled = {2019},
-    monthfiled = {{May}},
-    datefiled={14},
-    html={https://patents.google.com/patent/US10286197B2/en}
+
+@patent{pouliot2019patient,
+  title={Patient-specific temporary implants for accurately guiding local means of tumor control along patient-specific internal channels to treat cancer},
+  author={Pouliot, Jean and Goldberg, Ken and Hsu, I-Chow and Cunha, J Adam M and Animesh, GARG and Patil, Sachin and Abbeel, Pieter and Siauw, Timmy},
+  year={2019},
+  month=may # "~14",
+  publisher={Google Patents},
+  note={US Patent 10,286,197},
+  html={https://patents.google.com/patent/US10286197B2/en},
+  award={Granted}
 }
 
-@patent{lim2016precision,
+@patent{muralidharan2021bayesian,
+  title={Bayesian optimization of sparsity ratios in model compression},
+  author={Muralidharan, Saurav and Joseph, Vinu and Animesh, GARG and Garland, Michael},
+  year={2021},
+  month=mar # "~4",
+  publisher={Google Patents},
+  note={US Patent App. 16/785,044 (pending)},
+  html={https://patents.google.com/patent/US20210065052A1/en}
+}
+
+@patent{nie2022attribute,
+  title={Attribute-aware image generation using neural networks},
+  author={Nie, Weili and Karras, Tero Tapani and Animesh, GARG and Debnath, Shoubhik and Patney, Anjul and Anandkumar, Anima},
+  year={2022},
+  month=jan # "~13",
+  publisher={Google Patents},
+  note={US Patent App. 16/925,085 (pending)},
+  html={https://patents.google.com/patent/US20220012596A1/en}
+}
+
+@patent{dundar2022disentanglement,
+  title={Disentanglement of image attributes using a neural network},
+  author={Dundar, Aysegul and Shih, Kevin Jonathan and Animesh, GARG and Pottorff, Robert Thomas and Tao, Andrew and Catanzaro, Bryan Christopher},
+  year={2022},
+  month=jun # "~9",
+  publisher={Google Patents},
+  note={US Patent App. 17/678,666 (pending)},
+  html={https://patents.google.com/patent/US20220180528A1/en}
+}
+
+@patent{heiden2022differentiable,
+  title={Differentiable simulator for robotic cutting},
+  author={Heiden, Eric and Ramos, Fabio Tozeto and Narang, Yashraj and Macklin, Miles and Fox, Dieter and Animesh, GARG and Skolones, Mike},
+  year={2022},
+  month=dec # "~1",
+  publisher={Google Patents},
+  note={US Patent App. 17/732,313 (pending)},
+  html={https://patents.google.com/patent/US20220382246A1/en}
+}
+
+@patent{blukis2022language,
+  title={Language-guided distributional tree search},
+  author={Blukis, Valts and Paxton, Christopher Jason and Animesh, GARG and Fox, Dieter},
+  year={2022},
+  month=nov # "~24",
+  publisher={Google Patents},
+  note={US Patent App. 17/316,564 (pending)},
+  html={https://patents.google.com/patent/US20220374723A1/en}
+}
+
+@patent{animesh2022online,
+  title={Online task inference for compositional tasks with context adaptation},
+  author={Animesh, GARG and Ren, Hongyu and Zhu, Yuke and Anandkumar, Anima},
+  year={2022},
+  month=feb # "~3",
+  publisher={Google Patents},
+  note={US Patent App. 16/945,753 (pending)},
+  html={https://patents.google.com/patent/US20220036179A1/en}
+}
+
+@patent{mckinley2022precision,
   title={Precision injector/extractor for robot-assisted minimally-invasive surgery},
-  author={Mckinley, Stephen and Garg, Animesh and Patil, Sachin and Lim, Susan ML and Goldberg, Ken},
-  number = {U.S. Provisional. PCT International Application No.: PCT/US2016/039,026},
-  nationality = {US},
-  yearfiled={2016},
-  monthfiled = {June},
-  datefiled={23},
-  note={WO Patent App. PCT/US2016/039,026},
-  html={https://patents.google.com/patent/US20180177558A1/en}
+  author={Mckinley, Stephen and Animesh, GARG and Patil, Sachin and Lim, Susan ML and Goldberg, Ken},
+  year={2022},
+  month=dec # "~20",
+  publisher={Google Patents},
+  note={US Patent 11,529,205},
+  award={Granted},
+  html={https://patents.google.com/patent/US11529205B2/en}
 }
 
-@patent{mandlekar2024controlling,
-  title={Controlling position of robot by determining goal proposals by using neural networks},
-  author={Mandlekar, Ajay Uday and Ramos, Fabio Tozeto and Boots, Byron and Animesh, GARG and Fox, Dieter},
-  yearfiled={2024},
-  monthfiled = {apr},
-  note={US Patent 11,958,529}
-}
-
-@patent{mandlekar2023methods,
-  title={Methods and Systems to Remotely Operate Robotic Devices},
-  author={Mandlekar, Ajay U and Zhu, Yuke and Animesh, GARG and Savarese, Silvio and Li, Fei-Fei},
-  yearfiled={2023},
-  monthfiled = {jul},
-  datefiled={20},
-  note={US Patent App. 17/755,587}
-}
 
 @patent{murali2023techniques,
   title={Techniques for robot control using neural implicit value functions},
   author={Murali, Adithyavairavan and Sundaralingam, Balakumar and Yun-Chun, CHEN and Fox, Dieter and Animesh, GARG},
-  yearfiled={2023},
-  monthfiled = {aug},
-  datefiled={17},
-  note={US Patent App. 17/856,699}
+  year={2023},
+  month=aug # "~17",
+  publisher={Google Patents},
+  note={US Patent App. 17/856,699 (pending)},
+  html={https://patents.google.com/patent/US20230256595A1/en}
 }
 
 @patent{ramos2023predicting,
   title={Predicting object models},
   author={Ramos, Fabio Tozeto and Animesh, GARG and Jatavallabhula, Krishna Murthy and Macklin, Miles},
-  yearfiled={2023},
-  monthfiled = {dec},
-  datefiled={14},
-  note={US Patent App. 18/114,146}
+  year={2023},
+  month=dec # "~14",
+  publisher={Google Patents},
+  note={US Patent App. 18/114,146 (pending)},
+  html={https://patents.google.com/patent/US20230398686A1/en}
+}
+
+@patent{chao2024imitation,
+  title={Imitation learning system},
+  author={Chao, Yu-Wei and Huang, De-An and Paxton, Christopher Jason and Animesh, GARG and Fox, Dieter},
+  year={2024},
+  month=feb # "~6",
+  publisher={Google Patents},
+  note={US Patent 11,893,468 (pending)},
+  html={https://patents.google.com/patent/US20210081752A1/en}
 }
 
 @patent{singh2024prompt,
   title={Prompt generator for use with one or more machine learning processes},
   author={Singh, Ishika and Mousavian, Arsalan and Goyal, Ankit and Xu, Danfei and Tremblay, Jonathan and Fox, Dieter and Animesh, GARG and Blukis, Valts},
-  yearfiled={2024},
-  monthfiled = {mar},
-  datefiled={21},
-  note={US Patent App. 18/122,594}
+  year={2024},
+  month=mar # "~21",
+  publisher={Google Patents},
+  note={US Patent App. 18/122,594 (pending)},
+  html={https://patents.google.com/patent/US20240095077A1/en}
 }
 
 @patent{dvornik2024step,
   title={Step discovery and localization in instructional videos using a self-supervised transformer},
   author={Dvornik, Mikita and Hadji, Isma and Zhang, Ran and Derpanis, Konstantinos and Wildes, Richard and Animesh, GARG and Jepson, Allan Douglas},
-  yearfiled={2024},
-  monthfiled = {may},
-  datefiled={23},
-  note={US Patent App. 18/227,560}
+  year={2024},
+  month=may # "~23",
+  publisher={Google Patents},
+  note={US Patent App. 18/227,560 (pending)},
+  html={https://patents.google.com/patent/US20240169732A1/en}
 }
 
 @patent{garg2024scene,
-  title={SCENE UNDERSTANDING USING LANGUAGE MODELS FOR ROBOTICS SYSTEMS AND APPLICATIONS},
+  title={Scene understanding using language models for robotics systems and applications},
   author={Garg, Animesh and Fox, Dieter and Hermans, Tucker Ryer and Liu, Weiyu},
-  yearfiled={2024},
-  monthfiled = {nov},
-  datefiled={21},
-  note={US Patent App. 18/319,546}
+  year={2024},
+  month=nov # "~21",
+  note={US Patent App. 18/319,546 (pending)},
+  html={https://patents.google.com/patent/US20240386733A1/en}
+}
+
+@patent{mu2025data,
+  title={Data-efficient demonstration expansion for training a generalist robotic agent},
+  author={Mu, Tongzhou and Guo, Yijie and Xu, Jie and Goyal, Ankit and GARG, Animesh and Fox, Dieter},
+  year={2025},
+  month=may # "~15",
+  publisher={Google Patents},
+  note={US Patent App. 18/947,237 (pending)},
+  html={https://patents.google.com/patent/US20250156764A1/en}
+}
+
+
+@patent{mandlekar2024controlling,
+  title={Controlling position of robot by determining goal proposals by using neural networks},
+  author={Mandlekar, Ajay Uday and Ramos, Fabio Tozeto and Boots, Byron and Animesh, GARG and Fox, Dieter},
+  year={2024},
+  month=apr # "~16",
+  publisher={Google Patents},
+  note={US Patent 11,958,529},
+  award={Granted},
+  html={https://patents.google.com/patent/US11958529B2/en}
+}
+
+@patent{shih2024video,
+  title={Video prediction using one or more neural networks},
+  author={Shih, Kevin and Dundar, Aysegul and Animesh, GARG and Pottorff, Robert and Tao, Andrew and Catanzaro, Bryan},
+  year={2024},
+  month=feb # "~13",
+  publisher={Google Patents},
+  note={US Patent 11,902,705},
+  award={Granted},
+  html={https://patents.google.com/patent/US20210064925A1/en}
+}
+
+@patent{tremblay2024guided,
+  title={Guided uncertainty-aware policy optimization: combining model-free and model-based strategies for sample-efficient learning},
+  author={Tremblay, Jonathan and Fox, Dieter and Lee, Michelle and Florensa, Carlos and Ratliff, Nathan Donald and Animesh, GARG and Ramos, Fabio Tozeto},
+  year={2024},
+  month=oct # "~8",
+  publisher={Google Patents},
+  note={US Patent 12,109,701},
+  award={Granted},
+  html={https://patents.google.com/patent/US12109701B2/en}
+}
+
+
+@patent{mandlekar2025methods,
+  title={Methods and systems to remotely operate robotic devices},
+  author={Mandlekar, Ajay U and  Zhu, Yuke and Garg, Animesh and Savarese, Silvio and Li, Fei-Fei},
+  year={2025},
+  month=feb # "~18",
+  publisher={Google Patents},
+  note={US Patent 12,226,913},
+  award={Granted},
+  html={https://patents.google.com/patent/US12226913B2/en}
 }
 
 % ==========
@@ -271,10 +395,11 @@ degree (for thesis type)
 
 
 @workshop{zhou2023multi,
-  title={Multi-Constraint Safe RL with Objective Suppression for Safety-Critical Applications},
-  author={Zhou, Zihan and Booher, Jonathan and Liu, Wei and Petiushko, Aleksandr and Garg, Animesh},
+  title={Uniformly Safe RL with Objective Suppression for Multi-Constraint Safety-Critical Applications},
+  author={Zihan Zhou and Jonathan Booher and Khashayar Rohanimanesh and Wei Liu and Aleksandr Petiushko and Animesh Garg},
   booktitle={Workshop on Machine Learning for Autonomous Driving (ML4AD)},
-  year={2023}
+  year={2023},
+  arxiv={2402.15650}
 }
 
 
@@ -285,7 +410,8 @@ degree (for thesis type)
   booktitle={Workshop on Differentiable Optimization Everywhere at CoRL},
   arXiv={2411.02189},
   year={2024},
-  month={nov}
+  month={nov},
+  preview={diffsim2real-24.jpg}
 }
 
 % ==========
@@ -563,7 +689,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   poster={https://drive.google.com/file/d/1uvnw6VDn0r1nS3ePyFKaCbEx5GZw1ZEy/view},
   pdf={http://openaccess.thecvf.com/content_cvpr_2018/papers/Huang_Finding_It_Weakly-Supervised_CVPR_2018_paper.pdf},
   supplement={https://finding-it.github.io/finding-it-suppmat.pdf},
-  preview={finding-it-cvpr18.png}
+  preview={finding-it-cvpr18.jpeg}
 }
 
 @inproceedings{kurenkov2018deformnet,
@@ -588,7 +714,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   website={https://sites.google.com/view/task-oriented-grasp},
   video={https://www.youtube.com/watch?v=YI-3sf067f8},
   talk={https://youtu.be/v0ErAR8Dwy8?t=43s},
-  preview={tog-rss18.png}
+  preview={tog-rss18.jpeg}
 }
 
 @inproceedings{mandlekar2018roboturk,
@@ -628,7 +754,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   arxiv={1807.03480},
   video={https://www.youtube.com/watch?v=Rwog52mbMCI&feature=youtu.be},  
   award={Oral Presentation},
-  preview={ntg-cvpr19.png}
+  preview={ntg-cvpr19.jpeg}
 }
 
 @inproceedings{danielczuk2019mech,
@@ -853,7 +979,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
     talk={https://slideslive.com/38930712/counterfactual-data-augmentationi-using-locally-factored-dynamics},
     code={https://github.com/spitis/mrl/tree/master/experiments/coda},
     award={Outstanding Paper Award at Object-Oriented Learning Workshop, ICML 2020},
-    preview={coda-neurips21.png}
+    preview={coda-neurips21.jpeg}
 }
 
 @inproceedings{sinha2020cbs,
@@ -865,7 +991,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   arXiv = {2003.01367},
   talk={https://slideslive.com/38937950/curriculum-by-smoothing?ref=speaker-37161-latest},
   award={Spotlight Talk},
-  preview={cbs-neurips20.png},
+  preview={cbs-neurips20.jpeg},
   description={Curriculum deisgn to improve representation learning in CNN by restricting access to high frequency information until later in the training}
 }
 
@@ -1488,6 +1614,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2023},
   month={may},
   day={30},
+  arxiv={2305.17565},
   website = {https://actaim.github.io/},
   preview={actaim-icra23.gif},
   description={We learn interaction modes as priors of useful interactions with articulated objects. In contrast to the prior art, we only use perception data from sensors in both training ad testing.}
@@ -1532,6 +1659,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   ign-pages={50932--50958},
   arxiv={2305.11281},
   website={https://slotdiffusion.github.io/},
+  preview={slotdiffusion-23.jpeg}
 }
 
 @inproceedings{liu2023composable,
@@ -1541,7 +1669,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2023},
   month={nov},
   arxiv={2405.05876},
-  wesite={https://cpmcorl2023.github.io/}
+  wesite={https://cpmcorl2023.github.io/},
+  preview={cpm-corl23.jpg}
 }
 
 @inproceedings{attarian2023geometry,
@@ -1552,7 +1681,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={nov},
   arxiv={2312.03864},
   website={https://geo-match.github.io/},
-  code={https://github.com/google-deepmind/geomatch}
+  code={https://github.com/google-deepmind/geomatch},
+  preview={geommatch-23.jpeg}
 }
 
 
@@ -1564,6 +1694,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={may},
   arxiv={2311.16552},
   website={https://handypriors.github.io/},
+  preview={handypriors-24.gif}
 }
 
 
@@ -1574,8 +1705,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2024},
   month={may},
   website={https://open-x-embodiment.github.io/},
-  award_name={ICRA Best Paper},
-  award={ICRA Best Paper Award}
+  award={ICRA Best Paper Award},
+  preview={openx-icra24.jpeg}
 }
 
 
@@ -1587,7 +1718,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2024},
   arxiv={2404.16027},
   website={https://orbit-surgical.github.io/},
-  code={https://github.com/orbit-surgical/orbit-surgical}
+  code={https://github.com/orbit-surgical/orbit-surgical},
+  preview={orbit-surgical-24.jpeg}
 }
 
 
@@ -1600,6 +1732,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   organization={PMLR 235:15418-15437},
   arxiv={2405.17784},
   website={https://adaptive-horizon-actor-critic.github.io},
+  preview={ahac-icml24.jpeg},
 }
 
 
@@ -1611,7 +1744,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2024},
   month={oct},
   organization={IEEE},
-  arxiv={2402.02612}
+  arxiv={2402.02612},
+  preview={implicit-teleop-24.jpeg}
 }
 
 @inproceedings{moghani2024sufia,
@@ -1622,7 +1756,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2024},
   month={oct},
   arxiv={2405.05226},
-  website={https://orbit-surgical.github.io/sufia/}
+  website={https://orbit-surgical.github.io/sufia/},
+  preview={sufia-24.jpg}
 }
 
 
@@ -1634,7 +1769,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   month={nov},
   arxiv={2410.20258},
   website={https://actaim2.github.io/},
-  video={https://actaim2.github.io/static/videos/corl_video.mp4}
+  video={https://actaim2.github.io/static/videos/corl_video.mp4},
+  preview={actaim2-corl24.jpg}
 }
 
 @inproceedings{zhou2024spire,
@@ -1644,7 +1780,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2024},
   month={nov},
   website={https://sites.google.com/view/spire-corl-2024},
-  arxiv={2410.18065}
+  arxiv={2410.18065},
+  preview={spire-24.jpg}
 }
 
 @inproceedings{mu2024adademo,
@@ -1653,7 +1790,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   arXiv={2404.07428},
   booktitle={International Symposium on Robotics Research (ISRR)},
   year={2024},
-  month={dec}
+  month={dec},
+  preview={adademo-24.jpg}
 }
 
 @inproceedings{mu2024adademo,
@@ -1663,7 +1801,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   booktitle={International Symposium on Robotics Research (ISRR)},
   year={2024},
   month={dec},
-  website={https://dexmots.github.io/}
+  website={https://dexmots.github.io/},
+  preview={dexmots-24.jpg},
 }
 
 @inproceedings{mete2024quest,
@@ -1674,8 +1813,9 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   ign-pages={4062--4089},
   year={2024},
   month={dec},
-  arxiv={https://arxiv.org/abs/2407.15840},
-  website={https://quest-model.github.io/}
+  arxiv={2407.15840},
+  website={https://quest-model.github.io/},
+  preview={quest-24.jpg},
 }
 
 @inproceedings{georgiev2025pwm,
@@ -1686,7 +1826,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2025},
   month={apr},
   website={https://www.imgeorgiev.com/pwm/},
-  tags={Reinforcement Learning, World Models, Policy Learning}
+  tags={Reinforcement Learning, World Models, Policy Learning},
+  preview={pwm-25.jpg}
 }
 
 @inproceedings{yu2025egosim,
@@ -1696,7 +1837,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   year={2025},
   month={apr},
   website={https://egosim.github.io/EgoSim/},
-  pdf={https://openreview.net/forum?id=zAyS5aRKV8}
+  pdf={https://openreview.net/forum?id=zAyS5aRKV8},
+  preview={egosim-sample.gif}
 }
 
 
@@ -1707,7 +1849,8 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   arXiv={2410.13756},
   year={2025},
   month={may},
-  website={https://plan-with-climb.github.io/}
+  website={https://plan-with-climb.github.io/},
+  preview={climb-2025.jpg}
 }
 
 @inproceedings{ameperosa2025rocoda,
@@ -1720,6 +1863,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   website={https://rocoda.github.io/},
   keywords={Counterfactual Data Augmentation, Robot Learning, Data Efficiency, causality},
   tags={Data Augmentation},
+  preview={rocoda-25.jpg}
 }
 
 
@@ -1786,7 +1930,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   arXiv={1907.13098},
   website= {https://sites.google.com/view/visionandtouch},
   journal={IEEE Transactions on Robotics (T-RO)},
-  preview={lee-tro20-making.png}
+  preview={lee-tro20-making.jpeg}
 }
 
 @article{joseph2020condensa,
@@ -1821,7 +1965,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   Year = {2021},
   month={aug},
   arXiv = {2107.02907},
-  preview={losey_auro2021.png}
+  preview={losey_auro2021.jpeg}
 }
 
 @article{sun2022plate,
@@ -1915,7 +2059,9 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   ign-pages={1745--1751},
   year={2023},
   mon={aug},
-  publisher={Royal Society of Chemistry}
+  publisher={Royal Society of Chemistry},
+  preview={digital-pipette-23.jpeg},
+  doi={10.1039/D3DD00115F}
 }
 
 
@@ -1928,7 +2074,10 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   ign-pages={1057--1086},
   year={2023},
   mon={sep},
-  publisher={Springer US New York}
+  publisher={Springer US New York},
+  doi={10.1007/s10514-023-10136-2},
+  website={https://ac-rad.github.io/clairify/},
+  preview={llm-auro-23.gif}
 }
 
 @article{singh2023progprompt,
@@ -1939,7 +2088,9 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   year={2023},
   mon={sep},
   publisher={Springer},
+  doi={10.1007/s10514-023-10135-3},
   website={https://progprompt.github.io/},
+  preview={progprompt-singh2023progprompt.jpg}
 }
 
 @article{dharmarajan2023robot,
@@ -1951,7 +2102,10 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   ign-pages={2340006},
   year={2023},
   month={oct},
-  publisher={World Scientific Publishing Company}
+  publisher={World Scientific Publishing Company},
+  html={https://www.worldscientific.com/doi/10.1142/S2424905X23400068?srsltid=AfmBOoozQQRyWT_Lkw2GGXQWsec7W_9V0hzsiR6ogE7YlacZzLJHQdtq},
+  website={https://sites.google.com/berkeley.edu/autolab-avsi},
+  preview={avsi-dharmarajan2023robot.jpg}
 }
 
 
@@ -1964,7 +2118,8 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   month={nov},
   pdf={https://openreview.net/forum?id=cHroS8VIyN},
   note={Survey Certification},
-  code={https://github.com/ndrwmlnk/Awesome-Benchmarks-for-Physical-Reasoning-AI}
+  code={https://github.com/ndrwmlnk/Awesome-Benchmarks-for-Physical-Reasoning-AI},
+  preview={bench-phys-23.jpg}
 }
 
 
@@ -1980,7 +2135,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   arxiv={2401.06949},
   website={https://ac-rad.github.io/organa/},
   video={https://www.youtube.com/watch?v=N6qMMwJ8hKQ},
-
+  preview={organa-2025.jpg}
 }
 
 @article{cooper2025accelerating,
@@ -1988,7 +2143,8 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   author={Andrew I. Cooper and Patrick Courtney and Kourosh Darvish and Moritz Eckhoff and Hatem Fakhruldeen and Andrea Gabrielli and Animesh Garg and Sami Haddadin and Kanako Harada and Jason Hein and Maria Hübner and Dennis Knobbe and Gabriella Pizzuto and Florian Shkurti and Ruja Shrestha and Kerstin Thurow and Rafael Vescovi and Birgit Vogel-Heuser and Ádám Wolf and Naruki Yoshikawa and Yan Zeng and Zhengxue Zhou and Henning Zwirnmann},
   journal={Science Robotics},
   arXiv={2501.06847},
-  year={2025}
+  year={2025},
+  preview={ac-icra24.jpg}
 }
 
 % ==========
@@ -2028,7 +2184,8 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   author={Zhao, Yuchi and Bogdanovic, Miroslav and Luo, Chengyuan and Tohme, Steven and Darvish, Kourosh and Aspuru-Guzik, Al{\'a}n and Shkurti, Florian and Garg, Animesh},
   arxiv={2502.04531},
   year={2025},
-  website={https://any-place.github.io/}
+  website={https://any-place.github.io/},
+  preview={anyplace-2025.jpg}
 }
 
 @unpublished{wilcox2025adapt3radaptive3dscene,
@@ -2037,6 +2194,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
       year={2025},
       arxiv={2503.04877},
       website={https://www.pairlab.github.io/Adapt3R/}, 
+      preview={adapt3r-2025.jpg}
 }
 
 @unpublished{singh2025ogvla3dawarevisionlanguage,
@@ -2045,6 +2203,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
       year={2025},
       arxiv={2506.01196},
       website={https://og-vla.github.io/}, 
+      preview={ogvla-2025.jpg}
 }
 
 @unpublished{thakkar2025llmfeedbackenhancereview,
@@ -2053,6 +2212,7 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
       year={2025},
       arxiv={2504.09737},
       code={https://github.com/zou-group/review_feedback_agent}, 
+      preview={llm-feedback.jpg},
 }
 
 @unpublished{zhang2025scalinglawsscientificdiscovery,
@@ -2060,18 +2220,13 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
       author={Pengsong Zhang and Heng Zhang and Huazhe Xu and Renjun Xu and Zhenting Wang and Cong Wang and Animesh Garg and Zhibin Li and Arash Ajoudani and Xinyu Liu},
       year={2025},
       arxiv={2503.22444},
+      preview={scaling-scientist-25.jpg}
 }
 
 % =============
 %  Older Misc
 % =============
 
-
-@techreport{paluri2010autonomous,
-  title={Autonomous localization and navigation using 2D laser scanners},
-  author={Paluri, Manohar and Garg, Animesh and Christensen, Henrik},
-  year={2010}
-}
 
 @techreport{1711.01503,
   author={Liaw, Richard and Krishnan, Sanjay and Garg, Animesh and Crankshaw, Daniel and Gonzalez, Joseph E and Goldberg, Ken},
@@ -2118,7 +2273,7 @@ arXiv = {1909.02749},
   arXiv = {2109.12456},
   website= {https://sites.google.com/view/audit-ai/},
   blog={https://developer.nvidia.com/blog/nvidia-research-auditing-ai-models-for-verified-deployment-under-semantic-specifications/},
-  preview={audit-ai-banner.png},
+  preview={audit-ai-banner.jpg},
   description={How can we design a similarly motivated auditing scheme for deep learning models? We propose a sequence of semantically aligned unit tests each to verify a predefined specification.}
 }
 
@@ -2174,6 +2329,8 @@ arXiv = {1909.02749},
   mon={jan},
   year={2024},
   arXiv={2401.04157},  
+  website={https://replan-lm.github.io/replan.github.io/},
+  preview={replan-24.jpg}
 }
 
 
