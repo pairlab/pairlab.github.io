@@ -7,70 +7,70 @@ ninja.data = [{
     title: "about",
     section: "Navigation",
     handler: () => {
-      window.location.href = "/al-folio/";
+      window.location.href = "/";
     },
   },{id: "nav-publications",
           title: "publications",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/al-folio/publications/";
+            window.location.href = "/publications/";
           },
         },{id: "nav-research",
           title: "research",
           description: "PAIR research thrusts",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/al-folio/research/";
+            window.location.href = "/research/";
           },
         },{id: "nav-people",
           title: "people",
           description: "members of the research group",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/al-folio/people/";
+            window.location.href = "/people/";
           },
         },{id: "nav-contact",
           title: "contact",
           description: "members of the lab or group",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/al-folio/contact/";
+            window.location.href = "/contact/";
           },
         },{id: "nav-blog",
           title: "blog",
           description: "",
           section: "Navigation",
           handler: () => {
-            window.location.href = "/al-folio/blog/";
+            window.location.href = "/blog/";
           },
         },{id: "dropdown-courses",
               title: "courses",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/al-folio/teaching/";
+                window.location.href = "/teaching/";
               },
             },{id: "dropdown-news-archive",
               title: "news archive",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/al-folio/news/";
+                window.location.href = "/news/";
               },
             },{id: "dropdown-press-amp-media",
               title: "press &amp; media",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/al-folio/media/";
+                window.location.href = "/media/";
               },
             },{id: "dropdown-code-amp-talks",
               title: "code &amp; talks",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/al-folio/resources/";
+                window.location.href = "/resources/";
               },
             },{id: "dropdown-animesh-garg",
               title: "Animesh Garg",
@@ -87,7 +87,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/al-folio/blog/2022/vagram-voelcker/";
+            window.location.href = "/blog/2022/vagram-voelcker/";
           
         },
       },{id: "post-remote-sim2real-for-dexterous-in-hand-manipulation",
@@ -98,7 +98,7 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/al-folio/blog/2021/remote-sim2real-trifinger/";
+            window.location.href = "/blog/2021/remote-sim2real-trifinger/";
           
         },
       },{id: "post-learning-tool-affordances-without-labels",
@@ -109,14 +109,14 @@ ninja.data = [{
         section: "Posts",
         handler: () => {
           
-            window.location.href = "/al-folio/blog/2021/giftturpin/";
+            window.location.href = "/blog/2021/giftturpin/";
           
         },
       },{id: "books-the-godfather",
           title: 'The Godfather',
           description: "",
           section: "Books",handler: () => {
-              window.location.href = "/al-folio/books/the_godfather/";
+              window.location.href = "/books/the_godfather/";
             },},{id: "media-animesh-interviewed-by-nature-on-robot-assisted-surgery",
           title: 'Animesh interviewed by Nature on Robot-Assisted Surgery',
           description: "",
@@ -124,7 +124,7 @@ ninja.data = [{
           title: 'Awarded with CIFAR AI Chair 2019',
           description: "",
           section: "Media",handler: () => {
-              window.location.href = "/al-folio/media/2019-12-10-cifar-ai-chair/";
+              window.location.href = "/media/2019-12-10-cifar-ai-chair/";
             },},{id: "media-our-work-on-surgical-robotics-in-new-scientist",
           title: 'Our work on Surgical Robotics in New Scientist.',
           description: "",
@@ -144,7 +144,7 @@ ninja.data = [{
           title: 'Awarded with CIFAR AI Chair 2019',
           description: "",
           section: "News",handler: () => {
-              window.location.href = "/al-folio/news/2019-12-10-cifar-ai-chair/";
+              window.location.href = "/news/2019-12-10-cifar-ai-chair/";
             },},{id: "news-organizing-iclr-workshop-on-neural-odes-in-physical-sciences",
           title: 'Organizing ICLR workshop on Neural ODEs in Physical Sciences',
           description: "",
@@ -164,7 +164,7 @@ ninja.data = [{
           title: 'Invited Symposium Speaker at CRV 2020',
           description: "",
           section: "News",handler: () => {
-              window.location.href = "/al-folio/news/2020-05-16-crv-speaker/";
+              window.location.href = "/news/2020-05-16-crv-speaker/";
             },},{id: "news-two-new-papers-accepted-at-icml-2020-sparkles",
           title: 'Two new papers accepted at ICML 2020! :sparkles:',
           description: "",
@@ -172,7 +172,7 @@ ninja.data = [{
           title: 'Invited Workshop talks at CVPR 2020',
           description: "",
           section: "News",handler: () => {
-              window.location.href = "/al-folio/news/2020-06-15-cvpr-speaker/";
+              window.location.href = "/news/2020-06-15-cvpr-speaker/";
             },},{id: "news-new-paper-on-mechanical-search-accepted-at-iros-2020-sparkles",
           title: 'New paper on Mechanical Search accepted at IROS 2020! :sparkles:',
           description: "",
@@ -252,7 +252,7 @@ ninja.data = [{
           title: 'Workshop Talks at ICRA and RSS 2022',
           description: "",
           section: "News",handler: () => {
-              window.location.href = "/al-folio/news/2022-06-30-wksp-talks/";
+              window.location.href = "/news/2022-06-30-wksp-talks/";
             },},{id: "news-new-eccv-paper-on-differentiable-simulation-for-grasping",
           title: 'New ECCV Paper on Differentiable Simulation for Grasping.',
           description: "",
@@ -266,7 +266,7 @@ ninja.data = [{
           title: '5 New Papers at ICRA 2023',
           description: "",
           section: "News",handler: () => {
-              window.location.href = "/al-folio/news/2023-01-15-icra-new-papers/";
+              window.location.href = "/news/2023-01-15-icra-new-papers/";
             },},{id: "news-2-papers-at-iclr-slotformer-amp-amp-sea-for-structured-exploration",
           title: '2 papers at ICLR: Slotformer &amp;amp;amp; SEA for Structured Exploration.',
           description: "",
@@ -292,142 +292,142 @@ ninja.data = [{
           title: 'Albert Wilcox',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/albert-wilcox/";
+              window.location.href = "/people/albert-wilcox/";
             },},{id: "people-animesh-garg",
           title: 'Animesh Garg',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/animesh-garg/";
+              window.location.href = "/people/animesh-garg/";
             },},{id: "people-atharva-mete",
           title: 'Atharva Mete',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/atharva-mete/";
+              window.location.href = "/people/atharva-mete/";
             },},{id: "people-dennis-anthony",
           title: 'Dennis Anthony',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/dennis-anthony/";
+              window.location.href = "/people/dennis-anthony/";
             },},{id: "people-dylan-turpin",
           title: 'Dylan Turpin',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/dylan-turpin/";
+              window.location.href = "/people/dylan-turpin/";
             },},{id: "people-ezra-ameperosa",
           title: 'Ezra Ameperosa',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/ezra-ameperosa/";
+              window.location.href = "/people/ezra-ameperosa/";
             },},{id: "people-hrishit-leen",
           title: 'Hrishit Leen',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/hrishit-leen/";
+              window.location.href = "/people/hrishit-leen/";
             },},{id: "people-ignat-georgiev",
           title: 'Ignat Georgiev',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/ignat-georgiev/";
+              window.location.href = "/people/ignat-georgiev/";
             },},{id: "people-jeremy-collins",
           title: 'Jeremy Collins',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/jeremy-collins/";
+              window.location.href = "/people/jeremy-collins/";
             },},{id: "people-kunal-aneja",
           title: 'Kunal Aneja',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/kunal-aneja/";
+              window.location.href = "/people/kunal-aneja/";
             },},{id: "people-liquan-wang",
           title: 'Liquan Wang',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/liquan-wang/";
+              window.location.href = "/people/liquan-wang/";
             },},{id: "people-lorand-cheng",
           title: 'Lorand Cheng',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/lorand-cheng/";
+              window.location.href = "/people/lorand-cheng/";
             },},{id: "people-masoud-moghani",
           title: 'Masoud Moghani',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/masoud-moghani/";
+              window.location.href = "/people/masoud-moghani/";
             },},{id: "people-misroslav-bogdanovic",
           title: 'Misroslav Bogdanovic',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/misroslav-bogdanovic/";
+              window.location.href = "/people/misroslav-bogdanovic/";
             },},{id: "people-shuxin-cao",
           title: 'Shuxin Cao',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/shuxin-cao/";
+              window.location.href = "/people/shuxin-cao/";
             },},{id: "people-walker-byrnes",
           title: 'Walker Byrnes',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/walker-byrnes/";
+              window.location.href = "/people/walker-byrnes/";
             },},{id: "people-wei-yu",
           title: 'Wei Yu',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/wei-yu/";
+              window.location.href = "/people/wei-yu/";
             },},{id: "people-yuchi-zhao",
           title: 'Yuchi Zhao',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/yuchi-zhao/";
+              window.location.href = "/people/yuchi-zhao/";
             },},{id: "people-zihan-zhou",
           title: 'Zihan Zhou',
           description: "",
           section: "People",handler: () => {
-              window.location.href = "/al-folio/people/zihan-zhou/";
+              window.location.href = "/people/zihan-zhou/";
             },},{id: "projects-project-1",
           title: 'project 1',
           description: "with background image",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/1_project/";
+              window.location.href = "/projects/1_project/";
             },},{id: "projects-project-2",
           title: 'project 2',
           description: "a project with a background image and giscus comments",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/2_project/";
+              window.location.href = "/projects/2_project/";
             },},{id: "projects-project-3-with-very-long-name",
           title: 'project 3 with very long name',
           description: "a project that redirects to another website",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/3_project/";
+              window.location.href = "/projects/3_project/";
             },},{id: "projects-project-4",
           title: 'project 4',
           description: "another without an image",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/4_project/";
+              window.location.href = "/projects/4_project/";
             },},{id: "projects-project-5",
           title: 'project 5',
           description: "a project with a background image",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/5_project/";
+              window.location.href = "/projects/5_project/";
             },},{id: "projects-project-6",
           title: 'project 6',
           description: "a project with no image",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/6_project/";
+              window.location.href = "/projects/6_project/";
             },},{id: "projects-project-7",
           title: 'project 7',
           description: "with background image",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/7_project/";
+              window.location.href = "/projects/7_project/";
             },},{id: "projects-project-8",
           title: 'project 8',
           description: "an other project with a background image and giscus comments",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/8_project/";
+              window.location.href = "/projects/8_project/";
             },},{id: "projects-project-9",
           title: 'project 9',
           description: "another project with an image 🎉",
           section: "Projects",handler: () => {
-              window.location.href = "/al-folio/projects/9_project/";
+              window.location.href = "/projects/9_project/";
             },},{
         id: 'social-bluesky',
         title: 'Bluesky',

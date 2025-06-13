@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://pairlab.github.io/al-folio/sitemap.xml
+Sitemap: https://pairlab.github.io/sitemap.xml
