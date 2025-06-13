@@ -24,8 +24,8 @@ images:
 tags: robotics, vision, machine learning, reinforcement learning, simulation
 ---
 
-For the up-to-date publication list, please see [**Google Scholar**](http://scholar.google.com/citations?user=zp8V7ZMAAAAJ&hl=en) or [**Semantic Scholar**](https://www.semanticscholar.org/author/Animesh-Garg/1873736) pages.  
-For coverage of research in press, please see [News]({{ site.baseurl }}/news/)
+For the up-to-date publication list, please see **[Google Scholar](http://scholar.google.com/citations?user=zp8V7ZMAAAAJ&hl=en)** or **[Semantic Scholar](https://www.semanticscholar.org/author/Animesh-Garg/1873736)** pages.  
+For coverage of research in press, please see [Press & Media]({{ site.baseurl }}/media/).
 
 <!-- _pages/publications.md -->
 
