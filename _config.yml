@@ -143,8 +143,12 @@ newsletter:
 
 collections:
   books:
-    output: true
+    output: false
   news:
+    defaults:
+      layout: post
+    output: true
+  media:
     defaults:
       layout: post
     output: true

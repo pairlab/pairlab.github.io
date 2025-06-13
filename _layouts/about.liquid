@@ -48,6 +48,14 @@ layout: default
       {% include news.liquid limit=true %}
     {% endif %}
 
+    <!-- media -->
+    {% if page.media and page.media.enabled %}
+      <h2>
+        <a href="{{ '/media/' | relative_url }}" style="color: inherit">press & media</a>
+      </h2>
+      {% include media.liquid limit=true %}
+    {% endif %}
+
     <!-- Latest posts -->
     {% if page.latest_posts and page.latest_posts.enabled %}
       <h2>
