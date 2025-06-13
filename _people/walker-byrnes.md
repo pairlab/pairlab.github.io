@@ -10,5 +10,5 @@ email: walker.byrnes@gtri.gatech.edu
 website: https://research.gatech.edu/people/walker-byrnes
 scholar: https://scholar.google.com/citations?user=4l2EoB0AAAAJ&hl=en
 linkedin: https://www.linkedin.com/in/walkerbyrnes/
-twitter: https://twitter.com/imgeorgiev
+twitter:
 ---
