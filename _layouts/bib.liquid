@@ -65,14 +65,16 @@
     <div class="title">
       {% if entry.arxiv %}
         <a href="http://arxiv.org/abs/{{ entry.arxiv }}" target="_blank">{{ entry.title }}.</a>
+      {% elsif entry.website %}
+        <a href="{{ entry.website }}" target="_blank">{{ entry.title }}.</a>
+      {% elsif entry.html %}
+        <a href="{{ entry.html }}" target="_blank">{{ entry.title }}.</a>
       {% elsif entry.pdf %}
         {% if entry.pdf contains '://' %}
           <a href="{{ entry.pdf }}" target="_blank">{{ entry.title }}.</a>
         {% elsif entry.pdf %}
           <a href="{{ entry.pdf | prepend: '/assets/pdf/' | prepend: site.baseurl | prepend: site.url }}" target="_blank">{{ entry.title }}.</a>
         {% endif %}
-      {% elsif entry.url %}
-        <a href="{{ entry.url }}" target="_blank">{{ entry.title }}.</a>
       {% else %}
         {{ entry.title }}.
       {% endif %}
@@ -185,12 +187,6 @@
       {% capture entrytype %}<em>{{ entry.booktitle }}</em>{% endcapture %}
     {% elsif thesis contains entry.type %}
       {% capture entrytype %}<em>{{ entry.school }}</em>{% endcapture %}
-    {% elsif entry.type contains 'patent' %}
-      {% if entry.month %}
-        {% capture entrytype %}<em>{{entry.number}}</em>, <em>{{entry.month}}</em>, <em>{{entry.yeargranted}}</em>{% endcapture %}
-      {% else %}
-        {% capture entrytype %}<em>{{entry.number}}</em>, <em>{{entry.monthfiled}}</em>, <em>{{entry.yearfiled}}</em>{% endcapture %}
-      {% endif %}
     {% else %}
       {% capture entrytype %}{% endcapture %}
     {% endif %}
@@ -248,7 +244,7 @@
         <a class="award btn btn-sm z-depth-0" role="button">
           <span style="color:DarkOrange; font-weight: bold;"
             ><i class="fas fa-trophy"></i> &nbsp;
-            {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awarded{% endif -%}
+            {{ entry.award }}
           </span>
         </a>
         <br>
@@ -413,10 +409,10 @@
       {% endif %}
     {% endif %}
 
-    {% if entry.award %}
+    {% if entry.award_details %}
       <!-- Hidden Award block -->
       <div class="award hidden d-print-inline">
-        <p>{{ entry.award | markdownify }}</p>
+        <p>{{ entry.award_details | markdownify }}</p>
       </div>
     {% endif %}
 
