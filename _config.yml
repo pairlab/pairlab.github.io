@@ -296,7 +296,7 @@ scholar:
   type_names:
     {
       unpublished: Preprints,
-      article: Papers (archival),
+      article: Papers (peer-reviewed),
       workshop: Workshops,
       thesis: Theses,
       patent: Patents,
