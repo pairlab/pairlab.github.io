@@ -45,18 +45,25 @@ ninja.data = [{
             window.location.href = "/al-folio/blog/";
           },
         },{id: "dropdown-courses",
-              title: "Courses",
+              title: "courses",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/al-folio/teaching/";
               },
             },{id: "dropdown-news-archive",
-              title: "News Archive",
+              title: "news archive",
               description: "",
               section: "Dropdown",
               handler: () => {
                 window.location.href = "/al-folio/news/";
+              },
+            },{id: "dropdown-press-amp-media",
+              title: "press &amp; media",
+              description: "",
+              section: "Dropdown",
+              handler: () => {
+                window.location.href = "/al-folio/media/";
               },
             },{id: "dropdown-code-amp-talks",
               title: "code &amp; talks",
@@ -65,12 +72,12 @@ ninja.data = [{
               handler: () => {
                 window.location.href = "/al-folio/resources/";
               },
-            },{id: "dropdown-pi-profile",
-              title: "PI Profile",
+            },{id: "dropdown-animesh-garg",
+              title: "Animesh Garg",
               description: "",
               section: "Dropdown",
               handler: () => {
-                window.location.href = "/al-folio/cv/";
+                window.location.href = "https://animesh.garg.tech/";
               },
             },{id: "post-value-gradient-weighted-model-based-reinforcement-learning",
         
@@ -110,7 +117,30 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/al-folio/books/the_godfather/";
-            },},{id: "news-awarded-with-cifar-ai-chair-2019",
+            },},{id: "media-animesh-interviewed-by-nature-on-robot-assisted-surgery",
+          title: 'Animesh interviewed by Nature on Robot-Assisted Surgery',
+          description: "",
+          section: "Media",},{id: "media-awarded-with-cifar-ai-chair-2019",
+          title: 'Awarded with CIFAR AI Chair 2019',
+          description: "",
+          section: "Media",handler: () => {
+              window.location.href = "/al-folio/media/2019-12-10-cifar-ai-chair/";
+            },},{id: "media-our-work-on-surgical-robotics-in-new-scientist",
+          title: 'Our work on Surgical Robotics in New Scientist.',
+          description: "",
+          section: "Media",},{id: "media-animesh-quoted-by-forbes-on-humanoid-market-value",
+          title: 'Animesh quoted by Forbes on Humanoid Market Value.',
+          description: "",
+          section: "Media",},{id: "media-quoted-by-business-insider-and-verge-on-teleoperation-in-humanoids",
+          title: 'Quoted by Business Insider and Verge on Teleoperation in Humanoids.',
+          description: "",
+          section: "Media",},{id: "media-quoted-in-nvidia-blog-on-hf-in-isaac-lab",
+          title: 'Quoted in Nvidia Blog on HF in Isaac Lab.',
+          description: "",
+          section: "Media",},{id: "media-animesh-interviewed-by-aim-magazine-on-anyplace-paper",
+          title: 'Animesh interviewed by AIM Magazine on Anyplace Paper.',
+          description: "",
+          section: "Media",},{id: "news-awarded-with-cifar-ai-chair-2019",
           title: 'Awarded with CIFAR AI Chair 2019',
           description: "",
           section: "News",handler: () => {
