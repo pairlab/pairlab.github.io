@@ -268,6 +268,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/al-folio/people/animesh-garg/";
+            },},{id: "people-atharva-mete",
+          title: 'Atharva Mete',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/al-folio/people/atharva-mete/";
             },},{id: "people-dennis-anthony",
           title: 'Dennis Anthony',
           description: "",
@@ -298,6 +303,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/al-folio/people/jeremy-collins/";
+            },},{id: "people-kunal-aneja",
+          title: 'Kunal Aneja',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/al-folio/people/kunal-aneja/";
             },},{id: "people-liquan-wang",
           title: 'Liquan Wang',
           description: "",
