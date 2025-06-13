@@ -58,7 +58,7 @@ We recruit undergraduate and masters' students at all class levels, though a bac
 You must be **current (or admitted)** student at Georgia Tech and be enrolled during the time of your working in the lab.  
 We typically interview new undergraduate researchers at the beginning of the term.
 
-Please [**complete this form**](https://forms.gle/BtFqLGV33kC5FXAu9) and send an [email](mailto:{{ site.email | encode_email }}).
+Please **[complete this form](https://forms.gle/BtFqLGV33kC5FXAu9)** and send an [email](mailto:{{ site.email | encode_email }}).
 
 {% endtab %}
 
@@ -77,7 +77,7 @@ You may contact me **after** you have applied. I am unable to evaluate applicati
 We are actively looking for post-doctoral researchers to join the lab.  
 In particular if you have a fellowship or would like to apply for one, we strongly recommend getting in touch.
 
-Please [**complete this form**](https://forms.gle/TWJr36iDucTmDWQX7) and send an [email](mailto:{{ site.email | encode_email }}).
+Please **[complete this form](https://forms.gle/TWJr36iDucTmDWQX7)** and send an [email](mailto:{{ site.email | encode_email }}).
 
 {% endtab %}
 
@@ -85,7 +85,7 @@ Please [**complete this form**](https://forms.gle/TWJr36iDucTmDWQX7) and send an
 
 If you are not a current Georgia Tech student and are interested in a short-term visit, there are a few opportunities with preference for self-funded and/or fellowship supported visitors.
 
-Please [**complete this form**](https://forms.gle/ouy1RR8mtC3GNXki7) and send an [email](mailto:{{ site.email | encode_email }}).
+Please **[complete this form](https://forms.gle/ouy1RR8mtC3GNXki7)** and send an [email](mailto:{{ site.email | encode_email }}).
 
 {% endtab %}
 
