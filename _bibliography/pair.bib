@@ -10,8 +10,8 @@ entry types
   misc
 
 Fields (in addition to standard fields)
-  keywords --will be listed on the page
-    tags -- buttons/links 
+  keywords -- generic keywords to help with search
+    tags -- buttons/links - small list of tags. 
   award
     award_details: optional
   abstract
@@ -34,6 +34,21 @@ Fields (in addition to standard fields)
   inspirehep_id
  
 % =========
+Tag Tree
+
+Robotics
+  Simulation
+  Manipulation
+    Grasping
+  
+
+Computer Vision 
+
+Machine Learning
+  Reinforcement Learning
+
+% =========
+
 
 % ==========
 % Patents
@@ -121,7 +136,6 @@ Fields (in addition to standard fields)
   html={https://patents.google.com/patent/US11529205B2/en}
 }
 
-
 @patent{murali2023techniques,
   title={Techniques for robot control using neural implicit value functions},
   author={Murali, Adithyavairavan and Sundaralingam, Balakumar and Yun-Chun, CHEN and Fox, Dieter and Animesh, GARG},
@@ -191,7 +205,6 @@ Fields (in addition to standard fields)
   html={https://patents.google.com/patent/US20250156764A1/en}
 }
 
-
 @patent{mandlekar2024controlling,
   title={Controlling position of robot by determining goal proposals by using neural networks},
   author={Mandlekar, Ajay Uday and Ramos, Fabio Tozeto and Boots, Byron and Animesh, GARG and Fox, Dieter},
@@ -224,7 +237,6 @@ Fields (in addition to standard fields)
   award={Granted},
   html={https://patents.google.com/patent/US12109701B2/en}
 }
-
 
 @patent{mandlekar2025methods,
   title={Methods and systems to remotely operate robotic devices},
@@ -419,7 +431,7 @@ Fields (in addition to standard fields)
   year={2010}
 }
 
-@inproceedings{garg2012autotrix,
+@article{garg2012autotrix,
 author = {Garg, Animesh and Toor, Anju and Thakkar, Sahil and Goel, Shiwangi and Maheshwari, Sachin and Chand, Satish},
 title = {The Autotrix: Design and Implementation of an Autonomous Urban Driving System},
 year = {2012},
@@ -434,7 +446,7 @@ keywords = {Path Planning, Obstacle Avoidance, Monocular Vision, Autonomous Driv
 abstract = {The Autotrix is an interactive, intelligent, Autonomous Guided Vehicle (AGV) designed to serve in urban environments. Autonomous ground vehicle navigation requires the integration of many technologies such as path planning, odometry, control, obstacle avoidance and situational awareness. The objective of this project is for this prototype to navigate autonomously in an urban environment and reach its destination while detecting and avoiding obstacles on the path .This will be achieved by extracting information from multiple sources of real-time data including digital camera, GPS &ultra sonic sensors, collecting data from this extracted information, processing this data and send controlling instructions to our platform (Autotrix). The significance of this work is in presenting the methods needed for real time navigation; GPS based continuous mapping and obstacle avoidance for intelligent autonomous driving systems.}
 }
 
-@inproceedings{thakkar2012dtmf,
+@article{thakkar2012dtmf,
 author = {Thakkar, Sahil and Garg, Animesh and Midha, Adesh and Gaur, Prerna},
 title = {Low-Cost Teleoperation of Remotely Located Actuators Based on Dual Tone Multi-Frequency Data Transfer},
 year = {2012},
@@ -543,7 +555,7 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   abstract={We present the design and evaluation of a novel low-cost palpation probe for Robot assisted Minimally Invasive Surgery (RMIS) for localizing subcutaneous blood vessels. It measures probe tip deflection using a Hall Effect sensor as the spherical tip is moved tangentially across a surface under automated control. The probe is intended to be single-use and disposable, built from 3D printed parts and commercially available electronics. The prototype has a cross-section of less than 15mm×10mm and fits on the end of an 8mm diameter needle driver in the Intuitive Surgical da Vinci ® Research Kit (dVRK). We report experiments for quasi-static sliding palpation with silicone based tissue phantoms with embedded cylinders as subcutaneous blood vessel phantoms. We analyzed signal-to-noise ratios with multiple diameters of silicone cylinders (1.58-4.75 mm) at varying subcutaneous depths (1-5 mm) with a range of indentation depths (0-8 mm) and sliding speeds (0.5-21 mm/s). Results suggest that the probe can detect subcutaneous structures in phantoms of diameter 2.25 mm at a depth of up to 5mm below the tissue surface.},
   pdf= {https://doi.org/10.1109/CoASE.2015.7294253},
   preview={sensor-case15.jpg}
-  }
+}
 
 @inproceedings{krishnan2015tsc,
   title={Transition State Clustering: Unsupervised Surgical Trajectory Segmentation For Robot Learning},
@@ -602,7 +614,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={pida-case16.gif}
 }
 
-
 @inproceedings{krishnan2016swirl,
   title={{SWIRL: A Sequential Windowed Inverse Reinforcement Learning Algorithm for Robot Tasks With Delayed Rewards}},
   author={Krishnan, Sanjay and Garg, Animesh and Liaw, Richard and Thananjeyan, Brijen and Miller, Lauren and Pokorny, Florian T and Goldberg, Ken},
@@ -636,7 +647,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   video={https://www.youtube.com/watch?v=yZ-gSsbbzh0}
 }
 
-
 @inproceedings{gwak2017weakly,
   title={Weakly supervised 3D Reconstruction with Adversarial Constraint},
   author={Gwak*, JunYoung and Choy*, Christopher B and Garg, Animesh and Chandraker, Manmohan and Savarese (* equal contribution), Silvio},
@@ -646,7 +656,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   code={https://github.com/jgwak/McRecon},
   arxiv={1705.10904} 
 }
-
 
 @inproceedings{harrison2017adapt,
   title={{AdaPT: Zero-Shot Adaptive Policy Transfer for Stochastic Dynamical Systems}},
@@ -696,7 +705,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   website={https://deformnet-site.github.io/DeformNet-website/},
   talk={https://www.youtube.com/watch?v=cKzXVL6W--8}
 }
-
 
 @inproceedings{fang2018learning,
   title={Learning Task-Oriented Grasping for Tool Manipulation from Simulated Self-Supervision},
@@ -839,7 +847,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
  description={Learn a action space encoding from expert demonstrations, align the encoding with lower-dimension controller to enable efficient teleoperation.}
 }
 
-
 @inproceedings{mandlekar2020iris,
   title={IRIS: Implicit Reinforcement without Interaction at Scale for Learning Control from Offline Robot Manipulation Data},
   author={Ajay Mandlekar and Fabio Ramos and Byron Boots and Silvio Savarese and Li Fei-Fei and Animesh Garg and Dieter Fox},
@@ -936,7 +943,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={visuomotor-ms-iros20.gif}
 
 }
-
 
 @inproceedings{da2020learning,
   Author = {Xingye Da and Zhaoming Xie and David Hoeller and Byron Boots and Animashree Anandkumar and Yuke Zhu and Buck Babich and Animesh Garg},
@@ -1424,7 +1430,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   description={Koopman Forward (Conservative) Q-learning (KFC): a model-free RL algorithm which uses the symmetries in the dynamics of the environment to guide data augmentation in Offline RL.}
 }
 
-
 @inproceedings{allshire2022trifinger,
   title={{Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger}}, 
   author={Arthur Allshire and Mayank Mittal and Varun Lodaya and Viktor Makoviychuk and Denys Makoviichuk and Felix Widmaier and Manuel Wüthrich and Stefan Bauer and Ankur Handa and Animesh Garg},
@@ -1450,7 +1455,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={mm-articulated-arxiv21.gif},
   description={Predict expected keyframes of operating an articulated object, then plan for close-loop dyanmically-feasible whole-body motion to match predicted object trajectory.}
 }
-
 
 @inproceedings{turpin2022graspd,
   title={{Grasp'D: Differentiable Contact-rich Grasp Synthesis for Multi-fingered Hands}}, 
@@ -1492,7 +1496,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   description = {We present a differentiable probabilistic program that helps robots build mental representations of complex everyday objects.},
   preview={bom-corl22.jpg}
 }
-
 
 @inproceedings{xiong2022robotube,
   title={{RoboTube: Learning Household Manipulation from Human Videos with Simulated Twin Environments}},
@@ -1643,7 +1646,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   description={MVTrans is an end-to-end multi-view architecture with multiple perception capabilities, including depth estimation, segmentation, and pose estimation. We also present a procedural photo-realistic large-scale transparent object detection dataset, Syn-TODD.}
 }
 
-
 @inproceedings{wu2023slotdiffusion,
   title={Slotdiffusion: Object-centric generative modeling with diffusion models},
   author={Wu, Ziyi and Hu, Jingyu and Lu, Wuyue and Gilitschenski, Igor and Garg, Animesh},
@@ -1680,7 +1682,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={geommatch-23.jpeg}
 }
 
-
 @inproceedings{zhang2024handypriors,
   title={Handypriors: Physically consistent perception of hand-object interactions with differentiable priors},
   author={Zhang, Shutong and Qiao, Yi-Ling and Zhu, Guanglei and Heiden, Eric and Turpin, Dylan and Liu, Jingzhou and Lin, Ming and Macklin, Miles and Garg, Animesh},
@@ -1692,7 +1693,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={handypriors-24.gif}
 }
 
-
 @inproceedings{2023open,
   title={Open X-Embodiment: Robotic learning datasets and RT-X models},
   author={Open X-Embodiment Collaboration},
@@ -1703,7 +1703,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   award={ICRA Best Paper Award},
   preview={openx-icra24.jpeg}
 }
-
 
 @inproceedings{yu2024orbit,
   title={ORBIT-Surgical: An Open-Simulation Framework for Learning Surgical Augmented Dexterity},
@@ -1717,7 +1716,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={orbit-surgical-24.jpeg}
 }
 
-
 @inproceedings{georgiev2024adaptive,
   title={Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation},
   author={Georgiev, Ignat and Srinivasan, Krishnan and Xu, Jie and Heiden, Eric and Garg, Animesh},
@@ -1729,7 +1727,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   website={https://adaptive-horizon-actor-critic.github.io},
   preview={ahac-icml24.jpeg},
 }
-
 
 @inproceedings{walker2024fast,
   title={Fast Explicit-Input Assistance for Teleoperation in Clutter},
@@ -1754,7 +1751,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   website={https://orbit-surgical.github.io/sufia/},
   preview={sufia-24.jpg}
 }
-
 
 @inproceedings{wang2024discovering,
   title={Discovering Robotic Interaction Modes with Discrete Representation Learning},
@@ -1836,7 +1832,6 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={egosim-sample.gif}
 }
 
-
 @inproceedings{byrnes2025climb,
   title={CLIMB: Language-Guided Continual Learning for Task Planning with Iterative Model Building},
   author={Byrnes, Walker and Bogdanovic, Miroslav and Balakirsky, Avi and Balakirsky, Stephen and Garg, Animesh},
@@ -1861,6 +1856,18 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   preview={rocoda-25.jpg}
 }
 
+@inproceedings{moghani2025sufiabc,
+  title={SuFIA-BC: Generating High Quality Demonstration Data for Visuomotor Policy Learning in Surgical Subtasks},
+  author={Moghani, Masoud and Nelson, Nigel and Ghanem, Mohamed and Diaz-Pinto, Andres and Hari, Kush and Azizian, Mahdi and Goldberg, Ken and Huver, Sean and Garg, Animesh},
+  booktitle={IEEE International Conference on Robotics and Automation (ICRA)},
+  month={may},
+  year={2025},
+  website={https://orbit-surgical.github.io/sufia-bc/},
+  video={https://youtu.be/jCvZYf0saRo},
+  preview={sufia-bc-25.jpg},
+  arXiv={2504.14857}
+}
+
 @inproceedings{krishnan2025acgd,
   title={ACGD: Visual Multitask Policy Learning with Asymmetric Critic Guided Distillation},
   author={Srinivasan, Krishnan and Xu, Jie and Ang, Henry and Heiden, Eric and Fox, Dieter and Bohg, Jeannette and Garg, Animesh},
@@ -1870,17 +1877,16 @@ abstract = {DTMF (Dual Tone Multi Frequency) is a system of signal tones used fo
   pdf={https://critic-guided-distillation.github.io/acgd.pdf},
   website={https://critic-guided-distillation.github.io},
   preview={acgd-iros25.jpg},
-  keywords={Visual Multitask Policy Learning, Asymmetric Critic, lorem ipsum},
+  keywords={Visual Multitask Policy Learning, Asymmetric Critic},
   tags={Reinforcement Learning, Visual Learning, Policy Learning},
 }
-
 
 % ==========
 % Journal
 % ==========
 
 @article{garg2013robot,
-author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M and Hsu, I-C and Pouliot, Jean and Stoianovici, Dan and Goldberg, Ken},
+  author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M and Hsu, I-C and Pouliot, Jean and Stoianovici, Dan and Goldberg, Ken},
   journal={IEEE Transactions on Automation Science and Engineering (TASE)},
   title={Robot-Guided Open-Loop Insertion of Skew-Line Needle Arrangements for High Dose Rate Brachytherapy},
   year={2013},
@@ -1917,7 +1923,6 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   pdf={garg_swirl_ijrr18.pdf},
   html={https://doi.org/10.1177%2F0278364918784350}
 }
-
 
 @article{fang2018tog-ijrr,
   title={Learning Task-Oriented Grasping for Tool Manipulation from Simulated Self-Supervision},
@@ -1990,7 +1995,6 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   description={Planning Transformer to learn structured and plannable state and action spaces directly from unstructured videos. The model learns both action-conditional video prediction and goal conditioned planning.}
 }
 
-
 @article{Lutter2022cfvi,
   title={{Continuous-Time Fitted Value Iteration for Robust Policies}}, 
   author={Michael Lutter and Boris Belousov and Shie Mannor and Dieter Fox and Animesh Garg and Jan Peters},
@@ -2044,7 +2048,6 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
     description={Orbit is a unified and modular framework for robotics and robot learning. Supports different types of physics, robot types and sensors. Supports differen Robot Learning workflows: RL, imitation, and motion planning. }
 }
 
-
 @article{bourdillon2023integration,
   title={Integration of reinforcement learning in a virtual robotic surgical simulation},
   author={Bourdillon, Alexandra T and Garg, Animesh and Wang, Hanjay and Woo, Y Joseph and Pavone, Marco and Boyd, Jack},
@@ -2071,7 +2074,6 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   preview={digital-pipette-23.jpeg},
   doi={10.1039/D3DD00115F}
 }
-
 
 @article{yoshikawa2023large,
   title={Large language models for chemistry robotics},
@@ -2116,7 +2118,6 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   preview={avsi-dharmarajan2023robot.jpg}
 }
 
-
 @article{melnik2023benchmarks,
   title={Benchmarks for Physical Reasoning {AI}},
   author={Andrew Melnik and Robin Schiewer and Moritz Lange and Andrei Ioan Muresanu and mozhgan saeidi and Animesh Garg and Helge Ritter},
@@ -2129,7 +2130,6 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   code={https://github.com/ndrwmlnk/Awesome-Benchmarks-for-Physical-Reasoning-AI},
   preview={bench-phys-23.jpg}
 }
-
 
 @article{darvish2025organa,
   title={ORGANA: a robotic assistant for automated chemistry experimentation and characterization},
@@ -2181,11 +2181,9 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
   Number = {UCB/EECS-2016-140}
 }
 
-
 % ===========
 %  Preprints
 % ===========
-
 
 @unpublished{zhao2025anyplace,
   title={AnyPlace: Learning Generalized Object Placement for Robot Manipulation},
@@ -2238,20 +2236,19 @@ author={Garg, Animesh and Siauw, Timmy and Berenson, Dmitry and Cunha, J Adam M 
 
 @techreport{1711.01503,
   author={Liaw, Richard and Krishnan, Sanjay and Garg, Animesh and Crankshaw, Daniel and Gonzalez, Joseph E and Goldberg, Ken},
-Title = {Composing Meta-Policies for Autonomous Driving Using Hierarchical Deep Reinforcement Learning},
-Year = {2017},
-month={nov},
-arXiv = {1711.01503},
+  Title = {Composing Meta-Policies for Autonomous Driving Using Hierarchical Deep Reinforcement Learning},
+  Year = {2017},
+  month={nov},
+  arXiv = {1711.01503},
 }
 
 @techreport{1909.02749,
-Author = {Kevin J. Shih and Aysegul Dundar and Animesh Garg and Robert Pottorf and Andrew Tao and Bryan Catanzaro},
-Title = {Video Interpolation and Prediction with Unsupervised Landmarks},
-Year = {2019},
-month={sept},
-arXiv = {1909.02749},
+  Author = {Kevin J. Shih and Aysegul Dundar and Animesh Garg and Robert Pottorf and Andrew Tao and Bryan Catanzaro},
+  Title = {Video Interpolation and Prediction with Unsupervised Landmarks},
+  Year = {2019},
+  month={sept},
+  arXiv = {1909.02749},
 }
-
 
 @techreport{2007.00177,
   Author = {Homanga Bharadhwaj and Dylan Turpin and Animesh Garg and Ashton Anderson},
@@ -2262,7 +2259,6 @@ arXiv = {1909.02749},
   blog={https://homangab.github.io/ri-blog/2017/06/21/an-overview-of-deep-learning.html},
   description={Doubt-blind reviewing process may tilt the scales in favor of eminent authors who de-anonymize through concurrent arxiv release.}
 }
-
 
 @techreport{2009.08577,
   Author = {Tim Barfoot and Jessica Burgner-Kahrs and Eric Diller and Animesh Garg and Andrew Goldenberg and Jonathan Kelly and Xinyu Liu and Hani E. Naguib and Goldie Nejat and Angela P. Schoellig and Florian Shkurti and Hallie Siegel and Yu Sun and Steven Waslander},
@@ -2285,7 +2281,6 @@ arXiv = {1909.02749},
   description={How can we design a similarly motivated auditing scheme for deep learning models? We propose a sequence of semantically aligned unit tests each to verify a predefined specification.}
 }
 
-
 @techreport{2210.03825,
   title={{See, Plan, Predict: Language-guided Cognitive Planning with Video Prediction}}, 
   author={Maria Attarian and Advaya Gupta and Ziyi Zhou and Wei Yu and Igor Gilitschenski and Animesh Garg},
@@ -2298,37 +2293,35 @@ arXiv = {1909.02749},
 }
 
 @techreport{yoshikawa2022adaptive,
-    title={An Adaptive Robotics Framework for Chemistry Lab Automation},
-    author={Naruki Yoshikawa and Andrew Zou Li and Kourosh Darvish and Yuchi Zhao and Haoping Xu and Alan Aspuru-Guzik and Animesh Garg and Florian Shkurti},
-    year={2022},
-    mon={dec},
-    arXiv={2212.09672},
-    website = {https://ac-rad.github.io/robot-chemist-tamp/},
-    video={https://youtu.be/NjpZmaKQWls},
-    preview={chemrobot-arxiv22.gif},
-    description={We propose a framework for robots to assist chemists by performing lab experiments autonomously. The solution allows a general-purpose robot to perform diverse chemistry experiments and efficiently make use of available lab tools. }
+  title={An Adaptive Robotics Framework for Chemistry Lab Automation},
+  author={Naruki Yoshikawa and Andrew Zou Li and Kourosh Darvish and Yuchi Zhao and Haoping Xu and Alan Aspuru-Guzik and Animesh Garg and Florian Shkurti},
+  year={2022},
+  mon={dec},
+  arXiv={2212.09672},
+  website = {https://ac-rad.github.io/robot-chemist-tamp/},
+  video={https://youtu.be/NjpZmaKQWls},
+  preview={chemrobot-arxiv22.gif},
+  description={We propose a framework for robots to assist chemists by performing lab experiments autonomously. The solution allows a general-purpose robot to perform diverse chemistry experiments and efficiently make use of available lab tools. }
 }
 
 @techreport{skreta2023errors,
-      title={Errors are Useful Prompts: Instruction Guided Task Programming with Verifier-Assisted Iterative Prompting}, 
-      author={Marta Skreta and Naruki Yoshikawa and Sebastian Arellano-Rubach and Zhi Ji and Lasse Bjørn Kristensen and Kourosh Darvish and Alán Aspuru-Guzik and Florian Shkurti and Animesh Garg},
-      year={2023},
-      mon={mar},
-      arXiv={2303.14100},
-      website= {https://ac-rad.github.io/clairify/},
-      video={https://youtu.be/-87yrXytluw},
-      preview={clairify-iros23.gif},
-      description={CLAIRify is a novel approach that combines automatic iterative prompting in LLMs with program verification to ensure programs written in domain-specific languages are syntactically valid and incorporate environment constraints.}
+  title={Errors are Useful Prompts: Instruction Guided Task Programming with Verifier-Assisted Iterative Prompting}, 
+  author={Marta Skreta and Naruki Yoshikawa and Sebastian Arellano-Rubach and Zhi Ji and Lasse Bjørn Kristensen and Kourosh Darvish and Alán Aspuru-Guzik and Florian Shkurti and Animesh Garg},
+  year={2023},
+  mon={mar},
+  arXiv={2303.14100},
+  website= {https://ac-rad.github.io/clairify/},
+  video={https://youtu.be/-87yrXytluw},
+  preview={clairify-iros23.gif},
+  description={CLAIRify is a novel approach that combines automatic iterative prompting in LLMs with program verification to ensure programs written in domain-specific languages are syntactically valid and incorporate environment constraints.}
 }
-
 
 @techreport{devaguptapu2023deltanetworks,
-      title={{$\Delta$-Networks for Efficient Model Patching}}, 
-      author={Chaitanya Devaguptapu and Samarth Sinha and K J Joseph and Vineeth N Balasubramanian and Animesh Garg},
-      year={2023},
-      arXiv={2303.14772}
+  title={{$\Delta$-Networks for Efficient Model Patching}}, 
+  author={Chaitanya Devaguptapu and Samarth Sinha and K J Joseph and Vineeth N Balasubramanian and Animesh Garg},
+  year={2023},
+  arXiv={2303.14772}
 }
-
 
 @techreport{skreta2024replan,
   title={Replan: Robotic replanning with perception and language models},
@@ -2340,5 +2333,3 @@ arXiv = {1909.02749},
   website={https://replan-lm.github.io/replan.github.io/},
   preview={replan-24.jpg}
 }
-
-
