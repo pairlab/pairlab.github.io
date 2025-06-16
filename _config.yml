@@ -302,12 +302,12 @@ scholar:
       unpublished: Preprints,
       article: Papers (peer-reviewed),
       workshop: Workshops,
-      thesis: Theses,
-      patent: Patents,
       techreport: Tech Reports,
+      thesis: Theses,
+      patent: Patents,      
       misc: Others,
     }
-  type_order: [unpublished, article, workshop, thesis, patent, techreport, misc]
+  type_order: [unpublished, article, workshop, techreport, thesis, patent, misc]
 
   bibliography_list_attributes:
     reversed: true
