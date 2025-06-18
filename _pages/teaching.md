@@ -17,7 +17,7 @@ pretty_table: true
 | Introduction to Reinforcement Learning           | [CSC 498](https://www.pair.toronto.edu/csc498-f21)                                                 | University of Toronto | Instructor    | W-21, F-21                                                                   |
 | Algorithmic Intelligence in Robotics             | [CSC 375](https://www.pair.toronto.edu/csc375-f20)                                                 | University of Toronto | Instructor    | F-20, W-22                                                                   |
 | Topics in Computer Vision: Advances in 3D Vision | [CSC 2547](https://www.pair.toronto.edu/csc2547-w21)                                               | University of Toronto | Instructor    | [W-21](https://www.youtube.com/channel/UCrsmAXnwu6sgccWevW12Dfg)             |
-| Topics in Robotics: Deep Reinforcement Learning  | [CSC 2621](https://wwww.pair.toronto.edu/csc2621-w20)                                              | University of Toronto | Instructor    | W-20                                                                         |
+| Topics in Robotics: Deep Reinforcement Learning  | [CSC 2621](https://www.pair.toronto.edu/csc2621-w20)                                               | University of Toronto | Instructor    | W-20                                                                         |
 | Advanced Survey of Reinforcement Learning        | [CS 332](http://cs332.stanford.edu/#!index.md)                                                     | Stanford University   | Co-Instructor | [F-17](http://web.stanford.edu/class/archive/cs/cs332/cs332.1182/#!index.md) |
 
 <br>
