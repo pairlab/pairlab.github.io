@@ -369,6 +369,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/shuxin-cao/";
+            },},{id: "people-varun-giridhar",
+          title: 'Varun Giridhar',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/varun-giridhar/";
             },},{id: "people-walker-byrnes",
           title: 'Walker Byrnes',
           description: "",
