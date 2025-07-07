@@ -294,7 +294,12 @@ ninja.data = [{
           section: "News",},{id: "news-animesh-presents-at-icra-2025-keynote-see-slides",
           title: 'Animesh presents at ICRA 2025 Keynote (see slides)',
           description: "",
-          section: "News",},{id: "people-albert-wilcox",
+          section: "News",},{id: "people-aditya-bajoria",
+          title: 'Aditya Bajoria',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/aditya-bajoria/";
+            },},{id: "people-albert-wilcox",
           title: 'Albert Wilcox',
           description: "",
           section: "People",handler: () => {
@@ -309,6 +314,16 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/atharva-mete/";
+            },},{id: "people-ayush-agarwal",
+          title: 'Ayush Agarwal',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/ayush-agarwal/";
+            },},{id: "people-braydon-zhang",
+          title: 'Braydon Zhang',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/braydon-zhang/";
             },},{id: "people-dennis-anthony",
           title: 'Dennis Anthony',
           description: "",
@@ -339,6 +354,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/jeremy-collins/";
+            },},{id: "people-kaavya-menon",
+          title: 'Kaavya Menon',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/kaavya-menon/";
             },},{id: "people-kunal-aneja",
           title: 'Kunal Aneja',
           description: "",
@@ -364,6 +384,21 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/misroslav-bogdanovic/";
+            },},{id: "people-mrinal-jain",
+          title: 'Mrinal Jain',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/mrinal-jain/";
+            },},{id: "people-nhi-nguyen",
+          title: 'Nhi Nguyen',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/nhi-nguyen/";
+            },},{id: "people-ranjani-koushik",
+          title: 'Ranjani Koushik',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/ranjani-koushik/";
             },},{id: "people-shuxin-cao",
           title: 'Shuxin Cao',
           description: "",
