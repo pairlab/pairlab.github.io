@@ -422,6 +422,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/wei-yu/";
+            },},{id: "people-yixiong-hao",
+          title: 'Yixiong Hao',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/yixiong-hao/";
             },},{id: "people-yuchi-zhao",
           title: 'Yuchi Zhao',
           description: "",
