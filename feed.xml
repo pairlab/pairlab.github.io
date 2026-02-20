@@ -1,5 +1,1203 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://pairlab.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://pairlab.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2025-09-09T19:24:52+00:00</updated><id>https://pairlab.github.io/feed.xml</id><title type="html">PAIR</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Value Gradient weighted Model-Based Reinforcement Learning</title><link href="https://pairlab.github.io/blog/2022/vagram-voelcker/" rel="alternate" type="text/html" title="Value Gradient weighted Model-Based Reinforcement Learning"/><published>2022-04-21T15:12:00+00:00</published><updated>2022-04-21T15:12:00+00:00</updated><id>https://pairlab.github.io/blog/2022/vagram-voelcker</id><content type="html" xml:base="https://pairlab.github.io/blog/2022/vagram-voelcker/"><![CDATA[<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> <p><a href="https://cvoelcker.de">Claas Voelcker</a>, <a href="https://victorliao.com/">Victor Liao</a>, <a href="https://animesh.garg.tech/">Animesh Garg</a>, <a href="https://sologen.net">Amir-massoud Farahmand</a><br/> <em><a href="https://iclr.cc/">ICLR 2022 (spotlight paper)</a></em><br/> <a href="https://openreview.net/pdf?id=4-D6CZkRXxI">paper</a>, <a href="https://github.com/pairlab/vagram">code</a></p> <p>With the rise of powerful and flexible function approximation, model-based reinforcement learning (MBRL) has gained a lot of traction in recent years. The core idea of MBRL is intuitive: (a) use the data obtained by online interaction of an agent with its environment, (b) build a surrogate model of this environment, and (c) use this model to improve the agent’s planning capabilities.</p> <table> <tbody> <tr> <td><img src="https://pairlab.github.io/assets/img/blog/vagram-apr22/dyna.png" alt="A DYNA algorithm visualized." width="100%"/></td> <td><em>A sketch of the DYNA algorithm. The model is used to generate additional data for the RL agent training.</em></td> </tr> </tbody> </table> <p>While intuitive, this approach can start to suffer once we obtain multimodal, high resolution sensory information. In these cases, the agent may be observing more of the world that it needs to for completing its task and creating a predictive model of the full environment may actually be harder than the task at hand itself!</p> <p>In most MBRL approaches, the environment model is obtained from the maximum likelihood objective, often via a reconstruction loss where the model tries to predict the next observation and agent will encounter from the previous observations and actions. However, if the observation contains many superfluous dimensions, the MLE objective is ineffective, as much of the model capacity is spent on approximating the full complexity of the observation space.</p> <p>Our key proposal is to regularize the model learning by the sensitivity of the value function for different inputs. Intuitively, if the value function is not influenced by changing the observation, the model is not required to be accurate. To highlight how we arrive at this solution, let’s look at the problem and previous proposals in more detail.</p> <h2 id="when-is-a-model-mismatched">When is a model mismatched?</h2> <table> <tbody> <tr> <td><img src="https://pairlab.github.io/assets/img/blog/vagram-apr22/model_mismatch.png" alt="A sketch of a driving car. Hikers by the side of the road are labeled important, a cloud is marked as unimportant." width="100%"/></td> <td><em>For a car driving task, it is important to differentiate important from unimportant environment features. While it is very important to predict the likelihood of pedestrians entering the road, the clouds in the sky are just distractions.</em></td> </tr> </tbody> </table> <p>This phenomenon has been termed the “objective mismatch”: the model does not know anything about the task the agent is trying to solve, no information from the task is fed back to the model learning, so the objectives of the agent (“obtaining high reward”) and the model (“achieving low reconstruction error”) do not necessarily align. When trying to solve this problem, we quickly run into a catch-22: one of the core assumptions underlying decision making is that we do not know how to solve the task, otherwise we would not be doing model learning in the first place. We need an accurate model of the environment before we can solve the task, so how can we feed task information back to the model before solving it?</p> <table> <tbody> <tr> <td><img src="https://pairlab.github.io/assets/img/blog/vagram-apr22/vaml_principle.png" alt="A sketch of the VAML principle. 4 models are shown, with different value functions." width="100%"/></td> <td><em>On the left side, the model predictions are correct. On the right hand side they are wrong. In the top right image, the model prediction does not lead to a change in the value function prediction, so no error is fed back. In the bottom right corner, the model error leads to a difference in value function, so the error is propagated to the RL algorithm.</em></td> </tr> </tbody> </table> <p>In their papers “Value-aware model learning” and “Iterative value-aware model learning”, Farahmand et al. present two potential solutions to the problem: by analyzing the way in which the model is used in a Dyna algorithm, they show that the model only influences the policy via its value function. This means that even if the model prediction is wrong, as long as the value function prediction aligns with the real environment, the RL agent is not impacted by the model error. Conversely, even if the model only makes a small error, if the value function is very sensitive to small changes in the state space, the resulting value prediction can be very wrong. Following from this observation, Farahmand et al. propose to replace the model learning loss with a loss that measures the difference in value function.</p> \[\mathcal{L}_V(\hat{p}, p, \mu) = \int \mu(s,a) \bigg|\overbrace{\int p(s'|s,a)V(s')\mathrm{d}s'}^{\text{environment value estimate}} - \overbrace{\int \hat{p}(s'|s,a) V(s') \mathrm{d}s'}^{\text{model value estimate}}\bigg|^2 \mathrm{d} (s,a)\] <h3 id="does-this-solve-the-objective-mismatch-problem">Does this solve the objective mismatch problem?</h3> <p>Although the theoretical underpinnings of the VAML approach are rigorous, when naively applying the algorithm in practice, two problems quickly become apparent.</p> <p>(1) In many RL environments, we cannot assume that the state space is fully explored in early iterations, which means that there are many possible states in which we do not have data to learn a value function. However, a function approximation will still assign a value to these points, interpolating from previously seen points in the training set, often resulting in nonsensical values. When the model predicts that a next state is in an unexplored region of the state space, the VAML loss will not penalize it for predicting a completely wrong state if the value functions align. In some cases it can even drive the prediction further into the unexplored regions, simply because it only seeks to find a local optimum of the value function prediction. When the value function is updated, the predictions in the regions of the state space that are not covered by data often change rapidly, which suddenly cause very large value function prediction errors when using model data.</p> <p>(2) The second problem is the smoothness of the value function and resulting VAML loss. In many common applications, the value function is not convex or smooth, exhibiting plateaus and ridges that make the VAML loss difficult to optimize. In the image below we show the value function of the Pendulum environment. The non-smooth nature of the function shows in the two sharp ridges. When non-smooth value functions are coupled with out-of-distribution value estimates (problem #1), this can result in massive gradient norms and subsequent gradient descent procedure using this estimate can diverge rapidly.</p> <h2 id="value-gradient-aware-model-learning">Value-gradient aware model learning</h2> <p>To solve the model mismatch problem without introducing new optimization challenges, we argue that a good model loss should have three properties:</p> <ul> <li>It should minimize the value prediction error under the model. This is the task awareness.</li> <li>It should not lead to models predicting next states outside of the data covered region. This ensures stability with function approximation.</li> <li>It should be reasonably smooth. This enables easier optimization.</li> </ul> <p>Our key insight is to include the value function into the loss as a measure of the sensitivity of model errors for different data points and observation dimensions. To estimate this, we compute a convex approximation of the value function around each data point by taking its first order Taylor approximation (squared).</p> <p>This gives us a measure of how sensitive the value function is to distortions in the state space. If the gradient of the value function is low in a specific dimension, the impact of model prediction errors will be relatively small. Conversely, in regions of high gradient, the value function prediction changes rapidly, so the model should measure these dimensions more carefully. In mathematical terms, the gradient allows us to augment the L2 loss in state space by a value function-dependent local regularization for each data point.</p> \[\hat{\mathcal{L}}_{\hat{V}}=\sum_{\{s_i,a_i,s'_i\}\in\mathcal{D}}{\left(V(s'_i) - \int \hat{P}_\theta(s'|s_i,a_i) (V(s'_i) + (\nabla_s V(s)|_{s'_i})^\intercal (s' - s'_i)) \mathrm{d}s'\right)^2}\] \[=\sum_{\{s_i,a_i,s'_i\}\in\mathcal{D}} {\left(\int \hat{P}_\theta(s'|s_i,a_i) \left((\nabla_s V(s)|_{s'_i})^\intercal(s' - s'_i) \right) \mathrm{d}s'\right)^2}\] <p>We call the loss function the Value Gradient weighted Model loss (VaGraM).</p> <table> <tbody> <tr> <td><img src="https://pairlab.github.io/assets/img/blog/vagram-apr22/all_losses.png" alt="The value function of a pendulum environment and all discussed loss functions (VAML, MSE, VaGrAM) are shown. VaGrAM has a paraboloid shape like MSE but follows the gradient of the value function." width="100%"/></td> <td><em>A visual comparison of all the discussed value functions.</em></td> </tr> </tbody> </table> <h2 id="does-it-actually-help-in-practice">Does it actually help in practice?</h2> <p>The theory underlying VaGraM and VAML tells us that a value-aligned loss function should matter most in scenarios where the model is insufficient to capture the full complexity of the environment, or in cases where there are irrelevant dimensions in the state space for the control task. To verify that VaGraM actually increases the performance of a state-of-the-art model based RL algorithm, we conducted two main experiments:</p> <p><em>(a) Does VaGraM help when the model doesn’t fit!</em></p> <p>We took the popular DM control environment Hopper and Model-based Policy Optimization (MBPO). We replaced the MLE loss in MBPO by VaGraM and gradually decreased the model size to limit its capacity. The performance of the maximum likelihood solution quickly deteriorated as the model grew smaller, while the performance of the VaGraM augmented version stayed stable.</p> <p><img src="https://pairlab.github.io/assets/img/blog/vagram-apr22/hopper_small_joint.png" alt="" width="100%"/></p> <p><em>(b) Does VaGraM help when the model is hard to fit due to distracting observations.</em></p> <p>We appended superfluous dimensions to the state space following an independent non-linear dynamical system. This proved to be a very challenging environment, and both MBPO and VaGraM dropped in performance quickly with an increasing number of distracting dimensions. Nonetheless, VaGraM managed to stabilize the Hopper and achieve some forward motion when faced with 15 distracting dimensions, while the MLE solution collapsed to the performance of a random policy.</p> <p><img src="https://pairlab.github.io/assets/img/blog/vagram-apr22/hopper_distraction_joint.png" alt="" width="100%"/></p> <p>In further experiments we found that VaGraM is able to perform on par with MBPO in all DM control environments, and even outperforms it on the Ant benchmark. We hypothesize that the Ant state space is not perfectly tuned for the control problem, which shows that task-aware losses can achieve better performance even in environments where we previously did not expect the state and observation space to contain superfluous information.</p> <p>If you want to use and expand VaGraM, the implementation of the core loss function is surprisingly easy and can be included into most deep learning frameworks with only one additional backpropagation pass through the value function network.</p> <p>Here is the loss function code using the jax library:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">vagram_loss</span><span class="p">(</span><span class="n">model_prediction</span><span class="p">,</span> <span class="n">environment_sample</span><span class="p">,</span> <span class="n">value_function</span><span class="p">):</span>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://alshedivat.github.io/al-folio/feed.xml" rel="self" type="application/atom+xml"/><link href="https://alshedivat.github.io/al-folio/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-02-20T13:09:04+00:00</updated><id>https://alshedivat.github.io/al-folio/feed.xml</id><title type="html">blank</title><subtitle>A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design. </subtitle><entry><title type="html">Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra</title><link href="https://alshedivat.github.io/al-folio/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra/" rel="alternate" type="text/html" title="Google Gemini updates: Flash 1.5, Gemma 2 and Project Astra"/><published>2024-05-14T00:00:00+00:00</published><updated>2024-05-14T00:00:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2024/google-gemini-updates-flash-15-gemma-2-and-project-astra/"><![CDATA[<p>Learn more:Learn more:Learn more:Learn more:Learn more:Learn more:May 14, 2024 We’re introducing a series of updates across the Gemini family of models, including the new 1.5 Flash, our lightweight model for speed and efficiency, and Project Astra, our vision for the future of AI assistants. In December, we launched our first natively multimodal model Gemini 1.0 in three sizes: Ultra, Pro and Nano. Just a few months later we released 1.5 Pro, with enhanced performance and a breakthrough long context window of 1 million tokens.Developers and enterprise customers have been putting 1.5 Pro to use in incredible ways and finding its long context window, multimodal reasoning capabilities and impressive overall performance incredibly useful.We know from user feedback that some applications need lower latency and a lower cost to serve. This inspired us to keep innovating, so today, we’re introducing Gemini 1.5 Flash: a model that’s lighter-weight than 1.5 Pro, and designed to be fast and efficient to serve at scale.Both 1.5 Pro and 1.5 Flash are available in public preview with a 1 million token context window in Google AI Studio and Vertex AI. And now, 1.5 Pro is also available with a 2 million token context window via waitlist to developers using the API and to Google Cloud customers.We’re also introducing updates across the Gemini family of models, announcing our next generation of open models, Gemma 2, and sharing progress on the future of AI assistants, with Project Astra.Context lengths of leading foundation models compared with Gemini 1.5’s 2 million token capability1.5 Flash is the newest addition to the Gemini model family and the fastest Gemini model served in the API. It’s optimized for high-volume, high-frequency tasks at scale, is more cost-efficient to serve and features our breakthrough long context window.While it’s a lighter weight model than 1.5 Pro, it’s highly capable of multimodal reasoning across vast amounts of information and delivers impressive quality for its size.The new Gemini 1.5 Flash model is optimized for speed and efficiency, is highly capable of multimodal reasoning and features our breakthrough long context window.1.5 Flash excels at summarization, chat applications, image and video captioning, data extraction from long documents and tables, and more. This is because it’s been trained by 1.5 Pro through a process called “distillation,” where the most essential knowledge and skills from a larger model are transferred to a smaller, more efficient model.Read more about 1.5 Flash in our updated Gemini 1.5 technical report, on the Gemini technology page, and learn about 1.5 Flash’s availability and pricing.Over the last few months, we’ve significantly improved 1.5 Pro, our best model for general performance across a wide range of tasks.Beyond extending its context window to 2 million tokens, we’ve enhanced its code generation, logical reasoning and planning, multi-turn conversation, and audio and image understanding through data and algorithmic advances. We see strong improvements on public and internal benchmarks for each of these tasks.1.5 Pro can now follow increasingly complex and nuanced instructions, including ones that specify product-level behavior involving role, format and style. We’ve improved control over the model’s responses for specific use cases, like crafting the persona and response style of a chat agent or automating workflows through multiple function calls. And we’ve enabled users to steer model behavior by setting system instructions.We added audio understanding in the Gemini API and Google AI Studio, so 1.5 Pro can now reason across image and audio for videos uploaded in Google AI Studio. And we’re now integrating 1.5 Pro into Google products, including Gemini Advanced and in Workspace apps.Read more about 1.5 Pro in our updated Gemini 1.5 technical report and on the Gemini technology page.Gemini Nano is expanding beyond text-only inputs to include images as well. Starting with Pixel, applications using Gemini Nano with Multimodality will be able to understand the world the way people do — not just through text, but also through sight, sound and spoken language.Read more about Gemini 1.0 Nano on Android.Today, we’re also sharing a series of updates to Gemma, our family of open models built from the same research and technology used to create the Gemini models.We’re announcing Gemma 2, our next generation of open models for responsible AI innovation. Gemma 2 has a new architecture designed for breakthrough performance and efficiency, and will be available in new sizes.The Gemma family is also expanding with PaliGemma, our first vision-language model inspired by PaLI-3. And we’ve upgraded our Responsible Generative AI Toolkit with LLM Comparator for evaluating the quality of model responses.Read more on the Developer blog.As part of Google DeepMind’s mission to build AI responsibly to benefit humanity, we’ve always wanted to develop universal AI agents that can be helpful in everyday life. That’s why today, we’re sharing our progress in building the future of AI assistants with Project Astra (advanced seeing and talking responsive agent).To be truly useful, an agent needs to understand and respond to the complex and dynamic world just like people do — and take in and remember what it sees and hears to understand context and take action. It also needs to be proactive, teachable and personal, so users can talk to it naturally and without lag or delay.While we’ve made incredible progress developing AI systems that can understand multimodal information, getting response time down to something conversational is a difficult engineering challenge. Over the past few years, we’ve been working to improve how our models perceive, reason and converse to make the pace and quality of interaction feel more natural.Building on Gemini, we’ve developed prototype agents that can process information faster by continuously encoding video frames, combining the video and speech input into a timeline of events, and caching this information for efficient recall.By leveraging our leading speech models, we also enhanced how they sound, giving the agents a wider range of intonations. These agents can better understand the context they’re being used in, and respond quickly, in conversation.With technology like this, it’s easy to envision a future where people could have an expert AI assistant by their side, through a phone or glasses. And some of these capabilities are coming to Google products, like the Gemini app and web experience, later this year.We’ve made incredible progress so far with our family of Gemini models, and we’re always striving to advance the state-of-the-art even further. By investing in a relentless production line of innovation, we’re able to explore new ideas at the frontier, while also unlocking the possibility of new and exciting Gemini use cases.Learn more about Gemini and its capabilities. Your information will be used in accordance with Google’s privacy policy.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      Done. Just one step more.
+    
+      Check your inbox to confirm your subscription.
+    You are already subscribed to our newsletter.
+    You can also subscribe with a
+    different email address
+    
+    .
+    
+  Let’s stay in touch. Get the latest news from Google in your inbox.
+          Follow Us
+</code></pre></div></div>]]></content><author><name></name></author><category term="external-posts"/><category term="google"/><summary type="html"><![CDATA[We’re sharing updates across our Gemini family of models and a glimpse of Project Astra, our vision for the future of AI assistants.]]></summary></entry><entry><title type="html">a post with vega lite</title><link href="https://alshedivat.github.io/al-folio/blog/2024/vega-lite/" rel="alternate" type="text/html" title="a post with vega lite"/><published>2024-01-27T00:20:00+00:00</published><updated>2024-04-14T04:30:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2024/vega-lite</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2024/vega-lite/"><![CDATA[<p>This is an example post with some <a href="https://vega.github.io/vega-lite/">vega lite</a> code.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">vega_lite
+</span><span class="sb">{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A dot plot showing each movie in the database, and the difference from the average movie rating. The display is sorted by year to visualize everything in sequential order. The graph is for all Movies before 2019.",
+  "data": {
+    "url": "https://raw.githubusercontent.com/vega/vega/main/docs/data/movies.json"
+  },
+  "transform": [
+    {"filter": "datum['IMDB Rating'] != null"},
+    {"filter": {"timeUnit": "year", "field": "Release Date", "range": [null, 2019]}},
+    {
+      "joinaggregate": [{
+        "op": "mean",
+        "field": "IMDB Rating",
+        "as": "AverageRating"
+      }]
+    },
+    {
+      "calculate": "datum['IMDB Rating'] - datum.AverageRating",
+      "as": "RatingDelta"
+    }
+  ],
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "Release Date",
+      "type": "temporal"
+    },
+    "y": {
+      "field": "RatingDelta",
+      "type": "quantitative",
+      "title": "Rating Delta"
+    },
+    "color": {
+      "field": "RatingDelta",
+      "type": "quantitative",
+      "scale": {"domainMid": 0},
+      "title": "Rating Delta"
+    }
+  }
+}</span>
+<span class="p">```</span>
+</code></pre></div></div> <p>Which generates:</p> <pre><code class="language-vega_lite">{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A dot plot showing each movie in the database, and the difference from the average movie rating. The display is sorted by year to visualize everything in sequential order. The graph is for all Movies before 2019.",
+  "data": {
+    "url": "https://raw.githubusercontent.com/vega/vega/main/docs/data/movies.json"
+  },
+  "transform": [
+    {"filter": "datum['IMDB Rating'] != null"},
+    {"filter": {"timeUnit": "year", "field": "Release Date", "range": [null, 2019]}},
+    {
+      "joinaggregate": [{
+        "op": "mean",
+        "field": "IMDB Rating",
+        "as": "AverageRating"
+      }]
+    },
+    {
+      "calculate": "datum['IMDB Rating'] - datum.AverageRating",
+      "as": "RatingDelta"
+    }
+  ],
+  "mark": "point",
+  "encoding": {
+    "x": {
+      "field": "Release Date",
+      "type": "temporal"
+    },
+    "y": {
+      "field": "RatingDelta",
+      "type": "quantitative",
+      "title": "Rating Delta"
+    },
+    "color": {
+      "field": "RatingDelta",
+      "type": "quantitative",
+      "scale": {"domainMid": 0},
+      "title": "Rating Delta"
+    }
+  }
+}
+</code></pre> <p>This plot supports both light and dark themes.</p>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="charts"/><summary type="html"><![CDATA[this is what included vega lite code could look like]]></summary></entry><entry><title type="html">a post with TikZJax</title><link href="https://alshedivat.github.io/al-folio/blog/2023/tikzjax/" rel="alternate" type="text/html" title="a post with TikZJax"/><published>2023-12-12T22:25:00+00:00</published><updated>2023-12-12T22:25:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2023/tikzjax</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2023/tikzjax/"><![CDATA[<p>This is an example post with TikZ code. TikZJax converts script tags (containing TikZ code) into SVGs.</p> <script type="text/tikz">
+\begin{document}
+    \begin{tikzpicture}
+        \draw[red,fill=black!60!red] (0,0) circle [radius=1.5];
+        \draw[green,fill=black!60!green] (0,0) circle [x radius=1.5cm, y radius=10mm];
+        \draw[blue,fill=black!60!blue] (0,0) circle [x radius=1cm, y radius=5mm, rotate=30];
+    \end{tikzpicture}
+\end{document}
+</script>]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="diagrams"/><summary type="html"><![CDATA[this is what included TikZ code could look like]]></summary></entry><entry><title type="html">a post with custom blockquotes</title><link href="https://alshedivat.github.io/al-folio/blog/2023/custom-blockquotes/" rel="alternate" type="text/html" title="a post with custom blockquotes"/><published>2023-05-12T19:53:00+00:00</published><updated>2023-05-12T19:53:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2023/custom-blockquotes</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2023/custom-blockquotes/"><![CDATA[<p>This post shows how to add custom styles for blockquotes. Based on <a href="https://github.com/sighingnow/jekyll-gitbook">jekyll-gitbook</a> implementation.</p> <p>We decided to support the same custom blockquotes as in <a href="https://sighingnow.github.io/jekyll-gitbook/jekyll/2022-06-30-tips_warnings_dangers.html">jekyll-gitbook</a>, which are also found in a lot of other sites’ styles. The styles definitions can be found on the <a href="https://github.com/alshedivat/al-folio/blob/main/_sass/_typograms.scss">_sass/_typograms.scss</a> file, more specifically:</p> <div class="language-scss highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* Tips, warnings, and dangers */</span>
+<span class="nc">.post</span> <span class="nc">.post-content</span> <span class="nt">blockquote</span> <span class="p">{</span>
+  <span class="k">&amp;</span><span class="nc">.block-tip</span> <span class="p">{</span>
+    <span class="nl">border-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block</span><span class="p">);</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block-bg</span><span class="p">);</span>
+
+    <span class="nt">p</span> <span class="p">{</span>
+      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block-text</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nt">h1</span><span class="o">,</span>
+    <span class="nt">h2</span><span class="o">,</span>
+    <span class="nt">h3</span><span class="o">,</span>
+    <span class="nt">h4</span><span class="o">,</span>
+    <span class="nt">h5</span><span class="o">,</span>
+    <span class="nt">h6</span> <span class="p">{</span>
+      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-tip-block-title</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">&amp;</span><span class="nc">.block-warning</span> <span class="p">{</span>
+    <span class="nl">border-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block</span><span class="p">);</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block-bg</span><span class="p">);</span>
+
+    <span class="nt">p</span> <span class="p">{</span>
+      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block-text</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nt">h1</span><span class="o">,</span>
+    <span class="nt">h2</span><span class="o">,</span>
+    <span class="nt">h3</span><span class="o">,</span>
+    <span class="nt">h4</span><span class="o">,</span>
+    <span class="nt">h5</span><span class="o">,</span>
+    <span class="nt">h6</span> <span class="p">{</span>
+      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-warning-block-title</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">&amp;</span><span class="nc">.block-danger</span> <span class="p">{</span>
+    <span class="nl">border-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block</span><span class="p">);</span>
+    <span class="nl">background-color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block-bg</span><span class="p">);</span>
+
+    <span class="nt">p</span> <span class="p">{</span>
+      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block-text</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nt">h1</span><span class="o">,</span>
+    <span class="nt">h2</span><span class="o">,</span>
+    <span class="nt">h3</span><span class="o">,</span>
+    <span class="nt">h4</span><span class="o">,</span>
+    <span class="nt">h5</span><span class="o">,</span>
+    <span class="nt">h6</span> <span class="p">{</span>
+      <span class="nl">color</span><span class="p">:</span> <span class="nf">var</span><span class="p">(</span><span class="o">--</span><span class="n">global-danger-block-title</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div> <p>A regular blockquote can be used as following:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; This is a regular blockquote</span>
+<span class="gt">&gt; and it can be used as usual</span>
+</code></pre></div></div> <blockquote> <p>This is a regular blockquote and it can be used as usual</p> </blockquote> <p>These custom styles can be used by adding the specific class to the blockquote, as follows:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### TIP</span>
+<span class="gt">&gt;</span>
+<span class="gt">&gt; A tip can be used when you want to give advice</span>
+<span class="gt">&gt; related to a certain content.</span>
+{: .block-tip }
+</code></pre></div></div> <blockquote class="block-tip"> <h5 id="tip">TIP</h5> <p>A tip can be used when you want to give advice related to a certain content.</p> </blockquote> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### WARNING</span>
+<span class="gt">&gt;</span>
+<span class="gt">&gt; This is a warning, and thus should</span>
+<span class="gt">&gt; be used when you want to warn the user</span>
+{: .block-warning }
+</code></pre></div></div> <blockquote class="block-warning"> <h5 id="warning">WARNING</h5> <p>This is a warning, and thus should be used when you want to warn the user</p> </blockquote> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gt">&gt; ##### DANGER</span>
+<span class="gt">&gt;</span>
+<span class="gt">&gt; This is a danger zone, and thus should</span>
+<span class="gt">&gt; be used carefully</span>
+{: .block-danger }
+</code></pre></div></div> <blockquote class="block-danger"> <h5 id="danger">DANGER</h5> <p>This is a danger zone, and thus should be used carefully</p> </blockquote> ]]></content><author><name></name></author><category term="sample-posts"/><category term="formatting"/><category term="blockquotes"/><summary type="html"><![CDATA[an example of a blog post with custom blockquotes]]></summary></entry><entry><title type="html">Displaying External Posts on Your al-folio Blog</title><link href="https://alshedivat.github.io/al-folio/blog/2022/displaying-external-posts-on-your-al-folio-blog/" rel="alternate" type="text/html" title="Displaying External Posts on Your al-folio Blog"/><published>2022-04-23T23:20:09+00:00</published><updated>2022-04-23T23:20:09+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2022/displaying-external-posts-on-your-al-folio-blog</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2022/displaying-external-posts-on-your-al-folio-blog/"><![CDATA[<h3>External Posts on Your al-folio Blog</h3> <p>If you prefer publishing blog posts on medium.com or other external sources, starting version v0.5.0, <a href="https://github.com/alshedivat/al-folio">al-folio</a> lets you to display your external posts in the blog feed of your website! 🎉🎉</p> <p>Configuring external sources of super simple. After upgrading to v0.5.0, just add the following section to your _config.yml:</p> <pre>external_sources:<br />  - name: medium.com  # name of the source (arbitrary string)<br />    rss_url: <a href="https://medium.com/@al-folio/feed">https://medium.com/@&lt;your-medium-username&gt;/feed</a></pre> <p>The example above adds your medium.com blog post feed as an external source. But you can add arbitrary RSS feeds as sources.</p> <p>Any questions or suggestions? 👉 Start <a href="https://github.com/alshedivat/al-folio/discussions">a discussion on GitHub</a>!</p> <p><img src="https://medium.com/_/stat?event=post.clientViewed&amp;referrerSource=full_rss&amp;postId=b60a1d241a0a" width="1" height="1" alt=""/></p>]]></content><author><name></name></author><category term="external-posts"/><category term="medium"/></entry><entry><title type="html">Value Gradient weighted Model-Based Reinforcement Learning</title><link href="https://alshedivat.github.io/al-folio/blog/2022/vagram-voelcker/" rel="alternate" type="text/html" title="Value Gradient weighted Model-Based Reinforcement Learning"/><published>2022-04-21T15:12:00+00:00</published><updated>2022-04-21T15:12:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2022/vagram-voelcker</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2022/vagram-voelcker/"><![CDATA[<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> <p><a href="https://cvoelcker.de">Claas Voelcker</a>, <a href="https://victorliao.com/">Victor Liao</a>, <a href="https://animesh.garg.tech/">Animesh Garg</a>, <a href="https://sologen.net">Amir-massoud Farahmand</a><br/> <em><a href="https://iclr.cc/">ICLR 2022 (spotlight paper)</a></em><br/> <a href="https://openreview.net/pdf?id=4-D6CZkRXxI">paper</a>, <a href="https://github.com/pairlab/vagram">code</a></p> <p>With the rise of powerful and flexible function approximation, model-based reinforcement learning (MBRL) has gained a lot of traction in recent years. The core idea of MBRL is intuitive: (a) use the data obtained by online interaction of an agent with its environment, (b) build a surrogate model of this environment, and (c) use this model to improve the agent’s planning capabilities.</p> <table> <tbody> <tr> <td><img src="https://alshedivat.github.io/al-folio/assets/img/blog/vagram-apr22/dyna.png" alt="A DYNA algorithm visualized." width="100%"/></td> <td><em>A sketch of the DYNA algorithm. The model is used to generate additional data for the RL agent training.</em></td> </tr> </tbody> </table> <p>While intuitive, this approach can start to suffer once we obtain multimodal, high resolution sensory information. In these cases, the agent may be observing more of the world that it needs to for completing its task and creating a predictive model of the full environment may actually be harder than the task at hand itself!</p> <p>In most MBRL approaches, the environment model is obtained from the maximum likelihood objective, often via a reconstruction loss where the model tries to predict the next observation and agent will encounter from the previous observations and actions. However, if the observation contains many superfluous dimensions, the MLE objective is ineffective, as much of the model capacity is spent on approximating the full complexity of the observation space.</p> <p>Our key proposal is to regularize the model learning by the sensitivity of the value function for different inputs. Intuitively, if the value function is not influenced by changing the observation, the model is not required to be accurate. To highlight how we arrive at this solution, let’s look at the problem and previous proposals in more detail.</p> <h2 id="when-is-a-model-mismatched">When is a model mismatched?</h2> <table> <tbody> <tr> <td><img src="https://alshedivat.github.io/al-folio/assets/img/blog/vagram-apr22/model_mismatch.png" alt="A sketch of a driving car. Hikers by the side of the road are labeled important, a cloud is marked as unimportant." width="100%"/></td> <td><em>For a car driving task, it is important to differentiate important from unimportant environment features. While it is very important to predict the likelihood of pedestrians entering the road, the clouds in the sky are just distractions.</em></td> </tr> </tbody> </table> <p>This phenomenon has been termed the “objective mismatch”: the model does not know anything about the task the agent is trying to solve, no information from the task is fed back to the model learning, so the objectives of the agent (“obtaining high reward”) and the model (“achieving low reconstruction error”) do not necessarily align. When trying to solve this problem, we quickly run into a catch-22: one of the core assumptions underlying decision making is that we do not know how to solve the task, otherwise we would not be doing model learning in the first place. We need an accurate model of the environment before we can solve the task, so how can we feed task information back to the model before solving it?</p> <table> <tbody> <tr> <td><img src="https://alshedivat.github.io/al-folio/assets/img/blog/vagram-apr22/vaml_principle.png" alt="A sketch of the VAML principle. 4 models are shown, with different value functions." width="100%"/></td> <td><em>On the left side, the model predictions are correct. On the right hand side they are wrong. In the top right image, the model prediction does not lead to a change in the value function prediction, so no error is fed back. In the bottom right corner, the model error leads to a difference in value function, so the error is propagated to the RL algorithm.</em></td> </tr> </tbody> </table> <p>In their papers “Value-aware model learning” and “Iterative value-aware model learning”, Farahmand et al. present two potential solutions to the problem: by analyzing the way in which the model is used in a Dyna algorithm, they show that the model only influences the policy via its value function. This means that even if the model prediction is wrong, as long as the value function prediction aligns with the real environment, the RL agent is not impacted by the model error. Conversely, even if the model only makes a small error, if the value function is very sensitive to small changes in the state space, the resulting value prediction can be very wrong. Following from this observation, Farahmand et al. propose to replace the model learning loss with a loss that measures the difference in value function.</p> \[\mathcal{L}_V(\hat{p}, p, \mu) = \int \mu(s,a) \bigg|\overbrace{\int p(s'|s,a)V(s')\mathrm{d}s'}^{\text{environment value estimate}} - \overbrace{\int \hat{p}(s'|s,a) V(s') \mathrm{d}s'}^{\text{model value estimate}}\bigg|^2 \mathrm{d} (s,a)\] <h3 id="does-this-solve-the-objective-mismatch-problem">Does this solve the objective mismatch problem?</h3> <p>Although the theoretical underpinnings of the VAML approach are rigorous, when naively applying the algorithm in practice, two problems quickly become apparent.</p> <p>(1) In many RL environments, we cannot assume that the state space is fully explored in early iterations, which means that there are many possible states in which we do not have data to learn a value function. However, a function approximation will still assign a value to these points, interpolating from previously seen points in the training set, often resulting in nonsensical values. When the model predicts that a next state is in an unexplored region of the state space, the VAML loss will not penalize it for predicting a completely wrong state if the value functions align. In some cases it can even drive the prediction further into the unexplored regions, simply because it only seeks to find a local optimum of the value function prediction. When the value function is updated, the predictions in the regions of the state space that are not covered by data often change rapidly, which suddenly cause very large value function prediction errors when using model data.</p> <p>(2) The second problem is the smoothness of the value function and resulting VAML loss. In many common applications, the value function is not convex or smooth, exhibiting plateaus and ridges that make the VAML loss difficult to optimize. In the image below we show the value function of the Pendulum environment. The non-smooth nature of the function shows in the two sharp ridges. When non-smooth value functions are coupled with out-of-distribution value estimates (problem #1), this can result in massive gradient norms and subsequent gradient descent procedure using this estimate can diverge rapidly.</p> <h2 id="value-gradient-aware-model-learning">Value-gradient aware model learning</h2> <p>To solve the model mismatch problem without introducing new optimization challenges, we argue that a good model loss should have three properties:</p> <ul> <li>It should minimize the value prediction error under the model. This is the task awareness.</li> <li>It should not lead to models predicting next states outside of the data covered region. This ensures stability with function approximation.</li> <li>It should be reasonably smooth. This enables easier optimization.</li> </ul> <p>Our key insight is to include the value function into the loss as a measure of the sensitivity of model errors for different data points and observation dimensions. To estimate this, we compute a convex approximation of the value function around each data point by taking its first order Taylor approximation (squared).</p> <p>This gives us a measure of how sensitive the value function is to distortions in the state space. If the gradient of the value function is low in a specific dimension, the impact of model prediction errors will be relatively small. Conversely, in regions of high gradient, the value function prediction changes rapidly, so the model should measure these dimensions more carefully. In mathematical terms, the gradient allows us to augment the L2 loss in state space by a value function-dependent local regularization for each data point.</p> \[\hat{\mathcal{L}}_{\hat{V}}=\sum_{\{s_i,a_i,s'_i\}\in\mathcal{D}}{\left(V(s'_i) - \int \hat{P}_\theta(s'|s_i,a_i) (V(s'_i) + (\nabla_s V(s)|_{s'_i})^\intercal (s' - s'_i)) \mathrm{d}s'\right)^2}\] \[=\sum_{\{s_i,a_i,s'_i\}\in\mathcal{D}} {\left(\int \hat{P}_\theta(s'|s_i,a_i) \left((\nabla_s V(s)|_{s'_i})^\intercal(s' - s'_i) \right) \mathrm{d}s'\right)^2}\] <p>We call the loss function the Value Gradient weighted Model loss (VaGraM).</p> <table> <tbody> <tr> <td><img src="https://alshedivat.github.io/al-folio/assets/img/blog/vagram-apr22/all_losses.png" alt="The value function of a pendulum environment and all discussed loss functions (VAML, MSE, VaGrAM) are shown. VaGrAM has a paraboloid shape like MSE but follows the gradient of the value function." width="100%"/></td> <td><em>A visual comparison of all the discussed value functions.</em></td> </tr> </tbody> </table> <h2 id="does-it-actually-help-in-practice">Does it actually help in practice?</h2> <p>The theory underlying VaGraM and VAML tells us that a value-aligned loss function should matter most in scenarios where the model is insufficient to capture the full complexity of the environment, or in cases where there are irrelevant dimensions in the state space for the control task. To verify that VaGraM actually increases the performance of a state-of-the-art model based RL algorithm, we conducted two main experiments:</p> <p><em>(a) Does VaGraM help when the model doesn’t fit!</em></p> <p>We took the popular DM control environment Hopper and Model-based Policy Optimization (MBPO). We replaced the MLE loss in MBPO by VaGraM and gradually decreased the model size to limit its capacity. The performance of the maximum likelihood solution quickly deteriorated as the model grew smaller, while the performance of the VaGraM augmented version stayed stable.</p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/vagram-apr22/hopper_small_joint.png" alt="" width="100%"/></p> <p><em>(b) Does VaGraM help when the model is hard to fit due to distracting observations.</em></p> <p>We appended superfluous dimensions to the state space following an independent non-linear dynamical system. This proved to be a very challenging environment, and both MBPO and VaGraM dropped in performance quickly with an increasing number of distracting dimensions. Nonetheless, VaGraM managed to stabilize the Hopper and achieve some forward motion when faced with 15 distracting dimensions, while the MLE solution collapsed to the performance of a random policy.</p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/vagram-apr22/hopper_distraction_joint.png" alt="" width="100%"/></p> <p>In further experiments we found that VaGraM is able to perform on par with MBPO in all DM control environments, and even outperforms it on the Ant benchmark. We hypothesize that the Ant state space is not perfectly tuned for the control problem, which shows that task-aware losses can achieve better performance even in environments where we previously did not expect the state and observation space to contain superfluous information.</p> <p>If you want to use and expand VaGraM, the implementation of the core loss function is surprisingly easy and can be included into most deep learning frameworks with only one additional backpropagation pass through the value function network.</p> <p>Here is the loss function code using the jax library:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">vagram_loss</span><span class="p">(</span><span class="n">model_prediction</span><span class="p">,</span> <span class="n">environment_sample</span><span class="p">,</span> <span class="n">value_function</span><span class="p">):</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">model_prediction</span> <span class="o">-</span> <span class="n">environment_sample</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">grad</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="nf">value_and_grad</span><span class="p">(</span><span class="n">value_function</span><span class="p">)(</span><span class="n">environment_sample</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">jnp</span><span class="p">.</span><span class="nf">square</span><span class="p">(</span><span class="n">grad</span> <span class="o">*</span> <span class="n">err</span><span class="p">).</span><span class="nf">sum</span><span class="p">()</span>
-</code></pre></div></div>]]></content><author><name></name></author><summary type="html"><![CDATA[Value Gradient weighted Model-Based Reinforcement Learning presented at ICLR 2022]]></summary></entry><entry><title type="html">Remote Sim2Real for Dexterous In-Hand Manipulation</title><link href="https://pairlab.github.io/blog/2021/remote-sim2real-trifinger/" rel="alternate" type="text/html" title="Remote Sim2Real for Dexterous In-Hand Manipulation"/><published>2021-09-21T10:12:00+00:00</published><updated>2021-09-21T10:12:00+00:00</updated><id>https://pairlab.github.io/blog/2021/remote-sim2real-trifinger</id><content type="html" xml:base="https://pairlab.github.io/blog/2021/remote-sim2real-trifinger/"><![CDATA[<h2 id="transferring-dexterous-manipulation-from-gpu-simulation-to-a-remote-real-world-trifinger"><strong>Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger</strong></h2> <p>Arthur Allshire, Mayank Mittal, Varun Lodaya, Viktor Makoviychuk, Denys Makoviichuk, Felix Widmaier, Manuel Wüthrich, Stefan Bauer, Ankur Handa, Animesh Garg.<br/> <a href="http://arxiv.org/abs/2108.09779">Paper</a>, <a href="https://s2r2-ig.github.io/">Project</a></p> <p><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/s2r2-teaser.jpeg" alt="Teaser image for Remote Sim2Real." width="80%"/></p> <p><em>Figure: We have shown that large scale GPU-based simulation can be used to empower robot learning in simulation, and such solutions can be transferred to real robots without the need for physical access to the robots.</em></p> <h3 id="motivation">Motivation</h3> <h4 id="1-typical-robotics-solutions-take-weeks-if-not-months-to-develop-and-test">1. Typical robotics solutions take weeks, if not months, to develop and test</h4> <p>A critical question when designing a Machine Learning based solution is “what is the resource cost of developing this solution?”. There are typically many factors that go into answering this: time, developer skill, and computing resources. It’s rare that a researcher can maximize all of these aspects, hence optimizing the solution development process is critical. This problem is further aggravated in robotics since each task typically requires a completely unique solution that involves a non-trivial amount of hand-crafting from an expert!</p> <p>Dexterous multi-finger object manipulation has been one of the long-standing challenges in control and learning for robot manipulation [<a href="https://ieeexplore.ieee.org/document/844067">Okamura et al 2001.</a>, <a href="https://arxiv.org/abs/1806.00942">Sundaralingam et al. 2018</a>, <a href="https://ieeexplore.ieee.org/abstract/document/7487156">Kumar et al. 2016</a>, <a href="https://arxiv.org/abs/1810.06045">Zhu et al. 2018</a>]. While challenges in high-dimensional control for locomotion as well as image based object manipulation with simplified grippers have made remarkable progress in the last 5 years, Multi-finger Dexterous Manipulation remains a high-impact yet hard-to-crack problem. This challenge is due to a combination of issues:</p> <ul> <li>High-dimensional coordinated control,</li> <li>Inefficient simulation platforms,</li> <li>Uncertainty in observations and control in real-robot operation, and</li> <li>Lack of robust and cost-effective hardware platforms.</li> </ul> <p>These challenges coupled with lack of availability of large scale compute and robotic hardware has limited diversity among the teams attempting to address these problems.</p> <p><strong>Our goal in this effort is to present a path for democratization of robot learning and a viable solution through large scale simulation and robotics-as-a-service.</strong> We focus on 6-DoF object manipulation by using a dexterous multi-finger manipulator as a case study. We show how large-scale simulation done on a desktop grade GPU and cloud-based robotics can enable roboticists to perform research in robotic learning with modest resources.</p> <p>While a number of efforts in in-hand manipulation have attempted to build robust systems [<a href="https://ieeexplore.ieee.org/document/844067">Okamura et al 2001.</a>, <a href="https://arxiv.org/abs/1806.00942">Sundaralingam et al. 2018</a>, <a href="https://ieeexplore.ieee.org/abstract/document/7487156">Kumar et al. 2016</a>, <a href="https://arxiv.org/abs/1810.06045">Zhu et al. 2018</a>], one of the most impressive demonstrations came a few years ago from a team at OpenAI which built a system termed Dactyl [<a href="https://arxiv.org/pdf/1910.07113.pdf">OpenAI et al.</a>]. It was an impressive feat of engineering to achieve multi-object in-hand reposing with a Shadow Hand. It was remarkable not only for the final performance but also in the amount of compute and engineering effort to build this demo! As per public estimates, it used 13,000 years worth of computing and the hardware itself was costly and yet required repeated interventions! This immense resource requirement effectively prevented others from reproducing this result and as a result building on it.</p> <p>We show that our systems effort is a path to address this resource inequality, in the sense that a similar result can now be achieved in under a day using a single desktop-grade GPU and CPU.</p> <h4 id="2-the-complexity-of-standard-pose-representations-in-the-context-of-reinforcement-learning">2. The complexity of standard pose representations in the context of Reinforcement Learning</h4> <p>During initial experimentation, we followed previous works [<a href="https://openai.com/blog/learning-dexterity/">OpenAI et al, 2018</a>, <a href="http://proceedings.mlr.press/v87/liang18a/liang18a.pdf">Liang et al, 2018</a>] in providing our policy with observations based on a 3-D cartesian position plus a 4-Dimensional quaternion representation of pose to specify the current and target position of the cube, and reward based on L2 norm (position) and angular difference (orientation) between the desired and current pose of the cube. We found this approach to produce unstable reward curves which was good at optimising the position portion of the reward, even after adjusting relative weightings.</p> <p><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/figure_4.png" alt="" width="50%"/></p> <p><strong>Training curves on the Trifinger manipulation task using a reward function similar to previous wokrs. The nature of the reward makes it very difficult for the policy to optimize, particularly achieving an orientation goal.</strong></p> <p>Prior work has shown the benefits of alternate representations of spatial rotation when using neural networks [<a href="https://arxiv.org/abs/1812.07035">Zhou et al, 2020</a>]. Furthermore, it has been shown that mixing losses this way can lead to collapsing towards only optimising a single objective [<a href="https://www.engraved.blog/why-machine-learning-algorithms-are-hard-to-tune/">Degrave et al. 2020</a>]. The chart implies a similar behaviour, where only position reward is being optimised for.</p> <p>Inspired by this, we searched for a representation of pose in SO(3) for our 6-DoF reposing problem, which would also naturally trade off position and rotation rewards in a way suited to optimisation via reinforcement learning.</p> <h4 id="3-closing-the-sim2real-gap-with-remote-robots">3. Closing the sim2real gap with remote robots</h4> <p>The problem of access to physical robotic resources was exacerbated by the COVID-19 pandemic. Those fortunate enough to previously have access to robots in their research groups found that the number of people with physical access to the robots was greatly decreased; those that relied on other institutions to provide the hardware were often alienated completely due to physical distancing restrictions.</p> <p>Our work demonstrated the feasibility of a Robotics as-a-Service (RaaS) approach in tandem with robot learning, where a small team of people (something about maintaining the robot) and a separate team of researchers were able to upload a trained policy remotely collect data for post-processing.</p> <p>While our team of researchers was primarily based in North America, the physical robot was located in Europe, and so for the duration of the project, our development team was never able to physically be in the same room as the robots we were working on. Remote acces meant we could not vary the task at hand to make it easier, and limited the kinds of iteration and experiments we could do. For example, a priori system identification was not possible as our policy ran on a randomly chosen robot in the entire farm.</p> <p>We found that despite the lack of physical access, we were able to produce a robust and working policy to solve the 6 Degree-of-Freedom reposing task through a combination of several techniques: Realistic GPU-accelerated simulation, model-free RL, domain randomisation, and task-appropriate representation of pose.</p> <h3 id="method-overview">Method Overview</h3> <p><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/system.png" alt="" width="100%"/> <strong>Our system trains using the IsaacGym simulator on 16,384 environments in parallel on a single NVIDIA Tesla V100 or RTX 3090 GPU. Inference is then conducted remotely on a TriFinger robot located across the Atlantic in Germany using the uploaded actor weights. The infrastructure on which we perform Sim2Real transfer is provided courtesy of the organisers of the <a href="https://real-robot-challenge.com/">Real Robot Challenge</a>.</strong></p> <h4 id="1-collect-and-process-training-examples">1. Collect and process training examples</h4> <p>Using the IsaacGym simulator, we gather high-throughput experience (~100K samples/sec on an RTX 3090). The sample’s object pose and goal pose are to 8 key points of the object’s shape, and domain randomizations are applied to the observations, and environment parameters in order to simulate variations in the proprioceptive sensors of the real robots and cameras. These observations, along with some privileged state information from the simulator, were then used to train our policy.</p> <h4 id="2-train-policy">2. Train policy</h4> <p>Our policy is trained to maximize a custom reward using the Proximal Policy Optimization (PPO) algorithm (<a href="https://arxiv.org/abs/1707.06347">Schulman et al., 2017</a>). Our reward incentivizes the policy to balance the distance of the robot’s fingers from the object, the speed of movement, and the distance from the object to a specified goal position to solve the task efficiently, despite being a general formulation applicable broadly across in-hand manipulation applications. The policy outputs the torques for each of the robot’s motors, which are then passed back into the simulation environment.</p> <h4 id="3-transfer-policy-to-real-robot-and-run-inference">3. Transfer Policy to real robot and run inference</h4> <p>Once we have trained a policy, we upload it to the controller for the real robot. The cube is tracked on the system using 3 cameras. We combine proprioceptive information available from the system along with the converted keypoints representation to provide input to the policy. We repeat the camera-based cube-pose observations for subsequent rounds of policy evaluation to allow the policy to take advantage of the higher-frequency proprioceptive data available to the robot. The data collected from the system is then used to determine the success rate of the policy. The tracking system on the robot currently only supports cubes, however this could be extended in future to arbitrary objects.</p> <h3 id="results">Results</h3> <h4 id="1-the-key-points-representation-of-pose-greatly-improves-success-rate-and-convergence">1. The key points representation of pose greatly improves success rate and convergence</h4> <p><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/four_setups.png" alt="" width="50%"/>.</p> <p><strong>Success Rate on the real robot plotted for different trained agents. O-PQ and O-KP stand for position+quaternion and keypoints observations respectively, and R-PQ and R-KP stand for linear+angular and keypoints based displacements respectively. Each mean made of N=40 trials and error bars calculated based on an 80% confidence interval.</strong></p> <p>We were able to demonstrate that the policies that used our keypoint representation in either the observation provided to the policy or in reward calculation achieved a higher success rate than using a position+quaternion representation, with the highest performance coming from the policies that used the alternate representation for both elements.</p> <p><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/dr_no_dr.png" alt="" width="100%"/>.</p> <p><strong>Success Rate over the course of training without and with domain randomization. Each curve is the average of 5 seeds; the shaded areas show standard deviation. Note that training without DR is shown to 1B steps to verify performance; use of DR didn’t have a large impact on simulation success rates after initial training</strong></p> <p>We performed experiments to see how the use of keypoints impacted the speed and convergence level of our trained policies. As can be seen, using keypoints as part of the reward considerably sped up training, improved the eventual success rate, and reduced variance between trained policies. The magnitude of the difference was surprising to us given the simplicity and generality of using keypoints as part of reward.</p> <h4 id="2-the-trained-policies-can-be-deployed-straight-from-the-simulator-to-remote-real-robots">2. The trained policies can be deployed straight from the simulator to remote real robots</h4> <table> <thead> <tr> <th style="text-align: center">Dropping and Regrasping</th> <th style="text-align: center">Recovering from failure</th> </tr> </thead> <tbody> <tr> <td style="text-align: center"><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/drop_repose.gif" alt="" width="95%"/></td> <td style="text-align: center"><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/recover.gif" alt="" width="95%"/></td> </tr> </tbody> </table> <p>The above demonstration displays an emergent behaviour that we’ve termed “dropping and regrasping”. In this maneuver, the robot learns to drop the cube when it is close to the correct position, re-grasp, and pick it back up. This enables the robot to get a stable grasp on the cube in the right position, which leads to more successful attempts. It’s worth noting that this video is in real-time, i.e., it is not sped up in any way.</p> <p>The robot also learns to use the motion of the cube to the correct location in the arena as an opportunity to simultaneously rotate it on the ground to achieve the correct grasp in challenging target locations far from the center of the fingers’ workspace.</p> <p>In this demonstration we also see how a poor grasp lead to the cube slipping. Without being explicitly trained to, the robot has learned how to recover from such falls.</p> <p>Our policy is also robust towards dropping - it is able to recover from a cube falling out of the hand and retrieve it from the ground.</p> <h4 id="3-robustness-to-physics-and-object-variations">3. Robustness to physics and object variations</h4> <p>We found that our policy was fairly robust to variations in environment parameters in simulation. For example, it gracefully handles scaling up and down of the cube by ranges far exceeding randomization:</p> <table> <thead> <tr> <th style="text-align: center">Scaled up cube</th> <th style="text-align: center">Scaled down cube</th> </tr> </thead> <tbody> <tr> <td style="text-align: center"><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/big_cube.gif" alt="" width="95%"/></td> <td style="text-align: center"><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/small_cube.gif" alt="" width="95%"/></td> </tr> </tbody> </table> <p>Surprisingly, we found that our policies were able to generalise 0-shot to other objects, for example a cuboid or a sphere:</p> <table> <thead> <tr> <th style="text-align: center">Cuboid</th> <th style="text-align: center">Sphere</th> </tr> </thead> <tbody> <tr> <td style="text-align: center"><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/cuboid.gif" alt="" width="95%"/></td> <td style="text-align: center"><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/sphere.gif" alt="" width="95%"/></td> </tr> </tbody> </table> <p>Note that generalisation in scale and object is taking place due to the policy’s own robustness: we do not give it any shape information. The keypoints remain in the same place as they would on a cube:</p> <p><img src="https://pairlab.github.io/assets/img/blog/s2r2-sept21/keypoints_cube.gif" alt="" width="60%"/></p> <p><em>An example of a successful completion of the manipulation task with the keypoints visualized.</em></p> <h3 id="takeaways-and-potentials">Takeaways and Potentials</h3> <p>Our method shows a viable path for robot learning through large scale GPU-based simulation. We show how it is possible to train a policy using moderate levels of computational resources (desktop-level compute) and transfer to a remote robot. We also show that these policies are robust to a variety of changes in the environment and the object being manipulated. We hope our work can serve as a platform for researchers going forward.</p> <h3 id="paper-covered-in-this-post">Paper covered in this post</h3> <p><a href="https://arxiv.org/abs/2108.09779"><strong>Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger</strong></a>.<br/> <a href="https://allshire.org/">Arthur Allshire</a>, <a href="https://mayankm96.github.io/">Mayank Mittal</a>, <a href="https://ca.linkedin.com/in/varun-lodaya">Varun Lodaya</a>, <a href="https://www.linkedin.com/in/makoviychuk-viktor-9199988">Viktor Makoviychuk</a>, <a href="https://www.linkedin.com/in/denys-makoviichuk-2219a72b">Denys Makoviichuk</a>, <a href="https://scholar.google.de/citations?user=mmfbJaEAAAAJ&amp;hl=en">Felix Widmaier</a>, <a href="https://scholar.google.de/citations?user=7EWrVYIAAAAJ&amp;hl=en">Manuel Wuthrich</a>, <a href="https://www.is.mpg.de/~sbauer">Stefan Bauer</a>, <a href="https://ankurhanda.github.io/">Ankur Handa</a>, <a href="http://animesh.garg.tech/">Animesh Garg</a>.<br/> Under Review</p> <p><strong>Acknowledgement:</strong> This work was led by University of Toronto in collaboration with Nvidia, Vector Institute, MPI, ETH and Snap. We would like to thank Vector Institute for computing support, as well as the CIFAR AI Chair for research support to Animesh Garg.</p> ]]></content><author><name></name></author><summary type="html"><![CDATA[Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger]]></summary></entry><entry><title type="html">Learning Tool Affordances without Labels</title><link href="https://pairlab.github.io/blog/2021/giftturpin/" rel="alternate" type="text/html" title="Learning Tool Affordances without Labels"/><published>2021-06-15T15:12:00+00:00</published><updated>2021-06-15T15:12:00+00:00</updated><id>https://pairlab.github.io/blog/2021/giftturpin</id><content type="html" xml:base="https://pairlab.github.io/blog/2021/giftturpin/"><![CDATA[<h2 id="generalizable-interaction-aware-functional-tool-affordances-without-labels"><strong>Generalizable Interaction-aware Functional Tool Affordances without Labels</strong></h2> <p><a href="http://www.cs.toronto.edu/~dylanturpin/">Dylan Turpin</a>, <a href="https://www.linkedin.com/in/liquan-wang-a37634196/?originalSubdomain=ca">Liquan Wang</a>, <a href="https://tsogkas.github.io/">Stavros Tsogkas</a>, <a href="https://www.cs.toronto.edu/~sven/">Sven Dickinson</a>, <a href="https://animesh.garg.tech/">Animesh Garg</a><br/> <em><a href="http://www.roboticsproceedings.org/rss17/p060.html">Robotics Systems &amp; Science</a>, 2021.</em><br/> <a href="https://arxiv.org/abs/2106.14973">paper</a>, <a href="https://youtu.be/7N1XiIzu9v4">video</a></p> <p><img src="https://pairlab.github.io/assets/img/blog/gift-jul21/gift-teaser.svg" alt="Teaser image for GIFT. Discover tool affordances by interacting with procedurally-generated tools across three manipulation tasks: hooking, reaching and hammering. Train an affordance model to detect sparse keypoints representing tool geometry and predict distributions over pairs of keypoints to grasp and interact with for each task by learning from the contact data of sampled trajectories. Affordance predictions from RGBD observations of unknown objects match expected task semantics across hooking, reaching and hammering and are similar to those of a human labeller, e.g. for hammering." width="120%"/></p> <p><em>Figure 1: Rather than relying on human labels, the GIFT framework discovers affordances from goal-directed interaction with a set of procedurally-generated tools.</em></p> <h3 id="motivation">Motivation</h3> <p><strong>1. We should represent tools by what we can do with them.</strong></p> <p>When it comes to tools, ‘‘What can I do with this?’’ is the key question and there usually isn’t just one answer. There are many basic ways of using a hammer (to strike, to pry, to reach) each of which contains many finer-grained possibilities (strike with a high grip for precision, or a low grip for power).</p> <p>We learn a representation that captures these possibilities. Specifically, we represent an action possibility (i.e., an affordance) as a tuple (task ID, grasp keypoint, interaction keypoint).</p> <p>We build on a line of work that investigates behaviour-grounded object representations, especially KETO (<a href="https://arxiv.org/abs/1910.11977"><em>Fang et al. 2019</em></a>) and kPAM (<a href="https://arxiv.org/abs/1903.06684"><em>Manuelli et al. 2019</em></a>). In contrast to these, our learned representations do not rely on human labels (as in kPAM) or a predefined manipulation strategy (as in KETO).</p> <p><strong>2. Behaviour-grounded predictions are testable predictions.</strong></p> <p>Because our predicted tool representations are <em>behaviour-grounded</em> (i.e., they correspond to possible actions) we can test them against reality by executing the corresponding actions and checking the result. This ‘‘predict, act, check’’ routine gives us a <em>self-supervised</em> training loop that does not rely on human labels.</p> <p>To close the loop, we need a way of translating predicted representations into executable motions, which is a challenge, because the space of possible actions is large. Prior works rely on workarounds like additional human supervision or constraining the action space, but these simplifications come with serious drawbacks.</p> <p><em>Human supervision</em> (e.g., with keypoint labels) is expensive and introduces human bias. We want our representations to be discovered only from the constraints of the manipulation tasks.</p> <p><em>Constraining the action space</em> (e.g., to pre-defined motion primitives) means some action possibilities will never be explored.</p> <p><strong>3. Constraining behaviour limits affordance discovery.</strong></p> <p>If we constrain behaviour by limiting the action space or using a pre-defined manipulation strategy, we will never discover affordances corresponding to excluded behaviours.</p> <p>We generate our trajectories with a simple sampling-based motion planner that is conditioned on the predicted keypoints through a reward function with one term encoding task success and another encouraging use of the selected keypoints.</p> <p>Actions are sampled from the full action space, so motion generation is free to use tools in unexpected ways, discovering new possibilities that could not have been explored if we were tied to a limited set of motion primitivies or a pre-defined manipulation strategy.</p> <h3 id="method-overview">Method overview</h3> <p><img src="https://pairlab.github.io/assets/img/blog/gift-jul21/gift-pipeline.svg" alt="The training pipeline." width="120%"/></p> <p><em>Figure 2: The training pipeline. Our framework learns affordance models for hooking, reaching and hammering by interacting with a set of tools. All three models share a task-independent keypoint detector, which takes an RGBD image of a tool and predicts a set of keypoints representing a tool’s geometry and providing possible choices of grasp and interaction regions. The task-conditional portion of each model, which is trained on the outcome of trajectories collected from motion planning, selects two keypoints which become our functional tool representation.</em></p> <p><strong>Collect experience in the full action space.</strong></p> <p>We begin by generating a set of tools as concatenations of pairs of convex meshes into T, X and L shapes. We sample a tool from our training set, place it on a table and capture an RGBD observation of the tool from above.</p> <p>From this observation, our SparseKP network infers a set of keypoints representing the tool’s geometry and providing possible choices of regions to grasp and interact with. This module is pre-trained using unsupervised keypoint losses and is shared across tasks.</p> <p>A grasp keypoint and provisional interaction keypoint are uniformly sampled from the sparse ones. We take a crop of the RGBD observation around the grasp keypoint and pass it to a grasping network to infer a nearby stable grasp. This grasp is executed and we use MPPI to generate the rest of the trajectory. MPPI iteratively samples action sequences from the full action space and takes their average weighted by reward.</p> <p>Part of this reward encodes task success and part encourages use of the provisional interaction keypoint. In this way we are able to sample from the full action space while still conditioning on the sparse selection of keypoints on the tool’s surface.</p> <p><strong>Extract training examples from trajectory contact data.</strong></p> <p>Once we have a trajectory, we extract a training example. This consists of a reward, grasp KP, interaction KP and the full set of sparse keypoints. We replace the provisional choice of interaction KP with the keypoint closest to the actual first contact between the tool and the target object.</p> <p>The provisional interaction KP is sampled, and conditioned on, in order to encourage exploration of different manipulation strategies. But in the end, we want to use whichever interaction keypoint works best for the task.</p> <p><strong>Train keypoint selection to maximize task reward.</strong></p> <p>We sample a training example and build a graph out of its sparse keypoints. This graph is fed to a task-specific GNN, which predicts a distribution over pairs of keypoint indices (i.e., the joint distribution over grasp and interaction keypoints). Finally, we update the GNN weights using REINFORCE.</p> <p>At test time, we sample a tool from the holdout test set. The grasp and interaction keypoints are selected based on the predicted distribution, rather than uniformly, and we enforce that the selected interaction point be used, rather than treating it as provisional.</p> <h3 id="results">Results</h3> <p>So, how well does it work in practice?</p> <p>Quantitatively GIFT beats baseline methods on all three tasks and qualitatively the choices of grasp and interaction points usually match task semantics and agree with the choices of a human oracle.</p> <p><img src="https://pairlab.github.io/assets/img/blog/gift-jul21/gift-table.svg" alt="Quantitative results." width="70%"/></p> <p><em>Table 1: GIFT outperforms baselines on all tasks and matches a human oracle on two of three tasks using novel tools. Reward is normalized with respect to the human oracle.</em></p> <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe src="https://streamable.com/e/6l3jwp" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width: 100%; height: 100%; position: absolute;"></iframe></div> <p><em>Video 1: Hammering a peg with tools from the holdout set. Low grasp points increase leverage (providing greater strike point velocity and peg impulse for a given joint velocity). Strike points on the hard metallic head allow accumulated kinetic energy to be rapidly transferred to the peg for maximum impulse.</em></p> <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe src="https://streamable.com/e/sehup0" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width: 100%; height: 100%; position: absolute;"></iframe></div> <p><em>Video 2: Hooking a thermos with tools from the holdout set. Our original intention was to constrain the task such that only the right angle between head and handle could be used to hook. In fact, the motion planner finds other solutions.</em></p> <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe src="https://streamable.com/e/ciwknw" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width: 100%; height: 100%; position: absolute;"></iframe></div> <p><em>Video 3: Constrained reaching with tools from the holdout set. To manipulate an object on the other side of a wall, the tool must fit through the hole and reach the target object.</em></p> <h3 id="future-directions">Future directions</h3> <p>By grounding our affordance representation in contact data and sampling trajectories from the full action space, we are able to discover unbiased affordances for each task without human labels. There are however important limitations to our method that we think future work could address.</p> <p>Our sparse keypoints are stored as raw locations, without any additional property encodings. A natural extension to our method would encode additional local information at each keypoint. This could capture local geometric or material properties and allow for more robust reasoning about the relationship between materials, fine-grained geometry and task requirements.</p> <p>Our motion sampling routine depends on access to simulatable dynamics. This makes it non-trivial to transfer our results to real robots. We plan to experiment with recovering 3D models from visual observations, so we can leverage our learned representation to plan in simulator and execute on a real robot.</p> <p>For details on the background, implementation and results read the full paper <a href="https://arxiv.org/abs/2106.14973">here</a> and watch the <a href="https://streamable.com/eylzdj">presentation</a>.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[GIFT: Generalizable Interaction-aware Functional Tool representations (at RSS 2021)]]></summary></entry></feed>
+</code></pre></div></div>]]></content><author><name></name></author><summary type="html"><![CDATA[Value Gradient weighted Model-Based Reinforcement Learning presented at ICLR 2022]]></summary></entry><entry><title type="html">Remote Sim2Real for Dexterous In-Hand Manipulation</title><link href="https://alshedivat.github.io/al-folio/blog/2021/remote-sim2real-trifinger/" rel="alternate" type="text/html" title="Remote Sim2Real for Dexterous In-Hand Manipulation"/><published>2021-09-21T10:12:00+00:00</published><updated>2021-09-21T10:12:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2021/remote-sim2real-trifinger</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2021/remote-sim2real-trifinger/"><![CDATA[<h2 id="transferring-dexterous-manipulation-from-gpu-simulation-to-a-remote-real-world-trifinger"><strong>Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger</strong></h2> <p>Arthur Allshire, Mayank Mittal, Varun Lodaya, Viktor Makoviychuk, Denys Makoviichuk, Felix Widmaier, Manuel Wüthrich, Stefan Bauer, Ankur Handa, Animesh Garg.<br/> <a href="http://arxiv.org/abs/2108.09779">Paper</a>, <a href="https://s2r2-ig.github.io/">Project</a></p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/s2r2-teaser.jpeg" alt="Teaser image for Remote Sim2Real." width="80%"/></p> <p><em>Figure: We have shown that large scale GPU-based simulation can be used to empower robot learning in simulation, and such solutions can be transferred to real robots without the need for physical access to the robots.</em></p> <h3 id="motivation">Motivation</h3> <h4 id="1-typical-robotics-solutions-take-weeks-if-not-months-to-develop-and-test">1. Typical robotics solutions take weeks, if not months, to develop and test</h4> <p>A critical question when designing a Machine Learning based solution is “what is the resource cost of developing this solution?”. There are typically many factors that go into answering this: time, developer skill, and computing resources. It’s rare that a researcher can maximize all of these aspects, hence optimizing the solution development process is critical. This problem is further aggravated in robotics since each task typically requires a completely unique solution that involves a non-trivial amount of hand-crafting from an expert!</p> <p>Dexterous multi-finger object manipulation has been one of the long-standing challenges in control and learning for robot manipulation [<a href="https://ieeexplore.ieee.org/document/844067">Okamura et al 2001.</a>, <a href="https://arxiv.org/abs/1806.00942">Sundaralingam et al. 2018</a>, <a href="https://ieeexplore.ieee.org/abstract/document/7487156">Kumar et al. 2016</a>, <a href="https://arxiv.org/abs/1810.06045">Zhu et al. 2018</a>]. While challenges in high-dimensional control for locomotion as well as image based object manipulation with simplified grippers have made remarkable progress in the last 5 years, Multi-finger Dexterous Manipulation remains a high-impact yet hard-to-crack problem. This challenge is due to a combination of issues:</p> <ul> <li>High-dimensional coordinated control,</li> <li>Inefficient simulation platforms,</li> <li>Uncertainty in observations and control in real-robot operation, and</li> <li>Lack of robust and cost-effective hardware platforms.</li> </ul> <p>These challenges coupled with lack of availability of large scale compute and robotic hardware has limited diversity among the teams attempting to address these problems.</p> <p><strong>Our goal in this effort is to present a path for democratization of robot learning and a viable solution through large scale simulation and robotics-as-a-service.</strong> We focus on 6-DoF object manipulation by using a dexterous multi-finger manipulator as a case study. We show how large-scale simulation done on a desktop grade GPU and cloud-based robotics can enable roboticists to perform research in robotic learning with modest resources.</p> <p>While a number of efforts in in-hand manipulation have attempted to build robust systems [<a href="https://ieeexplore.ieee.org/document/844067">Okamura et al 2001.</a>, <a href="https://arxiv.org/abs/1806.00942">Sundaralingam et al. 2018</a>, <a href="https://ieeexplore.ieee.org/abstract/document/7487156">Kumar et al. 2016</a>, <a href="https://arxiv.org/abs/1810.06045">Zhu et al. 2018</a>], one of the most impressive demonstrations came a few years ago from a team at OpenAI which built a system termed Dactyl [<a href="https://arxiv.org/pdf/1910.07113.pdf">OpenAI et al.</a>]. It was an impressive feat of engineering to achieve multi-object in-hand reposing with a Shadow Hand. It was remarkable not only for the final performance but also in the amount of compute and engineering effort to build this demo! As per public estimates, it used 13,000 years worth of computing and the hardware itself was costly and yet required repeated interventions! This immense resource requirement effectively prevented others from reproducing this result and as a result building on it.</p> <p>We show that our systems effort is a path to address this resource inequality, in the sense that a similar result can now be achieved in under a day using a single desktop-grade GPU and CPU.</p> <h4 id="2-the-complexity-of-standard-pose-representations-in-the-context-of-reinforcement-learning">2. The complexity of standard pose representations in the context of Reinforcement Learning</h4> <p>During initial experimentation, we followed previous works [<a href="https://openai.com/blog/learning-dexterity/">OpenAI et al, 2018</a>, <a href="http://proceedings.mlr.press/v87/liang18a/liang18a.pdf">Liang et al, 2018</a>] in providing our policy with observations based on a 3-D cartesian position plus a 4-Dimensional quaternion representation of pose to specify the current and target position of the cube, and reward based on L2 norm (position) and angular difference (orientation) between the desired and current pose of the cube. We found this approach to produce unstable reward curves which was good at optimising the position portion of the reward, even after adjusting relative weightings.</p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/figure_4.png" alt="" width="50%"/></p> <p><strong>Training curves on the Trifinger manipulation task using a reward function similar to previous wokrs. The nature of the reward makes it very difficult for the policy to optimize, particularly achieving an orientation goal.</strong></p> <p>Prior work has shown the benefits of alternate representations of spatial rotation when using neural networks [<a href="https://arxiv.org/abs/1812.07035">Zhou et al, 2020</a>]. Furthermore, it has been shown that mixing losses this way can lead to collapsing towards only optimising a single objective [<a href="https://www.engraved.blog/why-machine-learning-algorithms-are-hard-to-tune/">Degrave et al. 2020</a>]. The chart implies a similar behaviour, where only position reward is being optimised for.</p> <p>Inspired by this, we searched for a representation of pose in SO(3) for our 6-DoF reposing problem, which would also naturally trade off position and rotation rewards in a way suited to optimisation via reinforcement learning.</p> <h4 id="3-closing-the-sim2real-gap-with-remote-robots">3. Closing the sim2real gap with remote robots</h4> <p>The problem of access to physical robotic resources was exacerbated by the COVID-19 pandemic. Those fortunate enough to previously have access to robots in their research groups found that the number of people with physical access to the robots was greatly decreased; those that relied on other institutions to provide the hardware were often alienated completely due to physical distancing restrictions.</p> <p>Our work demonstrated the feasibility of a Robotics as-a-Service (RaaS) approach in tandem with robot learning, where a small team of people (something about maintaining the robot) and a separate team of researchers were able to upload a trained policy remotely collect data for post-processing.</p> <p>While our team of researchers was primarily based in North America, the physical robot was located in Europe, and so for the duration of the project, our development team was never able to physically be in the same room as the robots we were working on. Remote acces meant we could not vary the task at hand to make it easier, and limited the kinds of iteration and experiments we could do. For example, a priori system identification was not possible as our policy ran on a randomly chosen robot in the entire farm.</p> <p>We found that despite the lack of physical access, we were able to produce a robust and working policy to solve the 6 Degree-of-Freedom reposing task through a combination of several techniques: Realistic GPU-accelerated simulation, model-free RL, domain randomisation, and task-appropriate representation of pose.</p> <h3 id="method-overview">Method Overview</h3> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/system.png" alt="" width="100%"/> <strong>Our system trains using the IsaacGym simulator on 16,384 environments in parallel on a single NVIDIA Tesla V100 or RTX 3090 GPU. Inference is then conducted remotely on a TriFinger robot located across the Atlantic in Germany using the uploaded actor weights. The infrastructure on which we perform Sim2Real transfer is provided courtesy of the organisers of the <a href="https://real-robot-challenge.com/">Real Robot Challenge</a>.</strong></p> <h4 id="1-collect-and-process-training-examples">1. Collect and process training examples</h4> <p>Using the IsaacGym simulator, we gather high-throughput experience (~100K samples/sec on an RTX 3090). The sample’s object pose and goal pose are to 8 key points of the object’s shape, and domain randomizations are applied to the observations, and environment parameters in order to simulate variations in the proprioceptive sensors of the real robots and cameras. These observations, along with some privileged state information from the simulator, were then used to train our policy.</p> <h4 id="2-train-policy">2. Train policy</h4> <p>Our policy is trained to maximize a custom reward using the Proximal Policy Optimization (PPO) algorithm (<a href="https://arxiv.org/abs/1707.06347">Schulman et al., 2017</a>). Our reward incentivizes the policy to balance the distance of the robot’s fingers from the object, the speed of movement, and the distance from the object to a specified goal position to solve the task efficiently, despite being a general formulation applicable broadly across in-hand manipulation applications. The policy outputs the torques for each of the robot’s motors, which are then passed back into the simulation environment.</p> <h4 id="3-transfer-policy-to-real-robot-and-run-inference">3. Transfer Policy to real robot and run inference</h4> <p>Once we have trained a policy, we upload it to the controller for the real robot. The cube is tracked on the system using 3 cameras. We combine proprioceptive information available from the system along with the converted keypoints representation to provide input to the policy. We repeat the camera-based cube-pose observations for subsequent rounds of policy evaluation to allow the policy to take advantage of the higher-frequency proprioceptive data available to the robot. The data collected from the system is then used to determine the success rate of the policy. The tracking system on the robot currently only supports cubes, however this could be extended in future to arbitrary objects.</p> <h3 id="results">Results</h3> <h4 id="1-the-key-points-representation-of-pose-greatly-improves-success-rate-and-convergence">1. The key points representation of pose greatly improves success rate and convergence</h4> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/four_setups.png" alt="" width="50%"/>.</p> <p><strong>Success Rate on the real robot plotted for different trained agents. O-PQ and O-KP stand for position+quaternion and keypoints observations respectively, and R-PQ and R-KP stand for linear+angular and keypoints based displacements respectively. Each mean made of N=40 trials and error bars calculated based on an 80% confidence interval.</strong></p> <p>We were able to demonstrate that the policies that used our keypoint representation in either the observation provided to the policy or in reward calculation achieved a higher success rate than using a position+quaternion representation, with the highest performance coming from the policies that used the alternate representation for both elements.</p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/dr_no_dr.png" alt="" width="100%"/>.</p> <p><strong>Success Rate over the course of training without and with domain randomization. Each curve is the average of 5 seeds; the shaded areas show standard deviation. Note that training without DR is shown to 1B steps to verify performance; use of DR didn’t have a large impact on simulation success rates after initial training</strong></p> <p>We performed experiments to see how the use of keypoints impacted the speed and convergence level of our trained policies. As can be seen, using keypoints as part of the reward considerably sped up training, improved the eventual success rate, and reduced variance between trained policies. The magnitude of the difference was surprising to us given the simplicity and generality of using keypoints as part of reward.</p> <h4 id="2-the-trained-policies-can-be-deployed-straight-from-the-simulator-to-remote-real-robots">2. The trained policies can be deployed straight from the simulator to remote real robots</h4> <table> <thead> <tr> <th style="text-align: center">Dropping and Regrasping</th> <th style="text-align: center">Recovering from failure</th> </tr> </thead> <tbody> <tr> <td style="text-align: center"><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/drop_repose.gif" alt="" width="95%"/></td> <td style="text-align: center"><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/recover.gif" alt="" width="95%"/></td> </tr> </tbody> </table> <p>The above demonstration displays an emergent behaviour that we’ve termed “dropping and regrasping”. In this maneuver, the robot learns to drop the cube when it is close to the correct position, re-grasp, and pick it back up. This enables the robot to get a stable grasp on the cube in the right position, which leads to more successful attempts. It’s worth noting that this video is in real-time, i.e., it is not sped up in any way.</p> <p>The robot also learns to use the motion of the cube to the correct location in the arena as an opportunity to simultaneously rotate it on the ground to achieve the correct grasp in challenging target locations far from the center of the fingers’ workspace.</p> <p>In this demonstration we also see how a poor grasp lead to the cube slipping. Without being explicitly trained to, the robot has learned how to recover from such falls.</p> <p>Our policy is also robust towards dropping - it is able to recover from a cube falling out of the hand and retrieve it from the ground.</p> <h4 id="3-robustness-to-physics-and-object-variations">3. Robustness to physics and object variations</h4> <p>We found that our policy was fairly robust to variations in environment parameters in simulation. For example, it gracefully handles scaling up and down of the cube by ranges far exceeding randomization:</p> <table> <thead> <tr> <th style="text-align: center">Scaled up cube</th> <th style="text-align: center">Scaled down cube</th> </tr> </thead> <tbody> <tr> <td style="text-align: center"><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/big_cube.gif" alt="" width="95%"/></td> <td style="text-align: center"><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/small_cube.gif" alt="" width="95%"/></td> </tr> </tbody> </table> <p>Surprisingly, we found that our policies were able to generalise 0-shot to other objects, for example a cuboid or a sphere:</p> <table> <thead> <tr> <th style="text-align: center">Cuboid</th> <th style="text-align: center">Sphere</th> </tr> </thead> <tbody> <tr> <td style="text-align: center"><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/cuboid.gif" alt="" width="95%"/></td> <td style="text-align: center"><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/sphere.gif" alt="" width="95%"/></td> </tr> </tbody> </table> <p>Note that generalisation in scale and object is taking place due to the policy’s own robustness: we do not give it any shape information. The keypoints remain in the same place as they would on a cube:</p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/s2r2-sept21/keypoints_cube.gif" alt="" width="60%"/></p> <p><em>An example of a successful completion of the manipulation task with the keypoints visualized.</em></p> <h3 id="takeaways-and-potentials">Takeaways and Potentials</h3> <p>Our method shows a viable path for robot learning through large scale GPU-based simulation. We show how it is possible to train a policy using moderate levels of computational resources (desktop-level compute) and transfer to a remote robot. We also show that these policies are robust to a variety of changes in the environment and the object being manipulated. We hope our work can serve as a platform for researchers going forward.</p> <h3 id="paper-covered-in-this-post">Paper covered in this post</h3> <p><a href="https://arxiv.org/abs/2108.09779"><strong>Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger</strong></a>.<br/> <a href="https://allshire.org/">Arthur Allshire</a>, <a href="https://mayankm96.github.io/">Mayank Mittal</a>, <a href="https://ca.linkedin.com/in/varun-lodaya">Varun Lodaya</a>, <a href="https://www.linkedin.com/in/makoviychuk-viktor-9199988">Viktor Makoviychuk</a>, <a href="https://www.linkedin.com/in/denys-makoviichuk-2219a72b">Denys Makoviichuk</a>, <a href="https://scholar.google.de/citations?user=mmfbJaEAAAAJ&amp;hl=en">Felix Widmaier</a>, <a href="https://scholar.google.de/citations?user=7EWrVYIAAAAJ&amp;hl=en">Manuel Wuthrich</a>, <a href="https://www.is.mpg.de/~sbauer">Stefan Bauer</a>, <a href="https://ankurhanda.github.io/">Ankur Handa</a>, <a href="http://animesh.garg.tech/">Animesh Garg</a>.<br/> Under Review</p> <p><strong>Acknowledgement:</strong> This work was led by University of Toronto in collaboration with Nvidia, Vector Institute, MPI, ETH and Snap. We would like to thank Vector Institute for computing support, as well as the CIFAR AI Chair for research support to Animesh Garg.</p> ]]></content><author><name></name></author><summary type="html"><![CDATA[Transferring Dexterous Manipulation from GPU Simulation to a Remote Real-World TriFinger]]></summary></entry><entry><title type="html">a post with diagrams</title><link href="https://alshedivat.github.io/al-folio/blog/2021/diagrams/" rel="alternate" type="text/html" title="a post with diagrams"/><published>2021-07-04T17:39:00+00:00</published><updated>2021-07-04T17:39:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2021/diagrams</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2021/diagrams/"><![CDATA[<p>This theme supports generating various diagrams from a text description using <a href="https://mermaid-js.github.io/mermaid/" target="\_blank">mermaid</a>. Previously, this was done using the <a href="https://github.com/zhustec/jekyll-diagrams" target="\_blank">jekyll-diagrams</a> plugin. For more information on this matter, see the <a href="https://github.com/alshedivat/al-folio/issues/1609#issuecomment-1656995674">related issue</a>.</p> <p>To enable mermaid, you have to put the following in this post frontmatter:</p> <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">mermaid</span><span class="pi">:</span>
+  <span class="na">enabled</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="na">zoomable</span><span class="pi">:</span> <span class="kc">true</span>
+</code></pre></div></div> <p>To disable the zooming feature, set <code class="language-plaintext highlighter-rouge">mermaid: zoomable</code> to <code class="language-plaintext highlighter-rouge">false</code>.</p> <h2 id="mermaid">Mermaid</h2> <p>The diagram below was generated by the following code:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">mermaid
+</span><span class="sb">sequenceDiagram
+    participant John
+    participant Alice
+    Alice-&gt;&gt;John: Hello John, how are you?
+    John--&gt;&gt;Alice: Great!</span>
+<span class="p">```</span>
+</code></pre></div></div> <pre><code class="language-mermaid">sequenceDiagram
+    participant John
+    participant Alice
+    Alice-&gt;&gt;John: Hello John, how are you?
+    John--&gt;&gt;Alice: Great!
+</code></pre>]]></content><author><name></name></author><category term="formatting"/><category term="diagrams"/><summary type="html"><![CDATA[an example of a blog post with diagrams]]></summary></entry><entry><title type="html">Learning Tool Affordances without Labels</title><link href="https://alshedivat.github.io/al-folio/blog/2021/giftturpin/" rel="alternate" type="text/html" title="Learning Tool Affordances without Labels"/><published>2021-06-15T15:12:00+00:00</published><updated>2021-06-15T15:12:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2021/giftturpin</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2021/giftturpin/"><![CDATA[<h2 id="generalizable-interaction-aware-functional-tool-affordances-without-labels"><strong>Generalizable Interaction-aware Functional Tool Affordances without Labels</strong></h2> <p><a href="http://www.cs.toronto.edu/~dylanturpin/">Dylan Turpin</a>, <a href="https://www.linkedin.com/in/liquan-wang-a37634196/?originalSubdomain=ca">Liquan Wang</a>, <a href="https://tsogkas.github.io/">Stavros Tsogkas</a>, <a href="https://www.cs.toronto.edu/~sven/">Sven Dickinson</a>, <a href="https://animesh.garg.tech/">Animesh Garg</a><br/> <em><a href="http://www.roboticsproceedings.org/rss17/p060.html">Robotics Systems &amp; Science</a>, 2021.</em><br/> <a href="https://arxiv.org/abs/2106.14973">paper</a>, <a href="https://youtu.be/7N1XiIzu9v4">video</a></p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/gift-jul21/gift-teaser.svg" alt="Teaser image for GIFT. Discover tool affordances by interacting with procedurally-generated tools across three manipulation tasks: hooking, reaching and hammering. Train an affordance model to detect sparse keypoints representing tool geometry and predict distributions over pairs of keypoints to grasp and interact with for each task by learning from the contact data of sampled trajectories. Affordance predictions from RGBD observations of unknown objects match expected task semantics across hooking, reaching and hammering and are similar to those of a human labeller, e.g. for hammering." width="120%"/></p> <p><em>Figure 1: Rather than relying on human labels, the GIFT framework discovers affordances from goal-directed interaction with a set of procedurally-generated tools.</em></p> <h3 id="motivation">Motivation</h3> <p><strong>1. We should represent tools by what we can do with them.</strong></p> <p>When it comes to tools, ‘‘What can I do with this?’’ is the key question and there usually isn’t just one answer. There are many basic ways of using a hammer (to strike, to pry, to reach) each of which contains many finer-grained possibilities (strike with a high grip for precision, or a low grip for power).</p> <p>We learn a representation that captures these possibilities. Specifically, we represent an action possibility (i.e., an affordance) as a tuple (task ID, grasp keypoint, interaction keypoint).</p> <p>We build on a line of work that investigates behaviour-grounded object representations, especially KETO (<a href="https://arxiv.org/abs/1910.11977"><em>Fang et al. 2019</em></a>) and kPAM (<a href="https://arxiv.org/abs/1903.06684"><em>Manuelli et al. 2019</em></a>). In contrast to these, our learned representations do not rely on human labels (as in kPAM) or a predefined manipulation strategy (as in KETO).</p> <p><strong>2. Behaviour-grounded predictions are testable predictions.</strong></p> <p>Because our predicted tool representations are <em>behaviour-grounded</em> (i.e., they correspond to possible actions) we can test them against reality by executing the corresponding actions and checking the result. This ‘‘predict, act, check’’ routine gives us a <em>self-supervised</em> training loop that does not rely on human labels.</p> <p>To close the loop, we need a way of translating predicted representations into executable motions, which is a challenge, because the space of possible actions is large. Prior works rely on workarounds like additional human supervision or constraining the action space, but these simplifications come with serious drawbacks.</p> <p><em>Human supervision</em> (e.g., with keypoint labels) is expensive and introduces human bias. We want our representations to be discovered only from the constraints of the manipulation tasks.</p> <p><em>Constraining the action space</em> (e.g., to pre-defined motion primitives) means some action possibilities will never be explored.</p> <p><strong>3. Constraining behaviour limits affordance discovery.</strong></p> <p>If we constrain behaviour by limiting the action space or using a pre-defined manipulation strategy, we will never discover affordances corresponding to excluded behaviours.</p> <p>We generate our trajectories with a simple sampling-based motion planner that is conditioned on the predicted keypoints through a reward function with one term encoding task success and another encouraging use of the selected keypoints.</p> <p>Actions are sampled from the full action space, so motion generation is free to use tools in unexpected ways, discovering new possibilities that could not have been explored if we were tied to a limited set of motion primitivies or a pre-defined manipulation strategy.</p> <h3 id="method-overview">Method overview</h3> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/gift-jul21/gift-pipeline.svg" alt="The training pipeline." width="120%"/></p> <p><em>Figure 2: The training pipeline. Our framework learns affordance models for hooking, reaching and hammering by interacting with a set of tools. All three models share a task-independent keypoint detector, which takes an RGBD image of a tool and predicts a set of keypoints representing a tool’s geometry and providing possible choices of grasp and interaction regions. The task-conditional portion of each model, which is trained on the outcome of trajectories collected from motion planning, selects two keypoints which become our functional tool representation.</em></p> <p><strong>Collect experience in the full action space.</strong></p> <p>We begin by generating a set of tools as concatenations of pairs of convex meshes into T, X and L shapes. We sample a tool from our training set, place it on a table and capture an RGBD observation of the tool from above.</p> <p>From this observation, our SparseKP network infers a set of keypoints representing the tool’s geometry and providing possible choices of regions to grasp and interact with. This module is pre-trained using unsupervised keypoint losses and is shared across tasks.</p> <p>A grasp keypoint and provisional interaction keypoint are uniformly sampled from the sparse ones. We take a crop of the RGBD observation around the grasp keypoint and pass it to a grasping network to infer a nearby stable grasp. This grasp is executed and we use MPPI to generate the rest of the trajectory. MPPI iteratively samples action sequences from the full action space and takes their average weighted by reward.</p> <p>Part of this reward encodes task success and part encourages use of the provisional interaction keypoint. In this way we are able to sample from the full action space while still conditioning on the sparse selection of keypoints on the tool’s surface.</p> <p><strong>Extract training examples from trajectory contact data.</strong></p> <p>Once we have a trajectory, we extract a training example. This consists of a reward, grasp KP, interaction KP and the full set of sparse keypoints. We replace the provisional choice of interaction KP with the keypoint closest to the actual first contact between the tool and the target object.</p> <p>The provisional interaction KP is sampled, and conditioned on, in order to encourage exploration of different manipulation strategies. But in the end, we want to use whichever interaction keypoint works best for the task.</p> <p><strong>Train keypoint selection to maximize task reward.</strong></p> <p>We sample a training example and build a graph out of its sparse keypoints. This graph is fed to a task-specific GNN, which predicts a distribution over pairs of keypoint indices (i.e., the joint distribution over grasp and interaction keypoints). Finally, we update the GNN weights using REINFORCE.</p> <p>At test time, we sample a tool from the holdout test set. The grasp and interaction keypoints are selected based on the predicted distribution, rather than uniformly, and we enforce that the selected interaction point be used, rather than treating it as provisional.</p> <h3 id="results">Results</h3> <p>So, how well does it work in practice?</p> <p>Quantitatively GIFT beats baseline methods on all three tasks and qualitatively the choices of grasp and interaction points usually match task semantics and agree with the choices of a human oracle.</p> <p><img src="https://alshedivat.github.io/al-folio/assets/img/blog/gift-jul21/gift-table.svg" alt="Quantitative results." width="70%"/></p> <p><em>Table 1: GIFT outperforms baselines on all tasks and matches a human oracle on two of three tasks using novel tools. Reward is normalized with respect to the human oracle.</em></p> <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe src="https://streamable.com/e/6l3jwp" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width: 100%; height: 100%; position: absolute;"></iframe></div> <p><em>Video 1: Hammering a peg with tools from the holdout set. Low grasp points increase leverage (providing greater strike point velocity and peg impulse for a given joint velocity). Strike points on the hard metallic head allow accumulated kinetic energy to be rapidly transferred to the peg for maximum impulse.</em></p> <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe src="https://streamable.com/e/sehup0" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width: 100%; height: 100%; position: absolute;"></iframe></div> <p><em>Video 2: Hooking a thermos with tools from the holdout set. Our original intention was to constrain the task such that only the right angle between head and handle could be used to hook. In fact, the motion planner finds other solutions.</em></p> <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe src="https://streamable.com/e/ciwknw" frameborder="0" width="100%" height="100%" allowfullscreen="" style="width: 100%; height: 100%; position: absolute;"></iframe></div> <p><em>Video 3: Constrained reaching with tools from the holdout set. To manipulate an object on the other side of a wall, the tool must fit through the hole and reach the target object.</em></p> <h3 id="future-directions">Future directions</h3> <p>By grounding our affordance representation in contact data and sampling trajectories from the full action space, we are able to discover unbiased affordances for each task without human labels. There are however important limitations to our method that we think future work could address.</p> <p>Our sparse keypoints are stored as raw locations, without any additional property encodings. A natural extension to our method would encode additional local information at each keypoint. This could capture local geometric or material properties and allow for more robust reasoning about the relationship between materials, fine-grained geometry and task requirements.</p> <p>Our motion sampling routine depends on access to simulatable dynamics. This makes it non-trivial to transfer our results to real robots. We plan to experiment with recovering 3D models from visual observations, so we can leverage our learned representation to plan in simulator and execute on a real robot.</p> <p>For details on the background, implementation and results read the full paper <a href="https://arxiv.org/abs/2106.14973">here</a> and watch the <a href="https://streamable.com/eylzdj">presentation</a>.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[GIFT: Generalizable Interaction-aware Functional Tool representations (at RSS 2021)]]></summary></entry><entry><title type="html">a distill-style blog post</title><link href="https://alshedivat.github.io/al-folio/blog/2021/distill/" rel="alternate" type="text/html" title="a distill-style blog post"/><published>2021-05-22T00:00:00+00:00</published><updated>2021-05-22T00:00:00+00:00</updated><id>https://alshedivat.github.io/al-folio/blog/2021/distill</id><content type="html" xml:base="https://alshedivat.github.io/al-folio/blog/2021/distill/"><![CDATA[<h2 id="equations">Equations</h2> <p>This theme supports rendering beautiful math in inline and display modes using <a href="https://www.mathjax.org/">MathJax 3</a> engine. You just need to surround your math expression with <code class="language-plaintext highlighter-rouge">$$</code>, like <code class="language-plaintext highlighter-rouge">$$ E = mc^2 $$</code>. If you leave it inside a paragraph, it will produce an inline expression, just like \(E = mc^2\).</p> <p>In fact, you can also use a single dollar sign <code class="language-plaintext highlighter-rouge">$</code> to create inline formulas, such as <code class="language-plaintext highlighter-rouge">$ E = mc^2 $</code>, which will render as $ E = mc^2 $. This approach provides the same effect during TeX-based compilation, but visually it appears slightly less bold compared to double-dollar signs <code class="language-plaintext highlighter-rouge">$$</code>, making it blend more naturally with surrounding text.</p> <p>To use display mode, again surround your expression with <code class="language-plaintext highlighter-rouge">$$</code> and place it as a separate paragraph. Here is an example:</p> \[\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)\] <p>Note that MathJax 3 is <a href="https://docs.mathjax.org/en/latest/upgrading/whats-new-3.0.html">a major re-write of MathJax</a> that brought a significant improvement to the loading and rendering speed, which is now <a href="https://www.intmath.com/cg5/katex-mathjax-comparison.php">on par with KaTeX</a>.</p> <hr/> <h2 id="citations">Citations</h2> <p>Citations are then used in the article body with the <code class="language-plaintext highlighter-rouge">&lt;d-cite&gt;</code> tag. The key attribute is a reference to the id provided in the bibliography. The key attribute can take multiple ids, separated by commas.</p> <p>The citation is presented inline like this: <d-cite key="gregor2015draw"></d-cite> (a number that displays more information on hover). If you have an appendix, a bibliography is automatically created and populated in it.</p> <p>Distill chose a numerical inline citation style to improve readability of citation dense articles and because many of the benefits of longer citations are obviated by displaying more information on hover. However, we consider it good style to mention author last names if you discuss something at length and it fits into the flow well — the authors are human and it’s nice for them to have the community associate them with their work.</p> <hr/> <h2 id="footnotes">Footnotes</h2> <p>Just wrap the text you would like to show up in a footnote in a <code class="language-plaintext highlighter-rouge">&lt;d-footnote&gt;</code> tag. The number of the footnote will be automatically generated.<d-footnote>This will become a hoverable footnote.</d-footnote></p> <hr/> <h2 id="code-blocks">Code Blocks</h2> <p>Syntax highlighting is provided within <code class="language-plaintext highlighter-rouge">&lt;d-code&gt;</code> tags. An example of inline code snippets: <code class="language-plaintext highlighter-rouge">&lt;d-code language="html"&gt;let x = 10;&lt;/d-code&gt;</code>. For larger blocks of code, add a <code class="language-plaintext highlighter-rouge">block</code> attribute:</p> <d-code block="" language="javascript"> var x = 25; function(x) { return x * x; } </d-code> <p><strong>Note:</strong> <code class="language-plaintext highlighter-rouge">&lt;d-code&gt;</code> blocks do not look good in the dark mode. You can instead use the standard Jekyll syntax highlight with the <code class="language-plaintext highlighter-rouge">highlight</code> liquid tag.</p> <figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+<span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">return</span> <span class="nx">x</span> <span class="err">\</span><span class="o">*</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure> <p>You can also write standard Markdown code blocks in triple ticks with a language tag, for instance:</p> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></div> <hr/> <h2 id="interactive-plots">Interactive Plots</h2> <p>You can add interative plots using plotly + iframes :framed_picture:</p> <div class="l-page"> <iframe src="/al-folio/assets/plotly/demo.html" frameborder="0" scrolling="no" height="500px" width="100%" style="border: 1px dashed grey;"></iframe> </div> <p>The plot must be generated separately and saved into an HTML file. To generate the plot that you see above, you can use the following code snippet:</p> <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">plotly.express</span> <span class="k">as</span> <span class="n">px</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span>
+<span class="sh">'</span><span class="s">https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv</span><span class="sh">'</span>
+<span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="p">.</span><span class="nf">density_mapbox</span><span class="p">(</span>
+<span class="n">df</span><span class="p">,</span>
+<span class="n">lat</span><span class="o">=</span><span class="sh">'</span><span class="s">Latitude</span><span class="sh">'</span><span class="p">,</span>
+<span class="n">lon</span><span class="o">=</span><span class="sh">'</span><span class="s">Longitude</span><span class="sh">'</span><span class="p">,</span>
+<span class="n">z</span><span class="o">=</span><span class="sh">'</span><span class="s">Magnitude</span><span class="sh">'</span><span class="p">,</span>
+<span class="n">radius</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="n">center</span><span class="o">=</span><span class="nf">dict</span><span class="p">(</span><span class="n">lat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mi">180</span><span class="p">),</span>
+<span class="n">zoom</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="n">mapbox_style</span><span class="o">=</span><span class="sh">"</span><span class="s">stamen-terrain</span><span class="sh">"</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">fig</span><span class="p">.</span><span class="nf">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">.</span><span class="nf">write_html</span><span class="p">(</span><span class="sh">'</span><span class="s">assets/plotly/demo.html</span><span class="sh">'</span><span class="p">)</span></code></pre></figure> <hr/> <h2 id="details-boxes">Details boxes</h2> <p>Details boxes are collapsible boxes which hide additional information from the user. They can be added with the <code class="language-plaintext highlighter-rouge">details</code> liquid tag:</p> <details><summary>Click here to know more</summary> <p>Additional details, where math \(2x - 1\) and <code class="language-plaintext highlighter-rouge">code</code> is rendered correctly.</p> </details> <hr/> <h2 id="mermaid">Mermaid</h2> <p>This theme supports creating diagrams directly in markdown using <a href="https://mermaid.js.org/">Mermaid</a>. Mermaid enables users to render flowcharts, sequence diagrams, class diagrams, Gantt charts, and more. Simply embed the diagram syntax within a mermaid code block.</p> <p>To create a Gantt chart, you can use the following syntax:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">mermaid
+</span><span class="sb">gantt
+    dateFormat  YYYY-MM-DD
+    title A Gantt Diagram
+
+    section Section
+    Task A           :a1, 2025-01-01, 30d
+    Task B           :after a1, 20d
+    Task C           :2025-01-10, 12d</span>
+<span class="p">```</span>
+</code></pre></div></div> <p>And here’s how it will be rendered:</p> <pre><code class="language-mermaid">gantt
+    dateFormat  YYYY-MM-DD
+    title A Gantt Diagram
+
+    section Section
+    Task A           :a1, 2025-01-01, 30d
+    Task B           :after a1, 20d
+    Task C           :2025-01-10, 12d
+</code></pre> <p>Similarly, you can also use it to create beautiful class diagrams:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```mermaid
+classDiagram
+direction LR
+    class Animal {
+        +String species
+        +int age
+        +makeSound()
+    }
+    class Dog {
+        +String breed
+        +bark()
+    }
+    class Cat {
+        +String color
+        +meow()
+    }
+    class Bird {
+        +String wingSpan
+        +fly()
+    }
+    class Owner {
+        +String name
+        +int age
+        +adoptAnimal(Animal animal)
+    }
+
+    Animal &lt;|-- Dog
+    Animal &lt;|-- Cat
+    Animal &lt;|-- Bird
+    Owner "1" --&gt; "0..*" Animal
+
+    Dog : +fetch()
+    Cat : +purr()
+    Bird : +sing()
+```
+</code></pre></div></div> <p>It will be presented as:</p> <pre><code class="language-mermaid">classDiagram
+direction LR
+    class Animal {
+        +String species
+        +int age
+        +makeSound()
+    }
+    class Dog {
+        +String breed
+        +bark()
+    }
+    class Cat {
+        +String color
+        +meow()
+    }
+    class Bird {
+        +String wingSpan
+        +fly()
+    }
+    class Owner {
+        +String name
+        +int age
+        +adoptAnimal(Animal animal)
+    }
+
+    Animal &lt;|-- Dog
+    Animal &lt;|-- Cat
+    Animal &lt;|-- Bird
+    Owner "1" --&gt; "0..*" Animal
+
+    Dog : +fetch()
+    Cat : +purr()
+    Bird : +sing()
+</code></pre> <p>With Mermaid, you can easily add clear and dynamic diagrams to enhance your blog content.</p> <hr/> <h2 id="diff2html">Diff2Html</h2> <p>This theme also supports integrating <a href="https://github.com/rtfpessoa/diff2html">Diff2Html</a>, a tool that beautifully renders code differences (diffs) directly in markdown. Diff2Html is ideal for showcasing code changes, allowing you to clearly present additions, deletions, and modifications. It’s perfect for code reviews, documentation, and tutorials where step-by-step code changes need to be highlighted—you can even introduce changes across multiple files at once.</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">diff2html
+</span><span class="sb">diff --git a/utils/mathUtils.js b/utils/mathUtils.js
+index 3b5f3d1..c7f9b2e 100644
+--- a/utils/mathUtils.js
++++ b/utils/mathUtils.js
+@@ -1,8 +1,12 @@
+-// Basic math utilities
++// Extended math utilities with additional functions
+
+-export function calculateArea(radius) {
+-    const PI = 3.14159;
++export function calculateCircleMetrics(radius) {
++    const PI = Math.PI;
+     const area = PI * radius ** 2;
++    const circumference = 2 * PI * radius;
++
++    if (!isValidRadius(radius)) throw new Error("Invalid radius");
++
+     return { area, circumference };
+ }
+
+-export function validateRadius(radius) {
++export function isValidRadius(radius) {
+     return typeof radius === 'number' &amp;&amp; radius &gt; 0;
+ }
+
+diff --git a/main.js b/main.js
+index 5f6a9c3..b7d4e8f 100644
+--- a/main.js
++++ b/main.js
+@@ -2,9 +2,12 @@
+ import { calculateCircleMetrics } from './utils/mathUtils';
+
+-function displayCircleMetrics(radius) {
+-    const { area } = calculateCircleMetrics(radius);
++function displayCircleMetrics(radius) {
++    const { area, circumference } = calculateCircleMetrics(radius);
+     console.log(`Area: ${area}`);
++    console.log(`Circumference: ${circumference}`);
+ }
+
+-displayCircleMetrics(5);
++try {
++    displayCircleMetrics(5);
++} catch (error) {
++    console.error("Error:", error.message);
++}</span>
+<span class="p">```</span>
+</code></pre></div></div> <p>Here’s how it will look when rendered with Diff2Html:</p> <pre><code class="language-diff2html">diff --git a/utils/mathUtils.js b/utils/mathUtils.js
+index 3b5f3d1..c7f9b2e 100644
+--- a/utils/mathUtils.js
++++ b/utils/mathUtils.js
+@@ -1,8 +1,12 @@
+-// Basic math utilities
++// Extended math utilities with additional functions
+
+-export function calculateArea(radius) {
+-    const PI = 3.14159;
++export function calculateCircleMetrics(radius) {
++    const PI = Math.PI;
+     const area = PI * radius ** 2;
++    const circumference = 2 * PI * radius;
++
++    if (!isValidRadius(radius)) throw new Error("Invalid radius");
++
+     return { area, circumference };
+ }
+
+-export function validateRadius(radius) {
++export function isValidRadius(radius) {
+     return typeof radius === 'number' &amp;&amp; radius &gt; 0;
+ }
+
+diff --git a/main.js b/main.js
+index 5f6a9c3..b7d4e8f 100644
+--- a/main.js
++++ b/main.js
+@@ -2,9 +2,12 @@
+ import { calculateCircleMetrics } from './utils/mathUtils';
+
+-function displayCircleMetrics(radius) {
+-    const { area } = calculateCircleMetrics(radius);
++function displayCircleMetrics(radius) {
++    const { area, circumference } = calculateCircleMetrics(radius);
+     console.log(`Area: ${area}`);
++    console.log(`Circumference: ${circumference}`);
+ }
+
+-displayCircleMetrics(5);
++try {
++    displayCircleMetrics(5);
++} catch (error) {
++    console.error("Error:", error.message);
++}
+</code></pre> <hr/> <h2 id="leaflet">Leaflet</h2> <p><a href="https://leafletjs.com/">Leaflet</a> is created by Ukrainian software engineer <a href="https://agafonkin.com/">Volodymyr Agafonkin</a>, allowing interactive maps to be embedded in webpages. With support for <a href="https://geojson.org/">GeoJSON data</a>, Leaflet allows you to highlight specific regions, making it easy to visualize geographical information in detail.</p> <p>You can use the following code to load map information on <a href="https://www.openstreetmap.org/">OpenStreetMap</a>:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">```</span><span class="nl">geojson
+</span><span class="sb">{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Crimea",
+        "popupContent": "Occupied Crimea"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              33.9,
+              45.3
+            ],
+            [
+              36.5,
+              45.3
+            ],
+            [
+              36.5,
+              44.4
+            ],
+            [
+              33.9,
+              44.4
+            ],
+            [
+              33.9,
+              45.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Donetsk",
+        "popupContent": "Occupied Donetsk"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              37.5,
+              48.5
+            ],
+            [
+              39.5,
+              48.5
+            ],
+            [
+              39.5,
+              47.5
+            ],
+            [
+              37.5,
+              47.5
+            ],
+            [
+              37.5,
+              48.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Luhansk",
+        "popupContent": "Occupied Luhansk"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              38.5,
+              49.5
+            ],
+            [
+              40.5,
+              49.5
+            ],
+            [
+              40.5,
+              48.5
+            ],
+            [
+              38.5,
+              48.5
+            ],
+            [
+              38.5,
+              49.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kherson",
+        "popupContent": "Occupied Kherson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              32.3,
+              47.3
+            ],
+            [
+              34.3,
+              47.3
+            ],
+            [
+              34.3,
+              46.3
+            ],
+            [
+              32.3,
+              46.3
+            ],
+            [
+              32.3,
+              47.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zaporizhzhia",
+        "popupContent": "Occupied Zaporizhzhia"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.3,
+              48
+            ],
+            [
+              36.3,
+              48
+            ],
+            [
+              36.3,
+              47
+            ],
+            [
+              34.3,
+              47
+            ],
+            [
+              34.3,
+              48
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}</span>
+<span class="p">```</span>
+</code></pre></div></div> <p>The rendered map below highlights the regions of Ukraine that have been illegally occupied by Russia over the years, including Crimea and the four eastern regions:</p> <pre><code class="language-geojson">{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Crimea",
+        "popupContent": "Occupied Crimea"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              33.9,
+              45.3
+            ],
+            [
+              36.5,
+              45.3
+            ],
+            [
+              36.5,
+              44.4
+            ],
+            [
+              33.9,
+              44.4
+            ],
+            [
+              33.9,
+              45.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Donetsk",
+        "popupContent": "Occupied Donetsk"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              37.5,
+              48.5
+            ],
+            [
+              39.5,
+              48.5
+            ],
+            [
+              39.5,
+              47.5
+            ],
+            [
+              37.5,
+              47.5
+            ],
+            [
+              37.5,
+              48.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Luhansk",
+        "popupContent": "Occupied Luhansk"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              38.5,
+              49.5
+            ],
+            [
+              40.5,
+              49.5
+            ],
+            [
+              40.5,
+              48.5
+            ],
+            [
+              38.5,
+              48.5
+            ],
+            [
+              38.5,
+              49.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kherson",
+        "popupContent": "Occupied Kherson"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              32.3,
+              47.3
+            ],
+            [
+              34.3,
+              47.3
+            ],
+            [
+              34.3,
+              46.3
+            ],
+            [
+              32.3,
+              46.3
+            ],
+            [
+              32.3,
+              47.3
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zaporizhzhia",
+        "popupContent": "Occupied Zaporizhzhia"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              34.3,
+              48
+            ],
+            [
+              36.3,
+              48
+            ],
+            [
+              36.3,
+              47
+            ],
+            [
+              34.3,
+              47
+            ],
+            [
+              34.3,
+              48
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
+</code></pre> <hr/> <h2 id="chartjs-echarts-and-vega-lite">Chartjs, Echarts and Vega-Lite</h2> <p><a href="https://www.chartjs.org/">Chart.js</a> is a versatile JavaScript library for creating responsive and interactive charts. Supporting multiple chart types like bar, line, pie, and radar, it’s an ideal tool for visualizing data directly in webpages.</p> <p>Here’s an example of a JSON-style configuration that creates a bar chart in Chart.js:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```chartjs
+{
+  "type": "bar",
+  "data": {
+    "labels": ["2017", "2018", "2019", "2020", "2021"],
+    "datasets": [
+      {
+        "label": "Population (millions)",
+        "data": [12, 15, 13, 14, 16],
+        "backgroundColor": "rgba(54, 162, 235, 0.6)",
+        "borderColor": "rgba(54, 162, 235, 1)",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "scales": {
+      "y": {
+        "beginAtZero": true
+      }
+    }
+  }
+}
+```
+</code></pre></div></div> <p>The rendered bar chart illustrates population data from 2017 to 2021:</p> <pre><code class="language-chartjs">{
+  "type": "bar",
+  "data": {
+    "labels": ["2017", "2018", "2019", "2020", "2021"],
+    "datasets": [
+      {
+        "label": "Population (millions)",
+        "data": [12, 15, 13, 14, 16],
+        "backgroundColor": "rgba(54, 162, 235, 0.6)",
+        "borderColor": "rgba(54, 162, 235, 1)",
+        "borderWidth": 1
+      }
+    ]
+  },
+  "options": {
+    "scales": {
+      "y": {
+        "beginAtZero": true
+      }
+    }
+  }
+}
+</code></pre> <hr/> <p><a href="https://echarts.apache.org/">ECharts</a> is a powerful visualization library from <a href="https://www.apache.org/">Apache</a> that supports a wide range of interactive charts, including more advanced types such as scatter plots, heatmaps, and geographic maps.</p> <p>The following JSON configuration creates a visually enhanced line chart that displays monthly sales data for two products.</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```echarts
+{
+  "title": {
+    "text": "Monthly Sales Comparison",
+    "left": "center"
+  },
+  "tooltip": {
+    "trigger": "axis",
+    "backgroundColor": "rgba(50, 50, 50, 0.7)",
+    "borderColor": "#777",
+    "borderWidth": 1,
+    "textStyle": {
+      "color": "#fff"
+    }
+  },
+  "legend": {
+    "data": ["Product A", "Product B"],
+    "top": "10%"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "axisLine": {
+      "lineStyle": {
+        "color": "#888"
+      }
+    }
+  },
+  "yAxis": {
+    "type": "value",
+    "axisLine": {
+      "lineStyle": {
+        "color": "#888"
+      }
+    },
+    "splitLine": {
+      "lineStyle": {
+        "type": "dashed"
+      }
+    }
+  },
+  "series": [
+    {
+      "name": "Product A",
+      "type": "line",
+      "smooth": true,
+      "data": [820, 932, 901, 934, 1290, 1330, 1320, 1400, 1450, 1500, 1600, 1650],
+      "itemStyle": {
+        "color": "#5470C6"
+      },
+      "lineStyle": {
+        "width": 3
+      },
+      "areaStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 0,
+          "x2": 0,
+          "y2": 1,
+          "colorStops": [
+            { "offset": 0, "color": "rgba(84, 112, 198, 0.5)" },
+            { "offset": 1, "color": "rgba(84, 112, 198, 0)" }
+          ]
+        }
+      },
+      "emphasis": {
+        "focus": "series"
+      }
+    },
+    {
+      "name": "Product B",
+      "type": "line",
+      "smooth": true,
+      "data": [620, 732, 701, 734, 1090, 1130, 1120, 1200, 1250, 1300, 1400, 1450],
+      "itemStyle": {
+        "color": "#91CC75"
+      },
+      "lineStyle": {
+        "width": 3
+      },
+      "areaStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 0,
+          "x2": 0,
+          "y2": 1,
+          "colorStops": [
+            { "offset": 0, "color": "rgba(145, 204, 117, 0.5)" },
+            { "offset": 1, "color": "rgba(145, 204, 117, 0)" }
+          ]
+        }
+      },
+      "emphasis": {
+        "focus": "series"
+      }
+    }
+  ]
+}
+```
+</code></pre></div></div> <p>The rendered output is shown below, and you can also interact with it using your mouse:</p> <pre><code class="language-echarts">{
+  "title": {
+    "text": "Monthly Sales Comparison",
+    "left": "center"
+  },
+  "tooltip": {
+    "trigger": "axis",
+    "backgroundColor": "rgba(50, 50, 50, 0.7)",
+    "borderColor": "#777",
+    "borderWidth": 1,
+    "textStyle": {
+      "color": "#fff"
+    }
+  },
+  "legend": {
+    "data": ["Product A", "Product B"],
+    "top": "10%"
+  },
+  "xAxis": {
+    "type": "category",
+    "data": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "axisLine": {
+      "lineStyle": {
+        "color": "#888"
+      }
+    }
+  },
+  "yAxis": {
+    "type": "value",
+    "axisLine": {
+      "lineStyle": {
+        "color": "#888"
+      }
+    },
+    "splitLine": {
+      "lineStyle": {
+        "type": "dashed"
+      }
+    }
+  },
+  "series": [
+    {
+      "name": "Product A",
+      "type": "line",
+      "smooth": true,
+      "data": [820, 932, 901, 934, 1290, 1330, 1320, 1400, 1450, 1500, 1600, 1650],
+      "itemStyle": {
+        "color": "#5470C6"
+      },
+      "lineStyle": {
+        "width": 3
+      },
+      "areaStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 0,
+          "x2": 0,
+          "y2": 1,
+          "colorStops": [
+            { "offset": 0, "color": "rgba(84, 112, 198, 0.5)" },
+            { "offset": 1, "color": "rgba(84, 112, 198, 0)" }
+          ]
+        }
+      },
+      "emphasis": {
+        "focus": "series"
+      }
+    },
+    {
+      "name": "Product B",
+      "type": "line",
+      "smooth": true,
+      "data": [620, 732, 701, 734, 1090, 1130, 1120, 1200, 1250, 1300, 1400, 1450],
+      "itemStyle": {
+        "color": "#91CC75"
+      },
+      "lineStyle": {
+        "width": 3
+      },
+      "areaStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 0,
+          "x2": 0,
+          "y2": 1,
+          "colorStops": [
+            { "offset": 0, "color": "rgba(145, 204, 117, 0.5)" },
+            { "offset": 1, "color": "rgba(145, 204, 117, 0)" }
+          ]
+        }
+      },
+      "emphasis": {
+        "focus": "series"
+      }
+    }
+  ]
+}
+</code></pre> <hr/> <p><a href="https://vega.github.io/vega-lite/">Vega-Lite</a> is a declarative visualization grammar that allows users to create, share, and customize a wide range of interactive data visualizations. The following JSON configuration generates a straightforward bar chart:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```vega_lite
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 400,
+  "height": 200,
+  "padding": 5,
+
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"category": "A", "value": 28},
+        {"category": "B", "value": 55},
+        {"category": "C", "value": 43},
+        {"category": "D", "value": 91},
+        {"category": "E", "value": 81},
+        {"category": "F", "value": 53},
+        {"category": "G", "value": 19},
+        {"category": "H", "value": 87}
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "band",
+      "domain": {"data": "table", "field": "category"},
+      "range": "width",
+      "padding": 0.1
+    },
+    {
+      "name": "yscale",
+      "type": "linear",
+      "domain": {"data": "table", "field": "value"},
+      "nice": true,
+      "range": "height"
+    }
+  ],
+
+  "axes": [
+    {"orient": "bottom", "scale": "xscale"},
+    {"orient": "left", "scale": "yscale"}
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "category"},
+          "width": {"scale": "xscale", "band": 0.8},
+          "y": {"scale": "yscale", "field": "value"},
+          "y2": {"scale": "yscale", "value": 0},
+          "fill": {"value": "steelblue"}
+        },
+        "update": {
+          "fillOpacity": {"value": 1}
+        },
+        "hover": {
+          "fill": {"value": "orange"}
+        }
+      }
+    }
+  ]
+}
+```
+</code></pre></div></div> <p>The rendered output shows a clean and simple bar chart with a hover effect：</p> <pre><code class="language-vega_lite">{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "width": 400,
+  "height": 200,
+  "padding": 5,
+
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"category": "A", "value": 28},
+        {"category": "B", "value": 55},
+        {"category": "C", "value": 43},
+        {"category": "D", "value": 91},
+        {"category": "E", "value": 81},
+        {"category": "F", "value": 53},
+        {"category": "G", "value": 19},
+        {"category": "H", "value": 87}
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "xscale",
+      "type": "band",
+      "domain": {"data": "table", "field": "category"},
+      "range": "width",
+      "padding": 0.1
+    },
+    {
+      "name": "yscale",
+      "type": "linear",
+      "domain": {"data": "table", "field": "value"},
+      "nice": true,
+      "range": "height"
+    }
+  ],
+
+  "axes": [
+    {"orient": "bottom", "scale": "xscale"},
+    {"orient": "left", "scale": "yscale"}
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "category"},
+          "width": {"scale": "xscale", "band": 0.8},
+          "y": {"scale": "yscale", "field": "value"},
+          "y2": {"scale": "yscale", "value": 0},
+          "fill": {"value": "steelblue"}
+        },
+        "update": {
+          "fillOpacity": {"value": 1}
+        },
+        "hover": {
+          "fill": {"value": "orange"}
+        }
+      }
+    }
+  ]
+}
+</code></pre> <hr/> <h2 id="tikz">TikZ</h2> <p><a href="https://tikz.net/">TikZ</a> is a powerful LaTeX-based drawing tool powered by <a href="https://tikzjax.com/">TikZJax</a>. You can easily port TikZ drawings from papers, posters, and notes. For example, we can use the following code to illustrate Euler’s formula $ e^{i \theta} = \cos \theta + i \sin \theta $:</p> <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/tikz"</span><span class="nt">&gt;</span>
+<span class="se">\b</span>egin{document}
+  <span class="se">\b</span>egin{tikzpicture}
+      <span class="se">\f</span>illdraw[fill=cyan!10, draw=blue, thick] (0,0) circle (2cm);<span class="sb">
+
+      \draw[-&gt;, thick] (-2.5,0) -- (2.5,0) node[right] {Re};
+      \draw[-&gt;, thick] (0,-2.5) -- (0,2.5) node[above] {Im};
+
+      \draw[-&gt;, thick, color=purple] (0,0) -- (1.5,1.5);
+      \node[color=purple] at (1.1, 1.7) {$e^{i\theta}$};
+
+      \draw[thick] (0.7,0) arc (0:45:0.7);
+      \node at (0.9, 0.3) {$\theta$};
+
+      \draw[dashed, color=gray] (1.5,1.5) -- (1.5,0) node[below, black] {$\cos \theta$};
+      \draw[dashed, color=gray] (1.5,1.5) -- (0,1.5) node[left, black] {$\sin \theta$};
+      \node at (2.2, 0) [below] {1};
+      \node at (0, 2.2) [left] {$i$};
+      \node at (1.5,1.5) [above right, color=blue] {$(\cos \theta \, \sin \theta)$};
+</span>  <span class="se">\e</span>nd{tikzpicture}
+<span class="se">\e</span>nd{document}
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div> <p>The rendered output is shown below, displayed as a vector graphic：</p> <script type="text/tikz">
+\begin{document}
+  \begin{tikzpicture}
+      \filldraw[fill=cyan!10, draw=blue, thick] (0,0) circle (2cm);
+
+      \draw[->, thick] (-2.5,0) -- (2.5,0) node[right] {Re};
+      \draw[->, thick] (0,-2.5) -- (0,2.5) node[above] {Im};
+
+      \draw[->, thick, color=purple] (0,0) -- (1.5,1.5);
+      \node[color=purple] at (1.1, 1.7) {$e^{i\theta}$};
+
+      \draw[thick] (0.7,0) arc (0:45:0.7);
+      \node at (0.9, 0.3) {$\theta$};
+
+      \draw[dashed, color=gray] (1.5,1.5) -- (1.5,0) node[below, black] {$\cos \theta$};
+      \draw[dashed, color=gray] (1.5,1.5) -- (0,1.5) node[left, black] {$\sin \theta$};
+      \node at (2.2, 0) [below] {1};
+      \node at (0, 2.2) [left] {$i$};
+      \node at (1.5,1.5) [above right, color=blue] {$(\cos \theta \, \sin \theta)$};
+  \end{tikzpicture}
+\end{document}
+</script> <hr/> <h2 id="typograms">Typograms</h2> <p><a href="https://google.github.io/typograms/">Typograms</a> are a way of combining text and graphics to convey information in a clear and visually engaging manner. Typograms are particularly effective for illustrating simple diagrams, charts, and concept visuals where text and graphics are closely integrated. The following example demonstrates a simple Typogram:</p> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>```typograms
+             ___________________
+            /                  /|
+           /__________________/ |
+          |                  |  |
+          |     Distill      |  |
+          |                  |  |
+          |                  | /
+          |__________________|/
+```
+</code></pre></div></div> <p>The rendered output is shown below：</p> <pre><code class="language-typograms">             ___________________
+            /                  /|
+           /__________________/ |
+          |                  |  |
+          |     Distill      |  |
+          |                  |  |
+          |                  | /
+          |__________________|/
+</code></pre> <hr/> <h2 id="layouts">Layouts</h2> <p>The main text column is referred to as the body. It is the assumed layout of any direct descendants of the <code class="language-plaintext highlighter-rouge">d-article</code> element.</p> <div class="fake-img l-body"> <p>.l-body</p> </div> <p>For images you want to display a little larger, try <code class="language-plaintext highlighter-rouge">.l-page</code>:</p> <div class="fake-img l-page"> <p>.l-page</p> </div> <p>All of these have an outset variant if you want to poke out from the body text a little bit. For instance:</p> <div class="fake-img l-body-outset"> <p>.l-body-outset</p> </div> <div class="fake-img l-page-outset"> <p>.l-page-outset</p> </div> <p>Occasionally you’ll want to use the full browser width. For this, use <code class="language-plaintext highlighter-rouge">.l-screen</code>. You can also inset the element a little from the edge of the browser by using the inset variant.</p> <div class="fake-img l-screen"> <p>.l-screen</p> </div> <div class="fake-img l-screen-inset"> <p>.l-screen-inset</p> </div> <p>The final layout is for marginalia, asides, and footnotes. It does not interrupt the normal flow of <code class="language-plaintext highlighter-rouge">.l-body</code> sized text except on mobile screen sizes.</p> <div class="fake-img l-gutter"> <p>.l-gutter</p> </div> <hr/> <h2 id="sidenotes">Sidenotes</h2> <p>Distill supports sidenotes, which are like footnotes but placed in the margin of the page. They are useful for providing additional context or references without interrupting the flow of the main text.</p> <p>There are two main ways to create a sidenote:</p> <p><strong>Using the <code class="language-plaintext highlighter-rouge">&lt;aside&gt;</code> tag:</strong></p> <p>The following code creates a sidenote with <strong><em>distill’s styling</em></strong> in the margin:</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;aside&gt;&lt;p&gt;</span>This is a sidenote using aside tag.<span class="nt">&lt;/p&gt;&lt;/aside&gt;</span>
+</code></pre></div></div> <aside><p> This is a sidenote using `&lt;aside&gt;` tag</p> </aside> <p>We can also add images to sidenotes (click on the image to zoom in for a larger version):</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;aside&gt;</span>
+  {% include figure.liquid loading="eager" path="assets/img/rhino.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+  <span class="nt">&lt;p&gt;</span>
+    F.J. Cole, “The History of Albrecht Dürer’s Rhinoceros in Zoological Literature,” Science, Medicine, and History: Essays on the Evolution of
+    Scientific Thought and Medical Practice (London, 1953), ed. E. Ashworth Underwood, 337-356. From page 71 of Edward Tufte’s Visual Explanations.
+  <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/aside&gt;</span>
+</code></pre></div></div> <aside> <figure> <picture> <source class="responsive-img-srcset" srcset="/al-folio/assets/img/rhino-480.webp 480w,/al-folio/assets/img/rhino-800.webp 800w,/al-folio/assets/img/rhino-1400.webp 1400w," type="image/webp" sizes="95vw"/> <img src="/al-folio/assets/img/rhino.png" class="img-fluid rounded z-depth-1" width="100%" height="auto" data-zoomable="" loading="eager" onerror="this.onerror=null; $('.responsive-img-srcset').remove();"/> </picture> </figure> <p>F.J. Cole, “The History of Albrecht Dürer’s Rhinoceros in Zoological Literature,” Science, Medicine, and History: Essays on the Evolution of Scientific Thought and Medical Practice (London, 1953), ed. E. Ashworth Underwood, 337-356. From page 71 of Edward Tufte’s Visual Explanations.</p> </aside> <p>Sidenotes can also contain equations and links:</p> <p>In physics, mass–energy equivalence is the relationship between mass and energy in a system’s rest frame. The two differ only by a multiplicative constant and the units of measurement.</p> <aside> <p>This principle is defined by Einstein's famous equation: $E = mc^2$ <a href="https://en.wikipedia.org/wiki/Mass%E2%80%93energy_equivalence" target="_blank">(Source: Wikipedia)</a></p> </aside> <p><strong>Using the <code class="language-plaintext highlighter-rouge">l-gutter</code> class:</strong></p> <p>The following code creates a sidenote with <strong><em>al-folio’s styling</em></strong> in the margin:</p> <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"l-gutter"</span><span class="nt">&gt;&lt;p&gt;</span>This is a sidenote using l-gutter class.<span class="nt">&lt;/p&gt;&lt;/div&gt;</span>
+</code></pre></div></div> <div class="l-gutter"> <p> This is a sidenote using `l-gutter` class. </p> </div> <hr/> <h2 id="other-typography">Other Typography?</h2> <p>Emphasis, aka italics, with <em>asterisks</em> (<code class="language-plaintext highlighter-rouge">*asterisks*</code>) or <em>underscores</em> (<code class="language-plaintext highlighter-rouge">_underscores_</code>).</p> <p>Strong emphasis, aka bold, with <strong>asterisks</strong> or <strong>underscores</strong>.</p> <p>Combined emphasis with <strong>asterisks and <em>underscores</em></strong>.</p> <p>Strikethrough uses two tildes. <del>Scratch this.</del></p> <ol> <li>First ordered list item</li> <li>Another item ⋅⋅* Unordered sub-list.</li> <li>Actual numbers don’t matter, just that it’s a number ⋅⋅1. Ordered sub-list</li> <li>And another item.</li> </ol> <p>⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we’ll use three here to also align the raw Markdown).</p> <p>⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅ ⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅ ⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)</p> <ul> <li> <p>Unordered list can use asterisks</p> </li> <li> <p>Or minuses</p> </li> <li> <p>Or pluses</p> </li> </ul> <p><a href="https://www.google.com">I’m an inline-style link</a></p> <p><a href="https://www.google.com" title="Google's Homepage">I’m an inline-style link with title</a></p> <p><a href="https://www.mozilla.org">I’m a reference-style link</a></p> <p><a href="https://slashdot.org">You can use numbers for reference-style link definitions</a></p> <p>Or leave it empty and use the <a href="https://www.reddit.com">link text itself</a>.</p> <p>URLs and URLs in angle brackets will automatically get turned into links. https://www.example.com or <a href="https://www.example.com">https://www.example.com</a> and sometimes example.com (but not on Github, for example).</p> <p>Some text to show that the reference links can follow later.</p> <p>Here’s our logo (hover to see the title text):</p> <p>Inline-style: <img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" title="Logo Title Text 1"/></p> <p>Reference-style: <img src="https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png" alt="alt text" title="Logo Title Text 2"/></p> <p>Inline <code class="language-plaintext highlighter-rouge">code</code> has <code class="language-plaintext highlighter-rouge">back-ticks around</code> it.</p> <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">s</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">JavaScript syntax highlighting</span><span class="dl">"</span><span class="p">;</span>
+<span class="nf">alert</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+</code></pre></div></div> <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Python syntax highlighting</span><span class="sh">"</span>
+<span class="k">print</span> <span class="n">s</span>
+</code></pre></div></div> <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>No language indicated, so no syntax highlighting.
+But let's throw in a &lt;b&gt;tag&lt;/b&gt;.
+</code></pre></div></div> <p>Colons can be used to align columns.</p> <table> <thead> <tr> <th>Tables</th> <th style="text-align: center">Are</th> <th style="text-align: right">Cool</th> </tr> </thead> <tbody> <tr> <td>col 3 is</td> <td style="text-align: center">right-aligned</td> <td style="text-align: right">$1600</td> </tr> <tr> <td>col 2 is</td> <td style="text-align: center">centered</td> <td style="text-align: right">$12</td> </tr> <tr> <td>zebra stripes</td> <td style="text-align: center">are neat</td> <td style="text-align: right">$1</td> </tr> </tbody> </table> <p>There must be at least 3 dashes separating each header cell. The outer pipes (|) are optional, and you don’t need to make the raw Markdown line up prettily. You can also use inline Markdown.</p> <table> <thead> <tr> <th>Markdown</th> <th>Less</th> <th>Pretty</th> </tr> </thead> <tbody> <tr> <td><em>Still</em></td> <td><code class="language-plaintext highlighter-rouge">renders</code></td> <td><strong>nicely</strong></td> </tr> <tr> <td>1</td> <td>2</td> <td>3</td> </tr> </tbody> </table> <blockquote> <p>Blockquotes are very handy in email to emulate reply text. This line is part of the same quote.</p> </blockquote> <p>Quote break.</p> <blockquote> <p>This is a very long line that will still be quoted properly when it wraps. Oh boy let’s keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can <em>put</em> <strong>Markdown</strong> into a blockquote.</p> </blockquote> <p>Here’s a line for us to start with.</p> <p>This line is separated from the one above by two newlines, so it will be a <em>separate paragraph</em>.</p> <p>This line is also a separate paragraph, but… This line is only separated by a single newline, so it’s a separate line in the <em>same paragraph</em>.</p>]]></content><author><name>Albert Einstein</name></author><category term="distill"/><category term="formatting"/><summary type="html"><![CDATA[an example of a distill-style blog post and main elements]]></summary></entry></feed>
