@@ -48,14 +48,6 @@ layout: default
       {% include news.liquid limit=true %}
     {% endif %}
 
-    <!-- media -->
-    {% if page.media and page.media.enabled %}
-      <h2>
-        <a href="{{ '/media/' | relative_url }}" style="color: inherit">press & media</a>
-      </h2>
-      {% include media.liquid limit=true %}
-    {% endif %}
-
     <!-- Latest posts -->
     {% if page.latest_posts and page.latest_posts.enabled %}
       <h2>
@@ -75,7 +67,7 @@ layout: default
     <!-- Social -->
     {% if page.social %}
       <div class="social">
-        <div class="contact-icons">{% include social.liquid %}</div>
+        <div class="contact-icons">{% social_links %}</div>
 
         <div class="contact-note">{{ site.contact_note }}</div>
       </div>
