@@ -6,7 +6,7 @@
         <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
           <img
             alt="PAIR Logo"
-            src="{{ site.logo_navbar | prepend: '/assets/img/' | prepend: site.baseurl | prepend: site.url }}"
+            src="{{ '/assets/img/' | append: site.logo_navbar | relative_url }}"
             height="40"
             style="margin-top:5px"
           >
