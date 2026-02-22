@@ -297,6 +297,9 @@ ninja.data = [{
           section: "News",},{id: "news-our-work-adatp3r-anyplace-topocut-will-be-at-corl-2025",
           title: 'Our work Adatp3R, AnyPlace, TopoCut will be at CoRL 2025.',
           description: "",
+          section: "News",},{id: "news-our-work-amplify-cobalt-softmimicgen-will-be-at-icra-2026",
+          title: 'Our work Amplify, Cobalt, SoftMimicGen will be at ICRA 2026.',
+          description: "",
           section: "News",},{id: "people-aditya-bajoria",
           title: 'Aditya Bajoria',
           description: "",
@@ -322,6 +325,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/ayush-agarwal/";
+            },},{id: "people-benjamin-joffe",
+          title: 'Benjamin Joffe',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/benjamin-joffe/";
             },},{id: "people-braydon-zhang",
           title: 'Braydon Zhang',
           description: "",
@@ -427,6 +435,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/yixiong-hao/";
+            },},{id: "people-yogita-choudhary",
+          title: 'Yogita Choudhary',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/yogita-choudhary/";
             },},{id: "people-yuchi-zhao",
           title: 'Yuchi Zhao',
           description: "",
