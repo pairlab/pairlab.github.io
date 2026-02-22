@@ -3,9 +3,9 @@ layout: page
 div_class: people
 permalink: /people/
 title: people
-description: members of the research group
+description: members of the PAIR research group
 nav: true
-nav_order: 4
+nav_order: 3
 tabs: true
 lab_pictures: assets/img/pair-group-pictures/
 pretty_table: true

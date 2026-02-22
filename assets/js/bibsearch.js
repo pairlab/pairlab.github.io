@@ -18,7 +18,9 @@ document.addEventListener("DOMContentLoaded", function () {
       // Simply add unloaded class to all non-matching items if Browser does not support CSS highlights
       document.querySelectorAll(".bibliography > li").forEach((element, index) => {
         const text = element.innerText.toLowerCase();
-        if (text.indexOf(searchTerm) == -1) {
+        const keywords = (element.getAttribute("data-keywords") || "").toLowerCase();
+        const tags = (element.getAttribute("data-tags") || "").toLowerCase();
+        if (text.indexOf(searchTerm) == -1 && keywords.indexOf(searchTerm) == -1 && tags.indexOf(searchTerm) === -1) {
           element.classList.add("unloaded");
         }
       });
@@ -52,8 +54,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const updateInputField = () => {
     const hashValue = decodeURIComponent(window.location.hash.substring(1)); // Remove the '#' character
-    document.getElementById("bibsearch").value = hashValue;
-    filterItems(hashValue);
+    // Collect all h2 anchors (ids)
+    const h2Anchors = Array.from(document.querySelectorAll("h2[id]")).map((h2) => h2.id);
+    let searchQuery = ""; // Default to the null
+    // Only use hash for search if it is NOT an h2 anchor
+    if (hashValue && !h2Anchors.includes(hashValue)) {
+      // If hash is an anchor, clear the search input and show all items
+      const searchQuery = hashValue.toLowerCase();
+    }
+    document.getElementById("bibsearch").value = searchQuery;
+    filterItems(searchQuery);
   };
 
   // Sensitive search. Only start searching if there's been no input for 300 ms
@@ -64,7 +74,37 @@ document.addEventListener("DOMContentLoaded", function () {
     timeoutId = setTimeout(filterItems(searchTerm), 300);
   });
 
-  window.addEventListener("hashchange", updateInputField); // Update the filter when the hash changes
+  // Update the filter when the hash changes
+  window.addEventListener("hashchange", updateInputField);
 
   updateInputField(); // Update filter when page loads
+});
+
+// filter by tag
+document.addEventListener("DOMContentLoaded", function () {
+  // Tag filter toggle logic
+  let activeTag = null;
+  document.querySelectorAll(".tag-filter").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      const tag = btn.getAttribute("data-tag").toLowerCase();
+      const searchInput = document.getElementById("bibsearch");
+      if (!searchInput) return;
+
+      // If this tag is already active, clear the filter
+      if (activeTag === tag) {
+        searchInput.value = "";
+        activeTag = null;
+        // Optionally, remove active styling from all buttons
+        document.querySelectorAll(".tag-filter").forEach((b) => b.classList.remove("active"));
+      } else {
+        searchInput.value = tag;
+        activeTag = tag;
+        // Optionally, highlight the active button
+        document.querySelectorAll(".tag-filter").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+      // Trigger input event to filter
+      searchInput.dispatchEvent(new Event("input"));
+    });
+  });
 });
