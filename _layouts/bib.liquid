@@ -4,7 +4,7 @@
   {% if site.enable_publication_thumbnails %}
     <div class="col col-sm-2 abbr">
       {%- if entry.abbr -%}
-              <style>
+        <style>
           @media (max-width: 768px) {
           {% if entry.abbr %}
             .abbr { display: none !important; }
@@ -62,7 +62,7 @@
   <!-- Entry bib key -->
   <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}col-sm-9{% else %}col-sm-11{% endif %}">
     <!-- Title -->
-        <div class="title">
+    <div class="title">
       {% if entry.arxiv %}
         <a href="http://arxiv.org/abs/{{ entry.arxiv }}" target="_blank">{{ entry.title }}.</a>
       {% elsif entry.website %}
@@ -222,7 +222,7 @@
 
     <!-- Links/Buttons -->
     <div class="links">
-            {% if entry.keywords %}
+      {% if entry.keywords %}
         <div class="keywords" style="display:none;">
           <span class="badge bg-secondary" data-keywords="{{ entry.keywords | escape }}">
             {{- entry.keywords | join: ', ' -}}
@@ -247,7 +247,7 @@
           <span style="color:DarkOrange; font-weight: bold;"
             ><i class="fas fa-trophy"></i> &nbsp;
             {%- if entry.award_name %}{{ entry.award_name }}{% else %}Awarded{% endif -%}
-          </span>          
+          </span>
         </a>
         <br>
       {% endif %}
@@ -270,28 +270,34 @@
         {% if entry.html contains '://' %}
           <a href="{{ entry.html }}" class="btn btn-sm z-depth-0" role="button"><i class="fas fa-link"></i> link</a>
         {% else %}
-          <a href="{{ entry.html | prepend: '/assets/html/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"><i class="fas fa-link"></i> url</a>
+          <a href="{{ entry.html | prepend: '/assets/html/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"
+            ><i class="fas fa-link"></i> url</a
+          >
         {% endif %}
       {% endif %}
       {% if entry.pdf %}
         {% if entry.pdf contains '://' %}
           <a href="{{ entry.pdf }}" class="btn btn-sm z-depth-0" role="button"><i class="far fa-file-alt"></i> PDF</a>
         {% else %}
-          <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"><i class="far fa-file-alt"></i> PDF</a>
+          <a href="{{ entry.pdf | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"
+            ><i class="far fa-file-alt"></i> PDF</a
+          >
         {% endif %}
       {% endif %}
       {% if entry.supp %}
         {% if entry.supp contains '://' %}
           <a href="{{ entry.supp }}" class="btn btn-sm z-depth-0" role="button"><i class="far fa-file-alt"></i> Supp</a>
         {% else %}
-          <a href="{{ entry.supp | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"><i class="far fa-file-alt"></i> Supp</a>
+          <a href="{{ entry.supp | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"
+            ><i class="far fa-file-alt"></i> Supp</a
+          >
         {% endif %}
       {% endif %}
       {% if entry.video and site.enable_video_embedding %}
         <a class="abstract btn btn-sm z-depth-0" role="button"><i class="fas fa-video"></i> Video</a>
       {% elsif entry.video %}
         {% comment %} <a href="{{ entry.video }}" class="btn btn-sm z-depth-0" role="button">Video</a> {% endcomment %}
-          <a class="venobox btn btn-sm z-depth-0" data-autoplay="true" data-vbtype="video" href="{{ entry.video }}"
+        <a class="venobox btn btn-sm z-depth-0" data-autoplay="true" data-vbtype="video" href="{{ entry.video }}"
           ><i class="fas fa-video"></i> Video</a
         >
       {% endif %}
@@ -305,14 +311,18 @@
         {% if entry.poster contains '://' %}
           <a href="{{ entry.poster }}" class="btn btn-sm z-depth-0" role="button"><i class="fas fa-tv"></i> PPoster</a>
         {% else %}
-          <a href="{{ entry.poster | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"><i class="fas fa-tv"></i> Poster</a>
+          <a href="{{ entry.poster | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"
+            ><i class="fas fa-tv"></i> Poster</a
+          >
         {% endif %}
       {% endif %}
       {% if entry.slides %}
         {% if entry.slides contains '://' %}
           <a href="{{ entry.slides }}" class="btn btn-sm z-depth-0" role="button"><i class="fa-regular fa-file-powerpoint"></i> Slides</a>
         {% else %}
-          <a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"><i class="fa-regular fa-file-powerpoint"></i> Slides</a>
+          <a href="{{ entry.slides | prepend: '/assets/pdf/' | relative_url }}" class="btn btn-sm z-depth-0" role="button"
+            ><i class="fa-regular fa-file-powerpoint"></i> Slides</a
+          >
         {% endif %}
       {% endif %}
       {% if entry.website %}
