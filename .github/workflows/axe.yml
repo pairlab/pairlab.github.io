@@ -41,6 +41,15 @@ jobs:
               "giscus.repo": "${{ github.repository }}",
               "baseurl": ""
             }
+      - name: Restore Jekyll image cache 🖼️
+        uses: actions/cache@v4
+        with:
+          path: |
+            _site/assets/img
+            .jekyll-cache
+          key: ${{ runner.os }}-jekyll-img-v1-${{ hashFiles('_config.yml', 'Gemfile.lock', 'assets/img/**') }}
+          restore-keys: |
+            ${{ runner.os }}-jekyll-img-v1-
       - name: Install and Build 🔧
         run: |
           sudo apt-get update && sudo apt-get install -y imagemagick
