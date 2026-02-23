@@ -40,7 +40,7 @@ We work on challenging open problems at the intersection of computer vision, mac
 
 If you are interested in joining us, please see details on the [contact]({{ site.baseurl}}/contact) page.
 
-**Research Interests**: Robotics, Reinforcement Learning, Causality, Perception  
-**Current Applications**: Mobile-Manipulation in Retail/Warehouse, Personal/Sevice, and Surgical/Medical robotics.
+**Research Interests**: Robotics, Reinforcement Learning, 3D Perception, World Models.  
+**Current Applications**: Humanoids in Personal/Service, Self-Driving Labs and Surgical/Medical robotics.
 
 ---

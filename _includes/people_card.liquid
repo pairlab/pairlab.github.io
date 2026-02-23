@@ -22,7 +22,15 @@
       {% endif %}
       <div class="{% if people.img %}col-md-9{% else %}col-md-12{% endif %}">
         <div class="card-body">
-          <h5 class="card-title">{{ people.name }}</h5>
+          <h5 class="card-title">
+            {% if people.website %}
+              <a href="{{ people.website }}">{{ people.name }}</a>
+            {% elsif people.linkedin %}
+              <a href="{{ people.linkedin }}">{{ people.name }}</a>
+            {% else %}
+              {{ people.name }}
+            {% endif %}
+          </h5>
           <p class="card-text">{{ people.role }}</p>
           <div class="row ml-1 mr-1 p-0">
             {% if people.email %}
