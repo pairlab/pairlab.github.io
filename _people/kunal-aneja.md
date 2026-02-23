@@ -4,7 +4,7 @@ name: Kunal Aneja
 role: MS Student #description of the role
 img: assets/img/people/kunal-aneja.jpeg
 category: ms # pi, postdoc, phd, ms, ug, visitor
-status: current # current, alumni
+status: alumni # current, alumni
 #links and socials
 email: kunala@gatech.edu
 website:

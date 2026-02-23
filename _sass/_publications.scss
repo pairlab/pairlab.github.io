@@ -1,17 +1,29 @@
-// this file has overlap with base scss
-// todo: could be cleaned up
+/*******************************************************************************
+ * Publication and bibliography styles
+ ******************************************************************************/
+
+@use "variables" as v;
 
 .publications {
+  margin-top: 2rem;
+  h1 {
+    color: var(--global-theme-color);
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
   h2 {
-    // color: var(--global-text-color-light);
-    // border-bottom: 1px solid var(--global-theme-color);
-    // border-top: 1px solid var(--global-theme-color);
     font-size: 24px;
+    // margin-bottom: 1rem;
     margin-bottom: 20px;
     margin-top: 20px;
     // padding: 20px 0;
     text-align: left;
     border-top: 1px solid var(--global-divider-color);
+    span {
+      font-size: 1.5rem;
+    }
   }
   h3 {
     // color: $grey-color-dark;
@@ -22,156 +34,227 @@
     margin-top: 5px;
     // padding: 20px 0;
     text-align: left;
-    // border-top: 1px solid $grey-color;
+    // border-top: 1px solid v.$grey-color;
   }
-  ol,
-  ul {
-    list-style: none inside;
-    // margin-left: -30px;
-    padding-left: 0.5rem;
+  .year {
+    border-top: 1px solid var(--global-divider-color);
+    // color: $grey-color;
+    margin: 0 -3em -2.5ex -2em;
+    padding-top: 1ex;
+    text-align: right;
   }
-}
-.year {
-  border-top: 1px solid var(--global-divider-color);
-  // color: $grey-color;
-  margin: 0 -3em -2.5ex -2em;
-  padding-top: 1ex;
-  text-align: right;
-}
-.bibliography {
-  margin-bottom: 10px;
-  margin-top: 10px;
-  list-style: none inside;
-  h2 {
+
+  h2.bibliography {
     border-top: 1px solid var(--global-divider-color);
     color: var(--global-text-color-light);
     margin: 20px -3em 20px -2em;
     padding-top: 1ex;
     text-align: right;
   }
-  ol {
-    list-style: none inside;
-    margin-left: -30px;
-  }
-  ul {
-    margin-left: -30px;
-    // list-style: none inside;
-  }
-  li {
-    border-left: 1px solid #ccc;
-    padding-left: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    margin-left: 1em; /* this is for having counter text */
-    /*margin: 10px 0;*/
-    position: relative;
-    color: $grey-color;
-    font-size: 0.9rem;
-    // list-style-type: decimal;
-    // list-style-position: outside;
 
-    span {
-      display: inline-block;
-    }
-    .title {
-      font-size: $base-font-size;
-      font-weight: 400;
-      color: var(--global-text-color);
-      a {
-        font-weight: 400;
-        // color: $grey-color-dark;
+  ol.bibliography {
+    list-style: none inside;
+    padding-left: 0.5rem;
+    // padding: 0;
+    margin-top: 0;
+    margin-left: -30px;
+
+    li {
+      margin-bottom: 1rem;
+      border-left: 1px solid #ccc;
+      padding-left: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      margin-left: 1em; /* this is for having counter text */
+      /*margin: 10px 0;*/
+      position: relative;
+      color: v.$grey-color;
+      font-size: 0.9rem;
+      // list-style-type: decimal;
+      // list-style-position: outside;
+
+      .preview {
+        display: inline-block;
       }
-    }
-    .author {
-      color: var(--global-text-color-light);
-      a {
-        border-bottom: 1px dashed var(--global-theme-color);
-        &:hover {
-          border-bottom-style: solid;
-          text-decoration: none;
+
+      .abbr {
+        margin-bottom: 0.5rem;
+
+        abbr {
+          display: inline-block;
+          background-color: var(--global-theme-color);
+          margin-bottom: 0.5rem;
+          color: var(--global-card-bg-color) !important;
+
+          a {
+            color: white;
+
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+
+        .award {
+          color: var(--global-theme-color) !important;
+          border: 1px solid var(--global-theme-color);
         }
       }
-      > em {
-        // border-bottom: 1px solid;
-        font-style: bolder;
-      }
-    }
-    span.description {
-      /*font-size: $small-font-size;*/
-      color: $grey-color-dark;
-    }
-    a.abstract,
-    a.bibtex {
-      cursor: pointer;
-    }
-    .hidden {
-      font-size: $small-font-size;
-      max-height: 0px;
-      overflow: hidden;
-      text-align: justify;
-      -webkit-transition: 0.15s ease;
-      -moz-transition: 0.15s ease;
-      -ms-transition: 0.15s ease;
-      -o-transition: 0.15s ease;
-      transition: all 0.15s ease;
 
-      p {
-        line-height: 1.4em;
-        margin: 10px;
+      .title {
+        font-size: v.$base-font-size;
+        font-weight: bolder;
+        color: var(--global-text-color);
       }
-      pre {
-        font-size: 1em;
-        line-height: 1.4em;
+
+      .author {
+        color: var(--global-text-color-light);
+        a {
+          border-bottom: 1px dashed var(--global-theme-color);
+
+          &:hover {
+            border-bottom-style: solid;
+            text-decoration: none;
+          }
+        }
+
+        > em {
+          //border-bottom: 1px solid;
+          font-style: bolder;
+        }
+
+        > span.more-authors {
+          color: var(--global-text-color-light);
+          border-bottom: 1px dashed var(--global-text-color-light);
+          cursor: pointer;
+
+          &:hover {
+            color: var(--global-text-color);
+            border-bottom: 1px dashed var(--global-text-color);
+          }
+        }
+      }
+
+      .links {
+        a.btn {
+          color: var(--global-text-color);
+          border: 1px solid var(--global-text-color);
+          padding-left: 1rem;
+          padding-right: 1rem;
+          padding-top: 0.25rem;
+          padding-bottom: 0.25rem;
+          margin-left: 0;
+
+          &:hover {
+            color: var(--global-theme-color);
+            border-color: var(--global-theme-color);
+          }
+        }
+        a.award.btn {
+          border-color: var(--global-highlight-color);
+        }
+      }
+
+      .badges {
+        padding-bottom: 0.5rem;
+        span {
+          display: inline-block;
+          color: v.$black-color;
+          height: 100%;
+          padding-right: 0.5rem;
+          vertical-align: middle;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .hidden {
+        font-size: v.$small-font-size;
+        max-height: 0px;
+        overflow: hidden;
+        text-align: justify;
+        transition-property: 0.15s ease;
+        -moz-transition: 0.15s ease;
+        -ms-transition: 0.15s ease;
+        -o-transition: 0.15s ease;
+        transition: all 0.15s ease;
+
+        p {
+          line-height: 1.4em;
+          margin: 10px;
+        }
+
+        pre {
+          font-size: 1em;
+          line-height: 1.4em;
+          padding: 10px;
+        }
+      }
+
+      .hidden.open {
+        max-height: 100em;
+        transition-property: 0.15s ease;
+        -moz-transition: 0.15s ease;
+        -ms-transition: 0.15s ease;
+        -o-transition: 0.15s ease;
+        transition: all 0.15s ease;
+      }
+
+      div.abstract.hidden {
+        border: dashed 1px var(--global-bg-color);
+      }
+
+      div.abstract.hidden.open {
+        border-color: var(--global-text-color);
+      }
+
+      img {
+        /*width:15%; */
+        /*float:none; */
+        max-width: 150px;
+        max-height: 150px;
+        float: right;
+        vertical-align: middle;
+        margin: auto;
+        display: block;
+        object-fit: contain;
+        box-shadow: 0 0 7px 0px #aaa;
+        border-radius: 8px;
+        /*border: 1px solid #0787E3;*/
+        border: 3px solid #fff;
+      }
+      .grid-containter {
+        display: grid;
+        grid-template-columns: auto 30%;
+        grid-gap: 15px;
         padding: 10px;
       }
+      .bib-entry {
+        grid-area: 1 / 1;
+      }
+      .bib-teaser {
+        grid-area: 1 / 2;
+      }
+      .internal-embed {
+        vertical-align: top !important;
+        margin-top: 0 !important;
+        display: inline-block !important;
+      }
     }
-    .hidden.open {
-      max-height: 100em;
-      -webkit-transition: 0.15s ease;
-      -moz-transition: 0.15s ease;
-      -ms-transition: 0.15s ease;
-      -o-transition: 0.15s ease;
-      transition: all 0.15s ease;
-    }
-    span.abstract.hidden {
+    div.award.hidden {
       border: dashed 1px var(--global-bg-color);
     }
-    span.abstract.hidden.open {
-      border-color: $grey-color;
-    }
-    img {
-      /*width:15%; */
-      /*float:none; */
-      max-width: 150px;
-      max-height: 150px;
-      float: right;
-      vertical-align: middle;
-      margin: auto;
-      display: block;
-      object-fit: contain;
-      box-shadow: 0 0 7px 0px #aaa;
-      border-radius: 8px;
-      /*border: 1px solid #0787E3;*/
-      border: 3px solid #fff;
-    }
-    .grid-containter {
-      display: grid;
-      grid-template-columns: auto 30%;
-      grid-gap: 15px;
-      padding: 10px;
-    }
-    .bib-entry {
-      grid-area: 1 / 1;
-    }
-    .bib-teaser {
-      grid-area: 1 / 2;
-    }
-    .internal-embed {
-      vertical-align: top !important;
-      margin-top: 0 !important;
-      display: inline-block !important;
+    div.award.hidden.open {
+      border-color: var(--global-highlight-color);
     }
   }
+}
+
+.citation,
+.citation-number {
+  color: var(--global-theme-color);
 }
 
 /*this is for counters*/
@@ -182,7 +265,7 @@ ol.bibliography {
 ol.bibliography li:before {
   //   content: counter(list-item) ".";  /* Display the counter value */
   counter-increment: item;
-  font-size: $small-font-size;
+  font-size: v.$small-font-size;
   position: absolute;
   top: 0;
   left: 0;

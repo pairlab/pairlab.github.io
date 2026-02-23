@@ -1,51 +1,51 @@
 % =========
 %  DOCS
-entry types
-  patent
-  workshop
-  inproceedings
-  article
-  unpublished (preprints)
-  techreport
-  misc
-
-Fields (in addition to standard fields)
-  keywords -- generic keywords to help with search
-    tags -- buttons/links - small list of tags. 
-  award
-    award_details: optional
-  abstract
-  doi : only use the id, do not use the full url
-  arxiv  : only use the id, do not use the full url
-  bibtex_show  : have to mark true
-    bibtex: auto generated
-  html
-  pdf - can be url or filetype.pdf
-  supp - can be url or filetype.pdf
-  video
-  blog
-  code
-  poster
-  slides - can be url or filetype.pdf
-  website
-  altmetric
-  dimensions
-  google_scholar_id
-  inspirehep_id
- 
+% entry types
+%   patent
+%   workshop
+%   inproceedings
+%   article
+%   unpublished (preprints)
+%   techreport
+%   misc
+%
+% Fields (in addition to standard fields)
+%   keywords -- generic keywords to help with search
+%     tags -- buttons/links - small list of tags.
+%   award
+%     award_details: optional
+%   abstract
+%   doi : only use the id, do not use the full url
+%   arxiv  : only use the id, do not use the full url
+%   bibtex_show  : have to mark true
+%     bibtex: auto generated
+%   html
+%   pdf - can be url or filetype.pdf
+%   supp - can be url or filetype.pdf
+%   video
+%   blog
+%   code
+%   poster
+%   slides - can be url or filetype.pdf
+%   website
+%   altmetric
+%   dimensions
+%   google_scholar_id
+%   inspirehep_id
+%
 % =========
-Tag Tree
-
-Robotics
-  Simulation
-  Manipulation
-    Grasping
-  
-
-Computer Vision 
-
-Machine Learning
-  Reinforcement Learning
+% Tag Tree (for search and filtering)
+%
+% Robotics
+%   Simulation
+%   Manipulation
+%     Grasping
+%
+% Computer Vision
+%   Video Prediction
+%
+% Machine Learning
+%   Reinforcement Learning
 
 % =========
 
@@ -850,7 +850,9 @@ Machine Learning
   talk={https://www.youtube.com/watch?v=SuUMKy52b4E},
   award={Oral Presentation},
   preview={corl21-transparenet.gif},
-  description={TraspareNet is a joint point cloud and depth completion method to recover learned depth of transparent objects in cluttered and complex scenes, even with partially filled fluid contents within the vessels}
+  description={TraspareNet is a joint point cloud and depth completion method to recover learned depth of transparent objects in cluttered and complex scenes, even with partially filled fluid contents within the vessels},
+  keywords={depth completion, transparent objects, laboratory automation},
+  tags={computer vision}
 }
 
 @inproceedings{sinha2021s4rl,
@@ -1273,6 +1275,8 @@ Machine Learning
   website= {https://ac-rad.github.io/MVTrans/},
   video={https://youtu.be/8Qdc_xWVp-k},
   preview={mvtrans-icra23.jpg},
+  keywords={transparent object perception, laboratory automation,, pose estimation},
+  tags={Computer Vision, Robotics},
   description={MVTrans is an end-to-end multi-view architecture with multiple perception capabilities, including depth estimation, segmentation, and pose estimation. We also present a procedural photo-realistic large-scale transparent object detection dataset, Syn-TODD.}
 }
 
@@ -1415,7 +1419,7 @@ Machine Learning
   preview={adademo-24.jpg}
 }
 
-@inproceedings{mu2024adademo,
+@inproceedings{srinivasan2024dexmots,
   title={DexMOTS: Dexterous Manipulation with Differentiable Simulation},
   author={Krishnan Srinivasan and Jeremy Collins and Eric Heiden and Ian Ng and Jeannette Bohg and Animesh Garg},
   arXiv={2404.07428},
@@ -1447,7 +1451,8 @@ Machine Learning
   year={2025},
   month={apr},
   website={https://www.imgeorgiev.com/pwm/},
-  tags={Reinforcement Learning, World Models, Policy Learning},
+  keywords={Policy Learning, World Models},
+  tags={Reinforcement Learning, Machine Learning},
   preview={pwm-25.jpg}
 }
 
@@ -1459,7 +1464,9 @@ Machine Learning
   month={apr},
   website={https://egosim.github.io/EgoSim/},
   pdf={https://openreview.net/forum?id=zAyS5aRKV8},
-  preview={egosim-sample.gif}
+  preview={egosim-sample.gif},
+  keywords={Video Prediction, World Models},
+  tags={Computer Vision, Machine Learning},
 }
 
 @inproceedings{byrnes2025climb,
@@ -1470,7 +1477,9 @@ Machine Learning
   year={2025},
   month={may},
   website={https://plan-with-climb.github.io/},
-  preview={climb-2025.jpg}
+  preview={climb-2025.jpg},
+  keywords={Planning, Continual Learning},
+  tags={Robotics},
 }
 
 @inproceedings{ameperosa2025rocoda,
@@ -1482,7 +1491,7 @@ Machine Learning
   month={may},
   website={https://rocoda.github.io/},
   keywords={Counterfactual Data Augmentation, Robot Learning, Data Efficiency, causality},
-  tags={Data Augmentation},
+  tags={Manipulation},
   preview={rocoda-25.jpg}
 }
 
@@ -1495,7 +1504,10 @@ Machine Learning
   website={https://orbit-surgical.github.io/sufia-bc/},
   video={https://youtu.be/jCvZYf0saRo},
   preview={sufia-bc-25.jpg},
-  arXiv={2504.14857}
+  arXiv={2504.14857},
+  keywords={Behavior Cloning, Surgical Subtasks, Demonstration Generation},
+  tags={Simulation, Manpiulation},
+  
 }
 
 @inproceedings{krishnan2025acgd,
@@ -1508,7 +1520,7 @@ Machine Learning
   website={https://critic-guided-distillation.github.io},
   preview={acgd-iros25.jpg},
   keywords={Visual Multitask Policy Learning, Asymmetric Critic},
-  tags={Reinforcement Learning, Visual Learning, Policy Learning},
+  tags={Reinforcement Learning, Manpiulation},
 }
 
 
@@ -1520,7 +1532,9 @@ Machine Learning
   year={2025},
   month={sep},
   website={https://any-place.github.io/},
-  preview={anyplace-2025.jpg}
+  preview={anyplace-2025.jpg},
+  keywords={Object Placement, Sim2Real},
+  tags={Manpiulation},
 }
 
 @inproceedings{wilcox2025adapt3radaptive3dscene,
@@ -1531,19 +1545,59 @@ Machine Learning
   arxiv={2503.04877},
   month={sep},
   website={https://www.pairlab.github.io/Adapt3R/}, 
-  preview={adapt3r-2025.jpg}
+  preview={adapt3r-2025.jpg},
+  keywords={Adaptive 3D Scene Representation, Domain Transfer, Imitation Learning},
+  tags={Computer Vision, Manpiulation},
 }
 
-@inproceedings{wilcox2025adapt3radaptive3dscene,
+@inproceedings{wang2025topocut,
   title={TopoCut: Learning Multi-Step Cutting with Spectral Rewards and Discrete Diffusion Policies}, 
   author={Liquan Wang and Jiangjie Bian and Eric Heiden and Animesh Garg},
   booktitle={Conference on Robot Learning (CoRL)},
   year={2025},
   month={sep},
   website={https://topocut.github.io/}, 
-  preview={topocut-corl25.jpg}
+  preview={topocut-corl25.jpg},
+  keywords={Cutting, Spectral Rewards, Discrete Diffusion Policies},
+  tags={Simulation, Manpiulation},
 }
 
+@inproceedings{collins2025amplify,
+      title={{AMPLIFY: Actionless Motion Priors for Robot Learning from Videos}}, 
+      author = {Collins, Jeremy A. and Cheng, Loránd and Aneja, Kunal and Wilcox, Albert and Joffe, Benjamin and Garg, Animesh},
+      booktitle={IEEE International Conference on Robotics and Automation (ICRA)},
+      year={2026},
+      month={may},
+      arxiv={2506.14198},
+      preview={amplify-corl25.jpg},
+      website={https://amplify-robotics.github.io/},
+      keywords={world models, robot learning from videos},
+      tags={machine learning, Manpiulation},
+}
+
+@inproceedings{moghani2026softmimicgen,
+      title={{SoftMimicGen: A Data Generation System for Scalable Robot Learning in Deformable Object Manipulation}}, 
+      author = {Moghani, Masoud and Garg, Animesh and Zhu, Yuke and Azizian, Mahdi and Mandlekar, Ajay Uday and Huver, Sean},
+      booktitle={IEEE International Conference on Robotics and Automation (ICRA)},
+      year={2026},
+      month={may},
+      preview={softmimicgen.png},
+      website={https://softmimicgen.github.io/},
+      keywords={data augmentation, deformable object manipulation},
+      tags={Simulation, Manpiulation},
+}
+
+@inproceedings{agarwal2026cobalt,
+      title={{COBALT: Crowdsourcing Robot Learning via Cloud-Based Teleoperation with Smartphones}}, 
+      author = {Ayush Agarwal and Ansh Gandhi and Jeremy Collins and Omar Rayyan and Aryan Sarswat and Ranjani Koushik and Masoud Moghani and Ajay Uday Mandlekar and Animesh Garg},
+      booktitle={IEEE International Conference on Robotics and Automation (ICRA)},
+      year={2026},
+      month={may},
+      preview={cobalt-icra26.png},
+      website={https://cobalt-teleop.github.io/},
+      keywords={teleoperation, crowdsourcing, robot learning},
+      tags={Simulation, Manpiulation},
+}
 
 % ==========
 % Journal
@@ -1751,10 +1805,12 @@ Machine Learning
   publisher={Springer US New York},
   doi={10.1007/s10514-023-10136-2},
   website={https://ac-rad.github.io/clairify/},
-  preview={llm-auro-23.gif}
+  preview={llm-auro-23.gif},
+  keywords={laboratory automation, large language models, self-driving labs},
+  tags={Robotics},
 }
 
-@article{singh2023progprompt,
+@article{auro-progprompt,
   title={ProgPrompt: program generation for situated robot task planning using large language models},
   author={Singh, Ishika and Blukis, Valts and Mousavian, Arsalan and Goyal, Ankit and Xu, Danfei and Tremblay, Jonathan and Fox, Dieter and Thomason, Jesse and Garg, Animesh},
   journal={Autonomous Robots (AURO)},
@@ -1807,7 +1863,9 @@ Machine Learning
   arxiv={2401.06949},
   website={https://ac-rad.github.io/organa/},
   video={https://www.youtube.com/watch?v=N6qMMwJ8hKQ},
-  preview={organa-2025.jpg}
+  preview={organa-2025.jpg},
+  keywords={Self-Driving Labs, laboratory automation, Agentic Planning},
+  tags={Manpiulation}
 }
 
 @article{cooper2025accelerating,
@@ -1815,8 +1873,38 @@ Machine Learning
   author={Andrew I. Cooper and Patrick Courtney and Kourosh Darvish and Moritz Eckhoff and Hatem Fakhruldeen and Andrea Gabrielli and Animesh Garg and Sami Haddadin and Kanako Harada and Jason Hein and Maria Hübner and Dennis Knobbe and Gabriella Pizzuto and Florian Shkurti and Ruja Shrestha and Kerstin Thurow and Rafael Vescovi and Birgit Vogel-Heuser and Ádám Wolf and Naruki Yoshikawa and Yan Zeng and Zhengxue Zhou and Henning Zwirnmann},
   journal={Science Robotics},
   arXiv={2501.06847},
+  month={sep},
   year={2025},
-  preview={ac-icra24.jpg}
+  preview={ac-icra24.jpg},
+  keywords={Self-Driving Labs, laboratory automation},
+  tags={Robotics}
+}
+
+@article{amato2025data,
+  author = {Nancy M. Amato  and Seth Hutchinson  and Animesh Garg  and Aude Billard  and Daniela Rus  and Russ Tedrake  and Frank Park  and Ken Goldberg },
+  title = {“Data will solve robotics and automation: True or false?”: A debate},
+  journal = {Science Robotics},
+  month = {aug},
+  year = {2025},
+  doi = {10.1126/scirobotics.aea7897},
+  preview={data-debate-25.jpg},
+  URL = {https://www.science.org/doi/abs/10.1126/scirobotics.aea7897},
+  blog={https://praxiscurrents.substack.com/p/the-age-of-empiricism-in-physical},
+  tags={Machine Learaning, Robotics},
+}
+
+@article{Darvish2026,
+  author = {Darvish, Kourosh and Sohal, Arjun and Mandal, Abhijoy and Fakhruldeen, Hatem and Radulov, Nikola and Zhou, Zhengxue and Veeramani, Satheeshkumar and Choi, Joshua and Han, Sijie and Zhang, Brayden and Chae, Jeeyeoun and Wright, Alex and Wang, Yijie and Darvish, Hossein and Zhao, Yuchi and Tom, Gary and Hao, Han and Bogdanovic, Miroslav and Pizzuto, Gabriella and Cooper, Andrew I. and Aspuru-Guzik, Al\'{a}n and Shkurti, Florian and Garg, Animesh},
+  title = {MATTERIX: toward a digital twin for robotics-assisted chemistry laboratory automation},
+  journal = {Nature Computational Science},
+  year = {2026},
+  month={jan},
+  doi = {10.1038/s43588-025-00924-4},
+  code = {https://github.com/AccelerationConsortium/Matterix},
+  url = {https://doi.org/10.1038/s43588-025-00924-4},
+  preview={matterix-2026.png},
+  keywords={digital twin, laboratory automation},
+  tags={Simulation, Manpiulation},
 }
 
 % ==========
@@ -1878,16 +1966,17 @@ Machine Learning
       preview={scaling-scientist-25.jpg}
 }
 
-@unpublished{collins2025amplify,
-      title={{AMPLIFY: Actionless Motion Priors for Robot Learning from Videos}}, 
-      author = {Collins, Jeremy A. and Cheng, Loránd and Aneja, Kunal and Wilcox, Albert and Joffe, Benjamin and Garg, Animesh},
+@unpublished{zhou2025reinforcegenhybridskillpolicies,
+      title={ReinforceGen: Hybrid Skill Policies with Automated Data Generation and Reinforcement Learning}, 
+      author={Zihan Zhou and Animesh Garg and Ajay Mandlekar and Caelan Garrett},
       year={2025},
-      month={jun},
-      arxiv={2506.14198},
-      preview={amplify-corl25.jpg},
-      website={https://amplify-robotics.github.io/}
+      eprint={2512.16861},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      preview={reinforcegen-2025.png},
+      arXiv={2512.16861}, 
+      url={https://reinforcegen.github.io/}
 }
-
 
 % =============
 %  Older Misc
@@ -1961,6 +2050,8 @@ Machine Learning
   website = {https://ac-rad.github.io/robot-chemist-tamp/},
   video={https://youtu.be/NjpZmaKQWls},
   preview={chemrobot-arxiv22.gif},
+  keywords={laboratory automation, task and motion planning, chemistry robotics},
+  tags={Manpiulation},
   description={We propose a framework for robots to assist chemists by performing lab experiments autonomously. The solution allows a general-purpose robot to perform diverse chemistry experiments and efficiently make use of available lab tools. }
 }
 
@@ -1973,6 +2064,7 @@ Machine Learning
   website= {https://ac-rad.github.io/clairify/},
   video={https://youtu.be/-87yrXytluw},
   preview={clairify-iros23.gif},
+  keywords={LLMs, program synthesis, program verification, laboratory automation},
   description={CLAIRify is a novel approach that combines automatic iterative prompting in LLMs with program verification to ensure programs written in domain-specific languages are syntactically valid and incorporate environment constraints.}
 }
 
@@ -1991,7 +2083,20 @@ Machine Learning
   year={2024},
   arXiv={2401.04157},  
   website={https://replan-lm.github.io/replan.github.io/},
-  preview={replan-24.jpg}
+  preview={replan-24.jpg},
+  keywords={replanning, language models, agentic planning},
+  tags={Reinforcement Learning, Robotics},
+}
+
+@techreport{nvidia2025isaaclab,
+      title={Isaac Lab: A GPU-Accelerated Simulation Framework for Multi-Modal Robot Learning}, 
+      author={NVIDIA and Mayank Mittal and Pascal Roth and James Tigue and Antoine Richard and Octi Zhang and Peter Du and Antonio Serrano-Muñoz and Xinjie Yao and René Zurbrügg and Nikita Rudin and Lukasz Wawrzyniak and Milad Rakhsha and Alain Denzler and Eric Heiden and Ales Borovicka and Ossama Ahmed and Iretiayo Akinola and Abrar Anwar and Mark T. Carlson and Ji Yuan Feng and Animesh Garg and Renato Gasoto and Lionel Gulich and Yijie Guo and M. Gussert and Alex Hansen and Mihir Kulkarni and Chenran Li and Wei Liu and Viktor Makoviychuk and Grzegorz Malczyk and Hammad Mazhar and Masoud Moghani and Adithyavairavan Murali and Michael Noseworthy and Alexander Poddubny and Nathan Ratliff and Welf Rehberg and Clemens Schwarke and Ritvik Singh and James Latham Smith and Bingjie Tang and Ruchik Thaker and Matthew Trepte and Karl Van Wyk and Fangzhou Yu and Alex Millane and Vikram Ramasamy and Remo Steiner and Sangeeta Subramanian and Clemens Volk and CY Chen and Neel Jawale and Ashwin Varghese Kuruttukulam and Michael A. Lin and Ajay Mandlekar and Karsten Patzwaldt and John Welsh and Huihua Zhao and Fatima Anes and Jean-Francois Lafleche and Nicolas Moënne-Loccoz and Soowan Park and Rob Stepinski and Dirk Van Gelder and Chris Amevor and Jan Carius and Jumyung Chang and Anka He Chen and Pablo de Heras Ciechomski and Gilles Daviet and Mohammad Mohajerani and Julia von Muralt and Viktor Reutskyy and Michael Sauter and Simon Schirm and Eric L. Shi and Pierre Terdiman and Kenny Vilella and Tobias Widmer and Gordon Yeoman and Tiffany Chen and Sergey Grizan and Cathy Li and Lotus Li and Connor Smith and Rafael Wiltz and Kostas Alexis and Yan Chang and David Chu and Linxi "Jim" Fan and Farbod Farshidian and Ankur Handa and Spencer Huang and Marco Hutter and Yashraj Narang and Soha Pouya and Shiwei Sheng and Yuke Zhu and Miles Macklin and Adam Moravanszky and Philipp Reist and Yunrong Guo and David Hoeller and Gavriel State},
+      year={2025},
+      eprint={2511.04831},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      arXiv={2511.04831},  
+      preview={isaaclab.jpg},
 }
 
 
