@@ -1,6 +1,32 @@
 import { highlightSearchTerm } from "./highlight-search-term.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("bibsearch");
+  if (!searchInput) {
+    return;
+  }
+
+  const getMetadataSearchText = (element) => {
+    const itemKeywords = (element.getAttribute("data-keywords") || "").toLowerCase();
+    const itemTags = (element.getAttribute("data-tags") || "").toLowerCase();
+    const nestedKeywords = Array.from(element.querySelectorAll("[data-keyword], [data-keywords]"))
+      .map((node) => node.getAttribute("data-keyword") || node.getAttribute("data-keywords") || "")
+      .join(" ")
+      .toLowerCase();
+    const nestedTags = Array.from(element.querySelectorAll("[data-tag], [data-tags]"))
+      .map((node) => node.getAttribute("data-tag") || node.getAttribute("data-tags") || "")
+      .join(" ")
+      .toLowerCase();
+
+    return `${itemKeywords} ${itemTags} ${nestedKeywords} ${nestedTags}`;
+  };
+
+  const getSearchableText = (element) => {
+    const renderedAndHiddenText = (element.textContent || "").toLowerCase();
+    const metadataText = getMetadataSearchText(element);
+    return `${renderedAndHiddenText} ${metadataText}`;
+  };
+
   // actual bibsearch logic
   const filterItems = (searchTerm) => {
     document.querySelectorAll(".bibliography, .unloaded").forEach((element) => element.classList.remove("unloaded"));
@@ -12,15 +38,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
       nonMatchingElements.forEach((element) => {
-        element.classList.add("unloaded");
+        const searchableText = getSearchableText(element);
+        if (searchableText.indexOf(searchTerm) === -1) {
+          element.classList.add("unloaded");
+        }
       });
     } else {
       // Simply add unloaded class to all non-matching items if Browser does not support CSS highlights
-      document.querySelectorAll(".bibliography > li").forEach((element, index) => {
-        const text = element.innerText.toLowerCase();
-        const keywords = (element.getAttribute("data-keywords") || "").toLowerCase();
-        const tags = (element.getAttribute("data-tags") || "").toLowerCase();
-        if (text.indexOf(searchTerm) == -1 && keywords.indexOf(searchTerm) == -1 && tags.indexOf(searchTerm) === -1) {
+      document.querySelectorAll(".bibliography > li").forEach((element) => {
+        const searchableText = getSearchableText(element);
+        if (searchableText.indexOf(searchTerm) === -1) {
           element.classList.add("unloaded");
         }
       });
@@ -37,7 +64,9 @@ document.addEventListener("DOMContentLoaded", function () {
           const totalSiblings = ol.querySelectorAll(":scope > li");
 
           if (unloadedSiblings.length === totalSiblings.length) {
-            ol.previousElementSibling.classList.add("unloaded"); // Add the '.unloaded' class to the previous grouping element (e.g. year)
+            if (ol.previousElementSibling) {
+              ol.previousElementSibling.classList.add("unloaded"); // Add the '.unloaded' class to the previous grouping element (e.g. year)
+            }
             ol.classList.add("unloaded"); // Add the '.unloaded' class to the OL itself
           } else {
             hideFirstGroupingElement = false; // there is at least some visible entry, don't hide the first grouping element
@@ -60,18 +89,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // Only use hash for search if it is NOT an h2 anchor
     if (hashValue && !h2Anchors.includes(hashValue)) {
       // If hash is an anchor, clear the search input and show all items
-      const searchQuery = hashValue.toLowerCase();
+      searchQuery = hashValue.toLowerCase();
     }
-    document.getElementById("bibsearch").value = searchQuery;
+    searchInput.value = searchQuery;
     filterItems(searchQuery);
   };
 
   // Sensitive search. Only start searching if there's been no input for 300 ms
   let timeoutId;
-  document.getElementById("bibsearch").addEventListener("input", function () {
+  searchInput.addEventListener("input", function () {
     clearTimeout(timeoutId); // Clear the previous timeout
     const searchTerm = this.value.toLowerCase();
-    timeoutId = setTimeout(filterItems(searchTerm), 300);
+    timeoutId = setTimeout(() => filterItems(searchTerm), 300);
   });
 
   // Update the filter when the hash changes
@@ -84,11 +113,12 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   // Tag filter toggle logic
   let activeTag = null;
+  const searchInput = document.getElementById("bibsearch");
+  if (!searchInput) return;
+
   document.querySelectorAll(".tag-filter").forEach(function (btn) {
     btn.addEventListener("click", function () {
       const tag = btn.getAttribute("data-tag").toLowerCase();
-      const searchInput = document.getElementById("bibsearch");
-      if (!searchInput) return;
 
       // If this tag is already active, clear the filter
       if (activeTag === tag) {

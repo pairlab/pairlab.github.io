@@ -4,7 +4,7 @@ name: Wei Yu
 role: Ph.D. Student (UofT) <br> (with Steve Easterbrook) #description of the role
 img: assets/img/people/wei-yu.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
-status: current # current, alumni
+status: alumni # current, alumni
 #links and socials
 email: gnosis@cs.toronto.edu
 website: https://gnosisyuw.github.io/
