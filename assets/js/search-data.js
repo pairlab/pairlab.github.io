@@ -354,6 +354,11 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/dylan-turpin/";
+            },},{id: "people-ethan-villalovoz",
+          title: 'Ethan Villalovoz',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/ethan-villalovoz/";
             },},{id: "people-ezra-ameperosa",
           title: 'Ezra Ameperosa',
           description: "",
