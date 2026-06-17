@@ -4,7 +4,7 @@ name: Atharva Mete
 role: MS Student #description of the role
 img: assets/img/people/atharva-mete.jpeg
 category: ms # pi, postdoc, phd, ms, ug, visitor
-status: current # current, alumni
+status: alumni # current, alumni
 #links and socials
 email: amete7@gatech.edu
 website: https://atharvamete.github.io/

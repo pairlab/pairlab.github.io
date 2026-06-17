@@ -4,7 +4,7 @@ name: Ayush Agarwal
 role: UG Student #description of the role
 img: assets/img/people/ayush-agarwal.jpeg
 category: ug # pi, postdoc, phd, ms, ug, visitor
-status: current # current, alumni
+status: alumni # current, alumni
 #links and socials
 email: aagarwal608@gatech.edu
 website:

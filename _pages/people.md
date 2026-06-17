@@ -122,7 +122,10 @@ We have been fortunate to work with exemplary colleagues over the years.
 
 | Name                                                                                       | Institution  | Degree                | Year      | Currently at              |
 | ------------------------------------------------------------------------------------------ | ------------ | --------------------- | --------- | ------------------------- |
+| [Ayush Agarwal](https://www.linkedin.com/in/ayush-agarwal05/)                              | Georgia Tech | BS                    | 2024-2026 | Stanford (MS)             |
+| [Aditya Bajoria](https://www.linkedin.com/in/abajoria04/)                                  | Georgia Tech | BS                    | 2024-2026 |                           |
 | [Kunal Aneja](https://www.linkedin.com/in/kunal-aneja/)                                    | Georgia Tech | BSMS                  | 2022-2026 | Google Deepmind           |
+| [Atharva Mete](https://www.linkedin.com/in/atharva-mete/)                                  | Georgia Tech | BSMS                  | 2023-2025 | Agility                   |
 | [Jia Lin (Alan) Yuan](https://www.linkedin.com/in/jalnyn/)                                 | UofT         | BS (CS)               | 2021-2024 | MScAC, Instacart          |
 | [Arthur Allshire](https://allshire.org)                                                    | UofT         | Engg. Sci.            | 2020-2023 | PhD, UC Berkeley          |
 | [Ritvik Singh](https://www.linkedin.com/in/ritvik-singh/)                                  | UofT         | Engg. Sci.            | 2020-2023 | Nvidia                    |
