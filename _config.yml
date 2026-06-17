@@ -323,7 +323,7 @@ scholar:
       patent: Patents,
       misc: Others,
     }
-  type_order: [unpublished, article, workshop, techreport, thesis, patent, misc]
+  type_order: [unpublished, article, techreport, workshop, thesis, patent, misc]
 
   bibliography_list_attributes:
     reversed: true
