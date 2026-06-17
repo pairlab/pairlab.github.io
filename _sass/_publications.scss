@@ -4,6 +4,20 @@
 
 @use "variables" as v;
 
+.tag-filter.btn {
+  color: var(--global-text-color);
+  border: 1px solid var(--global-divider-color);
+  background-color: transparent;
+
+  &:hover,
+  &:focus,
+  &.active {
+    color: #fff;
+    border-color: var(--global-theme-color);
+    background-color: var(--global-theme-color);
+  }
+}
+
 .publications {
   margin-top: 2rem;
   h1 {

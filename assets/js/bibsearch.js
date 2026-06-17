@@ -27,6 +27,53 @@ document.addEventListener("DOMContentLoaded", function () {
     return `${renderedAndHiddenText} ${metadataText}`;
   };
 
+  const normalizeWhitespace = (text) => {
+    return (text || "").toLowerCase().trim().replace(/\s+/g, " ");
+  };
+
+  const stripWrappingQuotes = (text) => {
+    return (text || "").replace(/^"(.+)"$/, "$1");
+  };
+
+  const normalizeSearchTokens = (searchTerm) => {
+    return normalizeWhitespace(stripWrappingQuotes(searchTerm)).split(" ").filter(Boolean);
+  };
+
+  const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+  const hasOrderedPhraseMatch = (searchableText, tokens) => {
+    if (tokens.length <= 1) {
+      return true;
+    }
+
+    // Allow optional middle initials between tokens, e.g. "jeremy a. collins".
+    const optionalInitials = "(?:[\\s,.-]+[a-z]\\.?)*";
+    const separator = `${optionalInitials}[\\s,.-]+`;
+    const pattern = tokens.map((token) => `\\b${escapeRegex(token)}\\b`).join(separator);
+    return new RegExp(pattern, "i").test(searchableText);
+  };
+
+  const matchesSearchTerm = (searchableText, searchTerm) => {
+    const normalizedSearchableText = normalizeWhitespace(searchableText);
+    const tokens = normalizeSearchTokens(searchTerm);
+
+    if (tokens.length === 0) {
+      return true;
+    }
+
+    const hasAllTokens = tokens.every((token) => normalizedSearchableText.includes(token));
+    if (!hasAllTokens) {
+      return false;
+    }
+
+    // For multi-word input, require phrase-like order with support for middle initials.
+    if (tokens.length > 1) {
+      return hasOrderedPhraseMatch(normalizedSearchableText, tokens);
+    }
+
+    return true;
+  };
+
   // actual bibsearch logic
   const filterItems = (searchTerm) => {
     document.querySelectorAll(".bibliography, .unloaded").forEach((element) => element.classList.remove("unloaded"));
@@ -39,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       nonMatchingElements.forEach((element) => {
         const searchableText = getSearchableText(element);
-        if (searchableText.indexOf(searchTerm) === -1) {
+        if (!matchesSearchTerm(searchableText, searchTerm)) {
           element.classList.add("unloaded");
         }
       });
@@ -47,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Simply add unloaded class to all non-matching items if Browser does not support CSS highlights
       document.querySelectorAll(".bibliography > li").forEach((element) => {
         const searchableText = getSearchableText(element);
-        if (searchableText.indexOf(searchTerm) === -1) {
+        if (!matchesSearchTerm(searchableText, searchTerm)) {
           element.classList.add("unloaded");
         }
       });

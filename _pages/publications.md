@@ -44,7 +44,7 @@ For coverage of research in press, please see [Press & Media]({{ site.baseurl }}
 
         <button
           type="button"
-          class="btn btn-sm btn-outline-light z-depth-0 tag-filter"
+          class="btn btn-sm z-depth-0 tag-filter"
           data-tag="{{ tag | escape }}"
           role="button"
         >
