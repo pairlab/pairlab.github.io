@@ -309,41 +309,67 @@ ninja.data = [{
           section: "News",},{id: "news-our-work-amplify-cobalt-softmimicgen-will-be-at-icra-2026",
           title: 'Our work Amplify, Cobalt, SoftMimicGen will be at ICRA 2026.',
           description: "",
-          section: "News",},{id: "people-aditya-bajoria",
-          title: 'Aditya Bajoria',
+          section: "News",},{id: "news-our-work-hierarchical-policy-learning-via-spectral-decomposition-will-be-at-icml-2026",
+          title: 'Our work Hierarchical Policy Learning via Spectral Decomposition will be at ICML 2026....',
           description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/aditya-bajoria/";
-            },},{id: "people-albert-wilcox",
+          section: "News",},{id: "news-our-work-keygen-and-og-vla-will-be-at-iros-2026",
+          title: 'Our work KEYGEN and OG-VLA will be at IROS 2026.',
+          description: "",
+          section: "News",},{id: "people-albert-wilcox",
           title: 'Albert Wilcox',
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/albert-wilcox/";
+            },},{id: "people-aditya-bajoria",
+          title: 'Aditya Bajoria',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/aditya-bajoria/";
+            },},{id: "people-atharva-mete",
+          title: 'Atharva Mete',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/atharva-mete/";
+            },},{id: "people-ayush-agarwal",
+          title: 'Ayush Agarwal',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/ayush-agarwal/";
+            },},{id: "people-braydon-zhang",
+          title: 'Braydon Zhang',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/braydon-zhang/";
+            },},{id: "people-kaavya-menon",
+          title: 'Kaavya Menon',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/kaavya-menon/";
+            },},{id: "people-kunal-aneja",
+          title: 'Kunal Aneja',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/kunal-aneja/";
+            },},{id: "people-ranjani-koushik",
+          title: 'Ranjani Koushik',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/ranjani-koushik/";
+            },},{id: "people-wei-yu",
+          title: 'Wei Yu',
+          description: "",
+          section: "People",handler: () => {
+              window.location.href = "/people/alumni/wei-yu/";
             },},{id: "people-animesh-garg",
           title: 'Animesh Garg',
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/animesh-garg/";
-            },},{id: "people-atharva-mete",
-          title: 'Atharva Mete',
-          description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/atharva-mete/";
-            },},{id: "people-ayush-agarwal",
-          title: 'Ayush Agarwal',
-          description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/ayush-agarwal/";
             },},{id: "people-benjamin-joffe",
           title: 'Benjamin Joffe',
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/benjamin-joffe/";
-            },},{id: "people-braydon-zhang",
-          title: 'Braydon Zhang',
-          description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/braydon-zhang/";
             },},{id: "people-dennis-anthony",
           title: 'Dennis Anthony',
           description: "",
@@ -379,16 +405,6 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/jeremy-collins/";
-            },},{id: "people-kaavya-menon",
-          title: 'Kaavya Menon',
-          description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/kaavya-menon/";
-            },},{id: "people-kunal-aneja",
-          title: 'Kunal Aneja',
-          description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/kunal-aneja/";
             },},{id: "people-liquan-wang",
           title: 'Liquan Wang',
           description: "",
@@ -419,11 +435,6 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/nhi-nguyen/";
-            },},{id: "people-ranjani-koushik",
-          title: 'Ranjani Koushik',
-          description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/ranjani-koushik/";
             },},{id: "people-shuxin-cao",
           title: 'Shuxin Cao',
           description: "",
@@ -439,11 +450,6 @@ ninja.data = [{
           description: "",
           section: "People",handler: () => {
               window.location.href = "/people/walker-byrnes/";
-            },},{id: "people-wei-yu",
-          title: 'Wei Yu',
-          description: "",
-          section: "People",handler: () => {
-              window.location.href = "/people/wei-yu/";
             },},{id: "people-yixiong-hao",
           title: 'Yixiong Hao',
           description: "",
