@@ -112,7 +112,7 @@ We have been fortunate to work with exemplary colleagues over the years.
 | [Siqi Zhou](https://siqizhou.com)                                             | UofT        | Postdoc  | 2022-2022 | SFU (Faculty)              |
 | [Nikita Dvornik](https://www.linkedin.com/in/nikita-dvornik/)                 | UofT        | Postdoc  | 2021-2022 | Waabi                      |
 | [Irene Zhang](https://irenezhang30.github.io/)                                | UofT        | MSc (CS) | 2020-2022 | PhD, Oxford                |
-| [Matthew Zhang](https://scholar.google.com/citations?user=Y1y2jdoAAAAJ&hl=en) | UofT        | MSc (CS) | 2020-2022 | PhD, UofT                  |
+| [Matthew Zhang](https://scholar.google.com/citations?user=Y1y2jdoAAAAJ&hl=en) | UofT        | MSc (CS) | 2020-2022 | PhD, UofT -> MIT (postdoc) |
 | [Dylan Turpin](http://www.cs.toronto.edu/~dylanturpin/)                       | UofT        | MSc (CS) | 2019-2021 | PhD, UofT -> Nvidia        |
 | [Homanga Bhardwaj](https://homangab.github.io/)                               | UofT        | MSc (CS) | 2019-2021 | CMU (PhD) -> JHU (Faculty) |
 
