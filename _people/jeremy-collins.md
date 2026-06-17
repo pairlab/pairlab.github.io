@@ -1,7 +1,7 @@
 ---
 layout: page
 name: Jeremy Collins
-role: Ph.D. Student #description of the role
+role: Ph.D. Student <br> (on leave) #description of the role
 img: assets/img/people/jeremy-collins.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni

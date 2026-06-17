@@ -1,7 +1,7 @@
 ---
 layout: page
 name: Lorand Cheng
-role: Ph.D. Student (on leave at 1X) #description of the role
+role: Ph.D. Student <br> (on leave at 1X) #description of the role
 img: assets/img/people/lorand-cheng.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni

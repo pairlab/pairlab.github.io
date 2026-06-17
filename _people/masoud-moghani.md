@@ -1,7 +1,7 @@
 ---
 layout: page
 name: Masoud Moghani
-role: Ph.D. Student (UofT) #description of the role
+role: Ph.D. Student (UofT) <br> Nvidia #description of the role
 img: assets/img/people/masoud-moghani.jpeg
 category: phd # pi, postdoc, phd, ms, ug, visitor
 status: current # current, alumni
