@@ -1,5 +1,5 @@
 metadata:
-  last_updated: '2026-06-19'
+  last_updated: '2026-06-29'
 papers:
   zp8V7ZMAAAAJ:-95Q15plzcUC:
     citations: 2
@@ -10,7 +10,7 @@ papers:
     title: 'COBALT: Crowdsourcing Robot Learning via Cloud-Based Teleoperation with Smartphones'
     year: '2026'
   zp8V7ZMAAAAJ:-FonjvnnhkoC:
-    citations: 16
+    citations: 17
     title: 'OCEAN: Online Task Inference for Compositional Tasks with Context Adaptation'
     year: '2020'
   zp8V7ZMAAAAJ:-nhnvRiOwuoC:
@@ -34,7 +34,7 @@ papers:
     title: Modular Action Concept Grounding in Semantic Video Prediction
     year: '2022'
   zp8V7ZMAAAAJ:1DsIQWDZLl8C:
-    citations: 1790
+    citations: 1870
     title: 'Open X-Embodiment: Robotic learning datasets and RT-X models'
     year: '2023'
   zp8V7ZMAAAAJ:1lhNe0rCu4AC:
@@ -42,11 +42,11 @@ papers:
     title: Monotonic quantile network for worst-case offline reinforcement learning
     year: '2022'
   zp8V7ZMAAAAJ:1taIhTC69MYC:
-    citations: 71
+    citations: 72
     title: 'Fast-Grasp''D: Dexterous Multi-finger Grasp Generation Through Differentiable Simulation'
     year: '2023'
   zp8V7ZMAAAAJ:1yWc8FF-_SYC:
-    citations: 561
+    citations: 565
     title: 'Making sense of vision and touch: Self-supervised learning of multimodal representations for contact-rich tasks'
     year: '2019'
   zp8V7ZMAAAAJ:27LrP4qxOz0C:
@@ -54,15 +54,15 @@ papers:
     title: Dynamic Execution Horizon Prediction for Chunk-based Robot Policies
     year: '2026'
   zp8V7ZMAAAAJ:2v_ZtQDX9iAC:
-    citations: 83
+    citations: 91
     title: A large-scale randomized study of large language model feedback in peer review
     year: '2026'
   zp8V7ZMAAAAJ:35r97b3x0nAC:
-    citations: 187
+    citations: 191
     title: 'Neural task graphs: Generalizing to unseen tasks from a single video demonstration'
     year: '2019'
   zp8V7ZMAAAAJ:3htObqc8RwsC:
-    citations: 35
+    citations: 34
     title: Centralized Model and Exploration Policy for Multi-Agent RL
     year: '2022'
   zp8V7ZMAAAAJ:43bX7VzcjpAC:
@@ -78,7 +78,7 @@ papers:
     title: Uniform Priors for Data-Efficient Learning
     year: '2022'
   zp8V7ZMAAAAJ:4fGpz3EwCPoC:
-    citations: 88
+    citations: 89
     title: 'LASER: Learning a Latent Action Space for Efficient Reinforcement Learning'
     year: '2021'
   zp8V7ZMAAAAJ:4fKUyHm3Qg0C:
@@ -86,11 +86,11 @@ papers:
     title: 'Learning by Observation for Surgical Subtasks: Multilateral Cutting of 3D Viscoelastic and 2D Orthotropic Tissue Phantoms'
     year: '2015'
   zp8V7ZMAAAAJ:4hFrxpcac9AC:
-    citations: 63
+    citations: 64
     title: Principled Exploration via Optimistic Bootstrapping and Backward Induction
     year: '2021'
   zp8V7ZMAAAAJ:4xDN1ZYqzskC:
-    citations: 32
+    citations: 33
     title: 'RoboTube: Learning Household Manipulation from Human Videos with Simulated Twin Environments'
     year: '2022'
   zp8V7ZMAAAAJ:5Ul4iDaHHb8C:
@@ -118,7 +118,7 @@ papers:
     title: Disentanglement of image attributes using a neural network
     year: '2022'
   zp8V7ZMAAAAJ:7H_MAutzIkAC:
-    citations: 169
+    citations: 172
     title: Large language models for chemistry robotics
     year: '2023'
   zp8V7ZMAAAAJ:7Hz3ACDFbsoC:
@@ -126,7 +126,7 @@ papers:
     title: 'Digital pipette: open hardware for liquid transfer in self-driving laboratories'
     year: '2023'
   zp8V7ZMAAAAJ:7wO8s98CvbsC:
-    citations: 27
+    citations: 28
     title: Composable part-based manipulation
     year: '2023'
   zp8V7ZMAAAAJ:8Xgff_V0N9gC:
@@ -134,11 +134,11 @@ papers:
     title: Behavior Cloning from Suboptimal Demonstrations with Robust World Models
     year: Unknown Year
   zp8V7ZMAAAAJ:8xutWZnSdmoC:
-    citations: 49
+    citations: 50
     title: 'Koopman q-learning: Offline reinforcement learning via symmetries of dynamics'
     year: '2022'
   zp8V7ZMAAAAJ:9c2xU6iGI7YC:
-    citations: 23
+    citations: 24
     title: 'Neural Hybrid Automata: Learning Dynamics with Multiple Modes and Stochastic Transitions'
     year: '2021'
   zp8V7ZMAAAAJ:9pM33mqn1YgC:
@@ -146,15 +146,15 @@ papers:
     title: 'GLIDE: Generalizable quadrupedal locomotion in diverse environments with a centroidal model'
     year: '2022'
   zp8V7ZMAAAAJ:AHdEip9mkN0C:
-    citations: 333
+    citations: 341
     title: 'X-Pool: Cross-Modal Language-Video Attention for Text-Video Retrieval'
     year: '2022'
   zp8V7ZMAAAAJ:ALROH1vI_8AC:
-    citations: 181
+    citations: 185
     title: 'SlotFormer: Unsupervised Visual Dynamics Simulation with Object-Centric Models'
     year: '2023'
   zp8V7ZMAAAAJ:AXkvAH5U_nMC:
-    citations: 23
+    citations: 24
     title: Hormonal manipulation with letrozole in the treatment of metastatic malignant pecoma
     year: '2014'
   zp8V7ZMAAAAJ:Ade32sEp0pkC:
@@ -162,7 +162,7 @@ papers:
     title: 'AdaDemo: Data-Efficient Demonstration Expansion for Generalist Robotic Agent'
     year: '2024'
   zp8V7ZMAAAAJ:Ak0FvsSvgGUC:
-    citations: 272
+    citations: 276
     title: Pessimistic Bootstrapping for Uncertainty-Driven Offline Reinforcement Learning
     year: '2022'
   zp8V7ZMAAAAJ:BUYA1_V_uYcC:
@@ -218,7 +218,7 @@ papers:
     title: 'S4RL: Surprisingly Simple Self-Supervision for Offline Reinforcement Learning. 2021. DOI: 10. 48550'
     year: Unknown Year
   zp8V7ZMAAAAJ:DkZNVXde3BIC:
-    citations: 9
+    citations: 10
     title: 'Adapt3r: Adaptive 3d scene representation for domain transfer in imitation learning'
     year: '2025'
   zp8V7ZMAAAAJ:DrR-2ekChdkC:
@@ -230,7 +230,7 @@ papers:
     title: Continuous relaxation of symbolic planner for one-shot imitation learning
     year: '2019'
   zp8V7ZMAAAAJ:F1b5ZUV5XREC:
-    citations: 14
+    citations: 15
     title: 'Disect: a differentiable simulator for parameter inference and control in robotic cutting'
     year: '2023'
   zp8V7ZMAAAAJ:F2UWTTQJPOcC:
@@ -238,7 +238,7 @@ papers:
     title: Discovering Robotic Interaction Modes with Discrete Representation Learning
     year: '2024'
   zp8V7ZMAAAAJ:F9fV5C73w3QC:
-    citations: 184
+    citations: 185
     title: 'S4RL: Surprisingly Simple Self-Supervision for Offline Reinforcement Learning in Robotics'
     year: '2021'
   zp8V7ZMAAAAJ:FAceZFleit8C:
@@ -270,7 +270,7 @@ papers:
     title: Deep Learning for Dexterous Robot Grasping
     year: Unknown Year
   zp8V7ZMAAAAJ:HhcuHIWmDEUC:
-    citations: 58
+    citations: 63
     title: 'Quest: Self-supervised skill abstractions for learning continuous control'
     year: '2024'
   zp8V7ZMAAAAJ:IRz6iEL74y4C:
@@ -282,7 +282,7 @@ papers:
     title: 'Tesseract: Tensorised Actors for Multi-Agent Reinforcement Learning'
     year: '2021'
   zp8V7ZMAAAAJ:IaI1MmNe2tcC:
-    citations: 93
+    citations: 96
     title: 'Slotdiffusion: Object-centric generative modeling with diffusion models'
     year: '2023'
   zp8V7ZMAAAAJ:IjCSPb-OGe4C:
@@ -302,7 +302,7 @@ papers:
     title: A Programmable Approach to Model Compression. CoRR abs/1911.02497 (2019)
     year: '2019'
   zp8V7ZMAAAAJ:KbBQZpvPDL4C:
-    citations: 100
+    citations: 101
     title: 'Drop-DTW: Aligning Common Signal Between Sequences While Dropping Outliers'
     year: '2021'
   zp8V7ZMAAAAJ:L1USKYWJimsC:
@@ -318,7 +318,7 @@ papers:
     title: Fast explicit-input assistance for teleoperation in clutter
     year: '2024'
   zp8V7ZMAAAAJ:LdasjJ6CEcoC:
-    citations: 9
+    citations: 8
     title: Learning Achievement Structure for Structured Exploration in Domains with Sparse Reward
     year: '2023'
   zp8V7ZMAAAAJ:LgRImbQfgY4C:
@@ -350,11 +350,11 @@ papers:
     title: Techniques for robot control using neural implicit value functions
     year: '2025'
   zp8V7ZMAAAAJ:N5tVd3kTz84C:
-    citations: 256
+    citations: 257
     title: 'Adversarially Robust Policy Learning: Active Construction of Physically-Plausible Perturbations'
     year: '2017'
   zp8V7ZMAAAAJ:NyGDZy8z5eUC:
-    citations: 85
+    citations: 87
     title: 'MoCoDA: Model-based Counterfactual Data Augmentation'
     year: '2022'
   zp8V7ZMAAAAJ:O0nohqN1r9EC:
@@ -362,11 +362,11 @@ papers:
     title: Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation
     year: '2024'
   zp8V7ZMAAAAJ:OR75R8vi5nAC:
-    citations: 196
+    citations: 198
     title: A Persistent Spatial Semantic Representation for High-level Natural Language Instruction Execution
     year: '2021'
   zp8V7ZMAAAAJ:OTTXONDVkokC:
-    citations: 28
+    citations: 29
     title: 'Making sense of the robotized pandemic response: a comparison of global and canadian robot deployments and success factors'
     year: '2020'
   zp8V7ZMAAAAJ:P7Ujq4OLJYoC:
@@ -378,7 +378,7 @@ papers:
     title: 'SMPL: Simulated Industrial Manufacturing and Process Control Learning Environments'
     year: '2022'
   zp8V7ZMAAAAJ:PVjk1bu6vJQC:
-    citations: 113
+    citations: 114
     title: 'Learning by Watching: Physical Imitation of Manipulation Skills from Human Videos'
     year: '2021'
   zp8V7ZMAAAAJ:PYBJJbyH-FwC:
@@ -398,11 +398,11 @@ papers:
     title: 'Breaking Bad: A Dataset for Geometric Fracture and Reassembly'
     year: '2022'
   zp8V7ZMAAAAJ:QUX0mv85b1cC:
-    citations: 7
+    citations: 8
     title: 'Sufia-bc: Generating high quality demonstration data for visuomotor policy learning in surgical subtasks'
     year: '2025'
   zp8V7ZMAAAAJ:QsaTk4IG4EwC:
-    citations: 145
+    citations: 163
     title: 'Isaac lab: A gpu-accelerated simulation framework for multi-modal robot learning'
     year: '2025'
   zp8V7ZMAAAAJ:S16KYo8Pm5AC:
@@ -410,7 +410,7 @@ papers:
     title: A programmable approach to neural network compression
     year: '2020'
   zp8V7ZMAAAAJ:SGW5VrABaM0C:
-    citations: 29
+    citations: 30
     title: 'PWM: Policy learning with multi-task world models'
     year: '2025'
   zp8V7ZMAAAAJ:SIv7DqKytYAC:
@@ -422,11 +422,11 @@ papers:
     title: Optimization and Design for Automation of Brachytherapy Delivery and Learning Robot-Assisted Surgical Sub-Tasks
     year: '2016'
   zp8V7ZMAAAAJ:SnGPuo6Feq8C:
-    citations: 11
+    citations: 12
     title: 'Og-vla: 3d-aware vision language action model via orthographic image generation'
     year: '2025'
   zp8V7ZMAAAAJ:TlpoogIpr_IC:
-    citations: 14
+    citations: 16
     title: 'Amplify: Actionless motion priors for robot learning from videos'
     year: '2025'
   zp8V7ZMAAAAJ:Tyk-4Ss8FVUC:
@@ -434,7 +434,7 @@ papers:
     title: Robot-guided open-loop insertion of skew-line needle arrangements for high dose rate brachytherapy
     year: '2013'
   zp8V7ZMAAAAJ:UHK10RUVsp4C:
-    citations: 276
+    citations: 282
     title: 'Neural task programming: Learning to generalize across hierarchical tasks'
     year: '2018'
   zp8V7ZMAAAAJ:U_HPUtbDl20C:
@@ -446,7 +446,7 @@ papers:
     title: An Algorithm for Computing Customized 3D Printed Implants with Curvature Constrained Channels for Enhancing Intracavitary Brachytherapy Radiation Delivery
     year: '2013'
   zp8V7ZMAAAAJ:Ug5p-4gJ2f0C:
-    citations: 311
+    citations: 312
     title: Learning task-oriented grasping for tool manipulation from simulated self-supervision
     year: '2020'
   zp8V7ZMAAAAJ:UmS_249rOGwC:
@@ -470,7 +470,7 @@ papers:
     title: Prompt generator for use with one or more machine learning processes
     year: '2024'
   zp8V7ZMAAAAJ:WZBGuue-350C:
-    citations: 19
+    citations: 20
     title: De-anonymization of authors through arXiv submissions during double-blind review
     year: '2020'
   zp8V7ZMAAAAJ:WqliGbK-hY8C:
@@ -478,7 +478,7 @@ papers:
     title: 'Autonomous tumor localization and extraction: Palpation, incision, debridement and adhesive closure with the da vinci research kit'
     year: '2015'
   zp8V7ZMAAAAJ:XUvXOeBm_78C:
-    citations: 65
+    citations: 66
     title: 'Replan: Robotic replanning with perception and language models'
     year: '2024'
   zp8V7ZMAAAAJ:XiVPGOgt02cC:
@@ -502,7 +502,7 @@ papers:
     title: Scene understanding using language models for robotics systems and applications
     year: '2024'
   zp8V7ZMAAAAJ:Z5m8FVwuT1cC:
-    citations: 109
+    citations: 111
     title: Controlling assistive robots with learned latent actions
     year: '2020'
   zp8V7ZMAAAAJ:ZzlSgRqYykMC:
@@ -518,7 +518,7 @@ papers:
     title: Towards Grasp Transfer using Shape Deformation
     year: '2017'
   zp8V7ZMAAAAJ:a3BOlSfXSfwC:
-    citations: 102
+    citations: 104
     title: 'Seeing Glass: Joint Point-Cloud and Depth Completion for Transparent Objects'
     year: '2021'
   zp8V7ZMAAAAJ:aIdbFUkbNIkC:
@@ -538,7 +538,7 @@ papers:
     title: 'MVTrans: Multi-View Perception of Transparent Objects'
     year: '2023'
   zp8V7ZMAAAAJ:ce2CqMG-AY4C:
-    citations: 54
+    citations: 56
     title: 'Orbit-surgical: An open-simulation framework for learning surgical augmented dexterity'
     year: '2024'
   zp8V7ZMAAAAJ:d1gkVwhDpl0C:
@@ -562,7 +562,7 @@ papers:
     title: 'Autonomous Generalist Scientist: Towards and Beyond Human-Level Scientific Research with Agentic and Embodied AI and Robots'
     year: Unknown Year
   zp8V7ZMAAAAJ:e_rmSamDkqQC:
-    citations: 147
+    citations: 149
     title: Counterfactual Data Augmentation using Locally Factored Dynamics
     year: '2020'
   zp8V7ZMAAAAJ:edDO8Oi4QzsC:
@@ -578,7 +578,7 @@ papers:
     title: Precision injector/extractor for robot-assisted minimally-invasive surgery
     year: '2018'
   zp8V7ZMAAAAJ:fEOibwPWpKIC:
-    citations: 438
+    citations: 442
     title: 'RoboTurk: A crowdsourcing platform for robotic skill learning through imitation'
     year: '2018'
   zp8V7ZMAAAAJ:fFSKOagxvKUC:
@@ -594,19 +594,15 @@ papers:
     title: 'Neural Shape Mating: Self-Supervised Object Assembly with Adversarial Shape Priors'
     year: '2022'
   zp8V7ZMAAAAJ:foquWX3nUaYC:
-    citations: 100
+    citations: 101
     title: 'D2RL: Deep dense architectures in reinforcement learning'
     year: '2020'
-  zp8V7ZMAAAAJ:g5Ck-dwhA_QC:
-    citations: 0
-    title: Disentangled GANs for controllable generation of high-resolution images
-    year: '2020'
   zp8V7ZMAAAAJ:gKiMpY-AVTkC:
-    citations: 184
+    citations: 187
     title: Accelerated Policy Learning with Parallel Differentiable Simulation
     year: '2022'
   zp8V7ZMAAAAJ:gVv57TyPmFsC:
-    citations: 2
+    citations: 3
     title: 'SWIRL: A SequentialWindowed Inverse Reinforcement Learning Algorithm for Robot Tasks With Delayed Rewards'
     year: '2020'
   zp8V7ZMAAAAJ:geHnlv5EZngC:
@@ -618,11 +614,11 @@ papers:
     title: Semi-Supervised StyleGAN for Disentanglement Learning
     year: '2020'
   zp8V7ZMAAAAJ:hCrLmN-GePgC:
-    citations: 68
+    citations: 69
     title: Angular visual hardness
     year: '2020'
   zp8V7ZMAAAAJ:hSRAE-fF4OAC:
-    citations: 1
+    citations: 4
     title: 'Softmimicgen: A data generation system for scalable robot learning in deformable object manipulation'
     year: '2026'
   zp8V7ZMAAAAJ:hkOj_22Ku90C:
@@ -638,11 +634,11 @@ papers:
     title: 'Visuomotor mechanical search: Learning to retrieve target objects in clutter'
     year: '2020'
   zp8V7ZMAAAAJ:ipzZ9siozwsC:
-    citations: 130
+    citations: 131
     title: 'Scaling Robot Supervision to Hundreds of Hours with RoboTurk: Robotic Manipulation Dataset through Human Reasoning and Dexterity'
     year: '2019'
   zp8V7ZMAAAAJ:j7_hQOaDUrUC:
-    citations: 51
+    citations: 54
     title: 'Stepformer: Self-supervised step discovery and localization in instructional videos'
     year: '2023'
   zp8V7ZMAAAAJ:jFemdcug13IC:
@@ -666,7 +662,7 @@ papers:
     title: 'Neurips 2022 competition: Driving smarts'
     year: '2022'
   zp8V7ZMAAAAJ:kVjdVfd2voEC:
-    citations: 567
+    citations: 576
     title: 'ORBIT: A unified simulation framework for interactive robot learning environments'
     year: '2023'
   zp8V7ZMAAAAJ:kWvqk_afx_IC:
@@ -726,11 +722,11 @@ papers:
     title: Reinforcement learning in factored action spaces using tensor decompositions
     year: '2021'
   zp8V7ZMAAAAJ:nrtMV_XWKgEC:
-    citations: 284
+    citations: 285
     title: 'Variable Impedance Control in End-Effector Space: An Action Space for Reinforcement Learning in Contact-Rich Tasks'
     year: '2019'
   zp8V7ZMAAAAJ:oNZyr7d5Mn4C:
-    citations: 165
+    citations: 163
     title: Causal discovery in physical systems from videos
     year: '2020'
   zp8V7ZMAAAAJ:oi2SiIJ9l4AC:
@@ -742,7 +738,7 @@ papers:
     title: 'Grasp''D: Differentiable Contact-rich Grasp Synthesis for Multi-fingered Hands'
     year: '2022'
   zp8V7ZMAAAAJ:pS0ncopqnHgC:
-    citations: 14
+    citations: 16
     title: Scaling laws in scientific discovery with AI and robot scientists
     year: '2025'
   zp8V7ZMAAAAJ:p__nRnzSRKYC:
@@ -750,11 +746,11 @@ papers:
     title: Turbulence forecasting via neural ode
     year: '2019'
   zp8V7ZMAAAAJ:prdVHNxh-e8C:
-    citations: 1574
+    citations: 1598
     title: 'Progprompt: Generating situated robot task plans using large language models'
     year: '2023'
   zp8V7ZMAAAAJ:q3CdL3IzO_QC:
-    citations: 210
+    citations: 211
     title: Conservative Safety Critics for Exploration
     year: '2021'
   zp8V7ZMAAAAJ:q3oQSFYPqjQC:
@@ -770,7 +766,7 @@ papers:
     title: 'Mosaicmem: Hybrid spatial memory for controllable video world models'
     year: '2026'
   zp8V7ZMAAAAJ:rTD5ala9j4wC:
-    citations: 359
+    citations: 365
     title: 'Making sense of vision and touch: Learning multimodal representations for contact-rich tasks'
     year: '2020'
   zp8V7ZMAAAAJ:r_AWSJRzSzQC:
@@ -782,7 +778,7 @@ papers:
     title: 'Rocoda: Counterfactual data augmentation for data-efficient robot learning from demonstrations'
     year: '2025'
   zp8V7ZMAAAAJ:rbm3iO8VlycC:
-    citations: 16
+    citations: 18
     title: 'AnyPlace: Learning Generalizable Object Placement for Robot Manipulation'
     year: '2025'
   zp8V7ZMAAAAJ:ruyezt5ZtCIC:
@@ -838,7 +834,7 @@ papers:
     title: Coach-Player Multi-Agent Reinforcement Learning for Dynamic Team Composition
     year: '2021'
   zp8V7ZMAAAAJ:vDZJ-YLwNdEC:
-    citations: 48
+    citations: 47
     title: Value Gradient weighted Model-Based Reinforcement Learning
     year: '2022'
   zp8V7ZMAAAAJ:vbGhcppDl1QC:
@@ -846,11 +842,11 @@ papers:
     title: Motion reasoning for goal-based imitation learning
     year: '2020'
   zp8V7ZMAAAAJ:w1MjKQ0l0TYC:
-    citations: 2
+    citations: 3
     title: 'CLIMB: Language-Guided Continual Learning for Task Planning with Iterative Model Building'
     year: '2025'
   zp8V7ZMAAAAJ:wKETBy42zhYC:
-    citations: 3
+    citations: 4
     title: Robot-assisted vascular shunt insertion with the dvrk surgical robot
     year: '2023'
   zp8V7ZMAAAAJ:wbdj-CoPYUoC:
@@ -878,7 +874,7 @@ papers:
     title: 'Real robot challenge: A robotics competition in the cloud'
     year: '2022'
   zp8V7ZMAAAAJ:yxmsSjX2EkcC:
-    citations: 185
+    citations: 189
     title: 'ORGANA: A robotic assistant for automated chemistry experimentation and characterization'
     year: '2025'
   zp8V7ZMAAAAJ:zCSUwVk65WsC:
@@ -890,7 +886,7 @@ papers:
     title: 'Accelerating discovery in natural science laboratories with AI and robotics: Perspectives and challenges'
     year: '2025'
   zp8V7ZMAAAAJ:z_wVstp3MssC:
-    citations: 158
+    citations: 161
     title: 'Mechanical Search: Multi-Step Retrieval of a Target Object Occluded by Clutter'
     year: '2019'
   zp8V7ZMAAAAJ:ziOE8S1-AIUC:
